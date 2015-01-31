@@ -1,0 +1,22 @@
+{
+  "name": "circles",
+  "main": "circles.js",
+  "version": "0.0.0",
+  "authors": [
+    "Manuel Bitto <manuel.bitto@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "easeljs": "~0.8.0",
+    "requirejs": "~2.1.15",
+    "SoundJS": "~0.6.0",
+    "zepto": "~1.1.6"
+  }
+}

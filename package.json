@@ -1,0 +1,31 @@
+{
+  "name": "circles",
+  "version": "0.0.0",
+  "description": "A simple game",
+  "main": "main.js",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "devDependencies": {
+    "mocha": "~2.1.0",
+    "chai": "~1.10.0",
+    "karma": "~0.12.31",
+    "karma-chrome-launcher": "~0.1.7",
+    "karma-chai": "~0.1.0",
+    "karma-mocha": "~0.1.10",
+    "karma-requirejs": "~0.2.2"
+  },
+  "scripts": {
+    "test": "karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:mbitto/circles.git"
+  },
+  "author": "",
+  "license": "BSD",
+  "dependencies": {
+    "requirejs": "~2.1.15"
+  }
+}

@@ -1,0 +1,11 @@
+html{
+    font-family: Verdana, Arial, sans-serif;
+}
+html, body{
+    margin: 0;
+    background-color: #111;
+}
+#canvas{
+    background-color:#111;
+    height: 100%;
+}

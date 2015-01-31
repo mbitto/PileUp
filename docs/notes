@@ -1,0 +1,15 @@
+TODO:
+- creare repulsione ravvicinata [OK]
+- Accettare input dell'utente  [OK]
+- Creare nuovi circle durante il push ed il pop [OK]
+- Aggiungere dati sull'andamento del gioco (punteggio fittizio)
+
+
+
+
+Idee:
+- L'obbiettivo è costruire una piramide arcobaleno (7 cerchietti colorati)
+- Un primo livello potrebbe avere un obiettivo di 3 cerchietti, iniziando il gioco con 2
+
+- Ogni livello si conclude nel momento in cui l'utente completa delle piramidi
+    il completamento delle piramidi può variare in base al numero di piramidi e al numero di cerchietti
