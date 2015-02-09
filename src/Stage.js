@@ -1,9 +1,10 @@
 define([
+    'createjs',
     'src/CircleFactory',
     'src/PositioningManager',
     'src/CirclesIterator',
     'src/UserInteractionManager'
-],function(CircleFactory, PositioningManager, CirclesIterator, UserInteractionManager){
+],function(createjs, CircleFactory, PositioningManager, CirclesIterator, UserInteractionManager){
 
     "use strict";
 
@@ -53,17 +54,33 @@ define([
 
             var circlesIterator = new CirclesIterator(circle);
 
+            circle.onPress(function(){
+                circlesIterator.forEachCircleInTower(function(circle){
+                    circle.setBlur();
+                });
+                self.update();
+            });
+
             circle.onMove(function (e) {
                 self.userInteractionManager.move(e, circle, circlesIterator);
                 self.update();
             });
 
             circle.onTap(function (e) {
+
+                circlesIterator.forEachCircleInTower(function(circle) {
+                    circle.removeBlur();
+                });
+
                 self.userInteractionManager.tap(e, circle, circlesIterator);
                 self.update();
             });
 
             circle.onRelease(function (e) {
+                circlesIterator.forEachCircleInTower(function(circle) {
+                    circle.removeBlur();
+                });
+
                 self.userInteractionManager.release(e, circle, circlesIterator);
                 self.update();
             });

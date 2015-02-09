@@ -1,4 +1,4 @@
-define(function() {
+define(['createjs'], function(createjs) {
 
     "use strict";
 
@@ -10,6 +10,7 @@ define(function() {
 
     UserInteractionManager.prototype = {
         move: function(e, circle, circlesIterator){
+
             circlesIterator.forEachCircleInTower(function (circleToMove) {
                 circleToMove.getShape().x = e.stageX;
                 circleToMove.getShape().y = e.stageY;
@@ -17,6 +18,7 @@ define(function() {
         },
 
         tap: function(e, circle, circlesIterator){
+
             if(circlesIterator.getHeight() == 1){ return; }
 
             // Find top circle id

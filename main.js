@@ -5,6 +5,7 @@ requirejs.config({
         src: '../src',
         zepto: 'zepto/zepto',
         createjs: 'easeljs/lib/easeljs-0.8.0.combined',
+        tweenjs: 'TweenJS/lib/tweenjs-0.6.0.combined',
         soundjs: 'SoundJS/lib/soundjs-0.6.0.combined',
         alertify: 'alertify.js/lib/alertify'
     },
@@ -16,6 +17,10 @@ requirejs.config({
         'createjs': {
             exports: 'createjs'
         },
+        'tweenjs': {
+            deps: ['createjs'],
+            exports: 'createjs.Tween'
+        },
         'soundjs': {
             deps: ['createjs'],
             exports: 'createjs.Sound'
@@ -24,7 +29,7 @@ requirejs.config({
     }
 });
 
-// Start the main app logic.
+// Start the main app logic
 requirejs([
     'createjs',
     'src/Stage',
@@ -45,6 +50,8 @@ function(createjs, Stage, Canvas, Game, Information, Sound){
         stage = new Stage(game, createJSStage, canvas.getWidth(), canvas.getHeight());
 
     createjs.Touch.enable(createJSStage);
+    createjs.Ticker.setFPS(60);
+    createjs.Ticker.addEventListener("tick", createJSStage);
 
     stage.start();
 });

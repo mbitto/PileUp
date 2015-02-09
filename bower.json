@@ -18,7 +18,8 @@
     "requirejs": "~2.1.15",
     "SoundJS": "~0.6.0",
     "zepto": "~1.1.6",
-    "alertify.js": "~0.3.11"
+    "alertify.js": "~0.3.11",
+    "TweenJS": "~0.6.0"
   },
   "devDependencies": {
     "squire": "~0.2.0",
