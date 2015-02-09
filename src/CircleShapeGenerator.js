@@ -22,7 +22,7 @@ define([
             YELLOW = "#FFFF00",
             GREEN = "#00FF00",
             BLUE = "#0000FF",
-            INDIGO = "#6F00FF",
+            INDIGO = "#5A00FF",
             VIOLET = "#7F00FF";
 
         /**

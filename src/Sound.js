@@ -3,7 +3,7 @@ define([
     'soundjs'
 ],function(createjs) {
 
-    var AudioManager = function AudioManager() {
+    var Sound = function Sound() {
         this.audioPath = "./assets/";
         this.mergeSound = {id: "merge", src: "merge.ogg"};
         this.splitSound = {id: "split", src: "split.ogg"};
@@ -16,7 +16,7 @@ define([
 
     };
 
-    AudioManager.prototype = {
+    Sound.prototype = {
         playMerge: function () {
             createjs.Sound.play(this.audioPath + this.mergeSound.src);
         },
@@ -32,5 +32,5 @@ define([
 
     };
 
-    return AudioManager;
+    return Sound;
 });

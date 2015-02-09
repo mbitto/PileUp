@@ -9,3 +9,15 @@ html, body{
     background-color:#111;
     height: 100%;
 }
+.info-bar{
+    position: absolute;
+    height: 20px;
+    width: 100%;
+    background-color: rgba(17, 17, 17, 0.30);
+    color: #fff;
+    text-align: right;
+}
+
+.info-bar span{
+    margin-right: 20px;
+}

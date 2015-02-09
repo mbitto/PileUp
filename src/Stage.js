@@ -1,40 +1,36 @@
 define([
-    'createjs',
     'src/CircleFactory',
     'src/PositioningManager',
-    'src/LevelManager',
     'src/CirclesIterator',
-    'src/EventManager'
-],function(createjs, CircleFactory, PositioningManager, LevelManager, CirclesIterator, EventManager){
+    'src/UserInteractionManager'
+],function(CircleFactory, PositioningManager, CirclesIterator, UserInteractionManager){
 
     "use strict";
 
-    var Stage = function Stage(canvas) {
-        this.canvas = canvas;
-        this.createJSStage = new createjs.Stage(canvas.getElement());
+    var Stage = function Stage(game, createJSStage, width, height) {
+        this.createJSStage = createJSStage;
         this.circleFactory = new CircleFactory();
-        this.positioningManager = new PositioningManager(this.canvas.getWidth(), this.canvas.getHeight());
-        this.levelManager = new LevelManager();
-        this.eventManager = new EventManager(this);
+        this.positioningManager = new PositioningManager(width, height);
+        this.game = game;
+        this.userInteractionManager = new UserInteractionManager(this, this.game, this.positioningManager);
         this.circles = [];
-
-        createjs.Touch.enable(this.createJSStage);
     };
 
     Stage.prototype = {
 
         update: function(){
-            this.createJSStage.stage.update();
+            this.createJSStage.update();
         },
 
         start: function(){
+            var startingCirclesQuantity = this.game.getStartingCirclesQuantity();
 
             // Create initial circles
-            var startingCirclesQuantity = this.levelManager.getStartingCirclesQuantity(),
-                i;
+            var i;
 
             for(i=0; i<startingCirclesQuantity; i++){
                 this.addCircle();
+                this.game.addedCircle();
             }
 
             this.update();
@@ -58,17 +54,17 @@ define([
             var circlesIterator = new CirclesIterator(circle);
 
             circle.onMove(function (e) {
-                self.eventManager.onMove(e, circle, circlesIterator);
+                self.userInteractionManager.move(e, circle, circlesIterator);
                 self.update();
             });
 
             circle.onTap(function (e) {
-                self.eventManager.onTap(e, circle, circlesIterator);
+                self.userInteractionManager.tap(e, circle, circlesIterator);
                 self.update();
             });
 
             circle.onRelease(function (e) {
-                self.eventManager.onRelease(e, circle, circlesIterator);
+                self.userInteractionManager.release(e, circle, circlesIterator);
                 self.update();
             });
 
@@ -82,10 +78,6 @@ define([
 
         getCircles: function(){
             return this.circles;
-        },
-
-        getCanvas: function () {
-            return this.canvas;
         }
     };
 

@@ -1,7 +1,6 @@
 define(function(){
     var Canvas = function Canvas(canvasElement){
 
-        this.canvasElement = canvasElement;
         this.width = canvasElement.width = window.innerWidth - 5;
         this.height = canvasElement.height = window.innerHeight - 5;
 
@@ -16,9 +15,6 @@ define(function(){
         },
         getHeight: function(){
             return this.height;
-        },
-        getElement: function(){
-            return this.canvasElement;
         }
     };
 

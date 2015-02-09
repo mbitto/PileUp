@@ -6,6 +6,8 @@ define([
 
         describe('#getRandomInt', function(){
             it('should return an integer between @min and @max params', function(){
+
+                // TODO: Fake random with sinon sinon.stub(Math, 'random').returns(0.5);
                 var res = utils.getRandomInt(1, 2);
 
                 assert.isNumber(res);
@@ -15,6 +17,8 @@ define([
             });
 
             it('should work even with negative numbers', function(){
+
+                // TODO: Fake random with sinon sinon.stub(Math, 'random').returns(0.5);
                 var res = utils.getRandomInt(-1, 1);
 
                 assert.isTrue(res >= -1);
@@ -24,6 +28,7 @@ define([
 
         describe('#getRandomCoordinates', function(){
 
+            // TODO: Fake random with sinon sinon.stub(Math, 'random').returns(0.5);
             var res = utils.getRandomCoordinates(10, 15, 15);
             it('should be an object', function(){
                 assert.isObject(res);

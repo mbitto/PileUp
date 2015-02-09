@@ -1,32 +1,22 @@
-define([
-    'src/PositioningManager',
-    'src/LevelManager',
-    'src/AudioManager',
-    'src/InfoManager'
-], function(PositioningManager, LevelManager, AudioManager, InfoManager) {
+define(function() {
 
     "use strict";
 
-    var EventManager = function EventManager(stage) {
+    var UserInteractionManager = function UserInteractionManager(stage, game, positioningManager) {
         this.stage = stage;
-        this.canvas = stage.getCanvas()
-        this.positioningManager = new PositioningManager(this.canvas.getWidth(), this.canvas.getHeight());
-
-        // TODO: level audio and info should be hidden by a facade
-        this.levelManager = new LevelManager();
-        this.audioManager = new AudioManager();
-        this.infoManager = new InfoManager();
+        this.game = game;
+        this.positioningManager = positioningManager;
     };
 
-    EventManager.prototype = {
-        onMove: function(e, circle, circlesIterator){
+    UserInteractionManager.prototype = {
+        move: function(e, circle, circlesIterator){
             circlesIterator.forEachCircleInTower(function (circleToMove) {
                 circleToMove.getShape().x = e.stageX;
                 circleToMove.getShape().y = e.stageY;
             });
         },
 
-        onTap: function(e, circle, circlesIterator){
+        tap: function(e, circle, circlesIterator){
             if(circlesIterator.getHeight() == 1){ return; }
 
             // Find top circle id
@@ -37,13 +27,14 @@ define([
             // Place circle near tower base circle
             this.positioningManager.moveNear(this.stage.getCircles(), poppedOutCircle , oldBaseCircle);
 
-            this.audioManager.playSplit();
+            this.game.splittedTower();
 
             // Add new Circle on stage when some circles have been splitted
             this.stage.addCircle();
+            this.game.addedCircle();
         },
 
-        onRelease: function(e, circle, circlesIterator){
+        release: function(e, circle, circlesIterator){
             var self = this,
                 collidingCircles = this.positioningManager.detectCollision(this.stage.getCircles(), circle);
 
@@ -53,19 +44,25 @@ define([
 
                 if (collidingCirclesBase.canBeMergedWith(movingCirclesBase)) {
                     collidingCirclesBase.mergeWith(movingCirclesBase);
-                    this.audioManager.playMerge();
+                    this.game.mergedTower();
 
                     // Add new Circle on stage when some circles have been merged
                     this.stage.addCircle();
+                    this.game.addedCircle();
 
-                    if(circlesIterator.getHeight() === this.levelManager.getMaxCirclesPerTower()){
-
+                    // TODO: refactor this part
+                    if(this.game.isCirclesLimitReached(this.stage.getCircles().length)){
                         circlesIterator.forEachCircleInTower(function(circle){
                             self.stage.removeCircle(circle);
                         });
+                        this.game.gameOver();
+                    }
 
-                        this.infoManager.towerCompleted();
-                        this.audioManager.playWin();
+                    else if(this.game.isTowerCompleted(circlesIterator.getHeight())){
+                        circlesIterator.forEachCircleInTower(function(circle){
+                            self.stage.removeCircle(circle);
+                        });
+                        this.game.doneTower();
                     }
                 }
                 else {
@@ -74,5 +71,5 @@ define([
             }
         }
     };
-    return EventManager;
+    return UserInteractionManager;
 });
