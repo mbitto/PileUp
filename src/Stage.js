@@ -1,60 +1,19 @@
 define([
-    'createjs',
-    'src/CircleFactory',
     'src/PositioningManager',
-    'src/CirclesIterator',
-    'src/UserInteractionManager'
-],function(createjs, CircleFactory, PositioningManager, CirclesIterator, UserInteractionManager){
+    'src/config'
+],function(PositioningManager, config){
 
     "use strict";
 
-    var Stage = function Stage(game, createJSStage, width, height, enableTicker) {
-        this.enableTicker = enableTicker;
+    var Stage = function Stage(createJSStage, width, height) {
         this.createJSStage = createJSStage;
-        this.circleFactory = new CircleFactory();
         this.positioningManager = new PositioningManager(width, height);
-        this.game = game;
-        this.userInteractionManager = new UserInteractionManager(this, this.game, this.positioningManager);
         this.circles = [];
-
-
-        createjs.Touch.enable(createJSStage);
-        if(this.enableTicker){
-            createjs.Ticker.setFPS(30);
-            createjs.Ticker.addEventListener("tick", createJSStage);
-        }
-
     };
 
     Stage.prototype = {
 
-        update: function(){
-            if(!this.enableTicker){
-                console.log("Stage update");
-                this.createJSStage.update();
-            }
-        },
-
-        start: function(){
-            var startingCirclesQuantity = this.game.getStartingCirclesQuantity();
-
-            // Create initial circles
-            var self = this,
-                i;
-
-            for(i=0; i<startingCirclesQuantity; i++){
-                setTimeout(function(){
-                    self.addCircle();
-                    self.game.addedCircle();
-                    self.update();
-                }, 600 * i);
-            }
-        },
-
-        addCircle: function(){
-            var circle = this.circleFactory.createCircle(this.positioningManager.getRandomStartingPoint()),
-                self = this;
-
+        addCircle: function(circle, callback){
             this.circles[circle.getId()] = circle;
             var coordinates = this.positioningManager.putCircle(this.circles, circle);
             this.createJSStage.addChild(circle.getShape());
@@ -66,42 +25,7 @@ define([
                 return 0;
             });
 
-            circle.moveSmooth(coordinates, 500);
-
-            var circlesIterator = new CirclesIterator(circle);
-
-            circle.onPress(function(){
-                circlesIterator.forEachCircleInTower(function(circle){
-                    circle.setBlur();
-                });
-                self.update();
-            });
-
-            circle.onMove(function (e) {
-                self.userInteractionManager.move(e, circle, circlesIterator);
-                self.update();
-            });
-
-            circle.onTap(function (e) {
-
-                circlesIterator.forEachCircleInTower(function(circle) {
-                    circle.removeBlur();
-                });
-
-                self.userInteractionManager.tap(e, circle, circlesIterator);
-                self.update();
-            });
-
-            circle.onRelease(function (e) {
-                circlesIterator.forEachCircleInTower(function(circle) {
-                    circle.removeBlur();
-                });
-
-                self.userInteractionManager.release(e, circle, circlesIterator);
-                self.update();
-            });
-
-            return circle;
+            circle.moveSmooth(coordinates, config.NEW_CIRCLE_ANIMATION_SPEED, callback);
         },
 
         removeCircle: function(circle){
@@ -109,8 +33,17 @@ define([
             delete this.circles[circle.getId()];
         },
 
-        getCircles: function(){
-            return this.circles;
+        moveCircleCloseTo: function (circleToMove, circleReference) {
+            var coordinates = this.positioningManager.moveNear(this.circles, circleToMove, circleReference);
+            circleToMove.moveSmooth(coordinates, config.POP_CIRCLE_ANIMATION_SPEED);
+        },
+
+        detectCollision: function(movingCircle){
+            return this.positioningManager.detectCollision(this.circles, movingCircle);
+        },
+
+        update: function(){
+            this.createJSStage.update();
         }
     };
 

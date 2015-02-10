@@ -7,10 +7,9 @@
  */
 define([
     'createjs',
-    'tweenjs',
     'src/CircleDragAndDropManager',
     'src/CirclesIterator'
-], function (createjs, tweenjs, CircleDragAndDropManager, CirclesIterator) {
+], function (createjs, CircleDragAndDropManager, CirclesIterator) {
 
     "use strict";
 
@@ -39,6 +38,8 @@ define([
             this.shape.x = coordinates.x;
             this.shape.y = coordinates.y;
         }
+
+        this.circlesIterator = new CirclesIterator(this);
     };
 
     Circle.prototype = {
@@ -91,15 +92,16 @@ define([
          * @param coordinates
          */
         move: function (coordinates) {
-            console.log('move', coordinates);
             this.shape.x = coordinates.x;
             this.shape.y = coordinates.y;
         },
 
-        moveSmooth: function (coordinates, speed) {
-            console.log(this.shape.x, this.shape.y);
-            console.log('moveSmooth', coordinates);
-            createjs.Tween.get(this.shape).to({x: coordinates.x, y: coordinates.y}, speed || 100, createjs.Ease.cubicIn());
+        moveSmooth: function (coordinates, speed, callback) {
+            var coords = {x: coordinates.x, y: coordinates.y},
+                callback = callback || function(){},
+                ease = createjs.Ease.cubicIn();
+
+            createjs.Tween.get(this.shape).to(coords, speed, ease).call(callback);
         },
 
         /**
@@ -238,6 +240,14 @@ define([
                 return circleToPop;
             }
             return null;
+        },
+
+        forEachCircleInTower: function(callback) {
+            this.circlesIterator.forEachCircleInTower(callback);
+        },
+
+        getHeight: function () {
+            return this.circlesIterator.getHeight();
         }
     };
     return Circle;

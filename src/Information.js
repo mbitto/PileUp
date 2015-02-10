@@ -1,7 +1,6 @@
 define([
-    'createjs',
     'alertify'
-],function(createjs, alertify){
+],function(alertify){
 
     "use strict";
 
@@ -20,6 +19,10 @@ define([
         incrementCirclesCounter: function () {
             this.circlesCounter++;
             this.circlesCounterElement.textContent = "Circles : " + this.circlesCounter;
+        },
+
+        getCirclesCount: function () {
+            return this.circlesCounter;
         },
 
         decrementCirclesCounter: function (quantity) {

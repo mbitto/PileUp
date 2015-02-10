@@ -11,10 +11,27 @@ define([
 
     CircleFactory.prototype = {
 
-        createCircle: function(startingPoint){
-            var shape = this.circleShapeGenerator.getCircleRandomFeatures();
-            console.log(startingPoint);
-            return new Circle(shape.color, shape.radius, startingPoint);
+        createCircle: function(userInteractionManager){
+            var shape = this.circleShapeGenerator.getCircleRandomFeatures(),
+                circle = new Circle(shape.color, shape.radius);
+
+            circle.onPress(function(e){
+                userInteractionManager.press(circle, e);
+            });
+
+            circle.onMove(function (e) {
+                userInteractionManager.move(circle, e);
+            });
+
+            circle.onTap(function (e) {
+                userInteractionManager.tap(circle, e);
+            });
+
+            circle.onRelease(function (e) {
+                userInteractionManager.release(circle, e);
+            });
+
+            return circle;
         }
     };
     return CircleFactory;

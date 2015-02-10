@@ -33,22 +33,27 @@ requirejs.config({
 requirejs([
     'createjs',
     'src/Stage',
-    'src/Canvas',
     'src/Game',
+    'src/Canvas',
+    'src/GameInfo',
     'src/Information',
     'src/Sound'
 ],
 
-function(createjs, Stage, Canvas, Game, Information, Sound){
+function(createjs, Stage, Game, Canvas, GameInfo, Information, Sound){
 
     "use strict";
 
-    var enableTicker = true,
-        htmlCanvasElement = document.getElementById('canvas'),
+    var htmlCanvasElement = document.getElementById('canvas'),
         canvas = new Canvas(htmlCanvasElement),
         createJSStage = new createjs.Stage(htmlCanvasElement),
-        game = new Game(new Information('circlesQuantity', 'towersCompleted'), new Sound()),
-        stage = new Stage(game, createJSStage, canvas.getWidth(), canvas.getHeight(), enableTicker);
+        gameInfo = new GameInfo(new Information('circlesQuantity', 'towersCompleted'), new Sound()),
+        stage = new Stage(createJSStage, canvas.getWidth(), canvas.getHeight()),
+        game = new Game(stage, gameInfo);
 
-    stage.start();
+    createjs.Touch.enable(createJSStage);
+    createjs.Ticker.setFPS(30);
+    createjs.Ticker.addEventListener("tick", createJSStage);
+
+    game.start();
 });
