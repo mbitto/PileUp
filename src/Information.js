@@ -1,6 +1,7 @@
 define([
+    'createjs',
     'alertify'
-],function(alertify){
+],function(createjs, alertify){
 
     "use strict";
 
@@ -33,6 +34,17 @@ define([
 
         displayGameOverMessage: function () {
             alertify.alert("Game Over!</br>Towers completed: " + this.towersCompleted);
+        },
+
+        displayPraiseMessage: function (message, color, posX, posY) {
+            var praiseMessageDomElement = document.getElementsByClassName('praise-message')[0];
+            praiseMessageDomElement.textContent = message;
+            praiseMessageDomElement.style.color = color;
+            praiseMessageDomElement.style.left = posX + 'px';
+            praiseMessageDomElement.style.top = posY + 'px';
+            setTimeout(function(){
+                praiseMessageDomElement.textContent = '';
+            }, 1500);
         }
     };
 

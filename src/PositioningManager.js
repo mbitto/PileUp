@@ -16,9 +16,24 @@ define([
         this.putCircleLoops = 0;
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
+        this.randomStartingPoints = [
+            {x: -100, y: -100},                             // Top left
+            {x: canvasWidth / 2, y: -100},                  // Top center
+            {x: canvasWidth + 100, y:-100},                 // Top right
+            {x: -100, y: canvasHeight / 2},                 // Middle right
+            {x: canvasWidth + 100, y: canvasHeight / 2},    // Bottom right
+            {x: -100, y: canvasHeight + 100},               // Bottom center
+            {x: canvasWidth / 2 , y: canvasHeight + 100},   // Bottom left
+            {x: canvasWidth + 100, y: canvasHeight + 100 }  // Middle left
+        ];
     };
 
     PositioningManager .prototype = {
+
+        getRandomStartingPoint: function () {
+            var randomInt = utils.getRandomInt(0, this.randomStartingPoints.length - 1);
+            return this.randomStartingPoints[randomInt];
+        },
 
         /**
          * Detect a collision between an array of circles and a single circle
@@ -60,6 +75,7 @@ define([
                 baseCircleReferenceShape = baseCircleReference.getShape(),
                 minimumDistance = baseCircleReference.getRadius() * 2,
                 maximumTrials = 100,
+                initialPosition = circleToMove.getCoordinates(),
                 i = 1, j, newXPosition, newYPosition, xMovement, yMovement;
 
             while(i < maximumTrials){
@@ -85,21 +101,24 @@ define([
                     }
                 }
                 if(stop){
+                    circleToMove.move(initialPosition);
                     break;
                 }
                 i++;
             }
+            return { x: newXPosition, y: newYPosition };
         },
 
         // FIXME: Buggy (too much loops) when there are many circles
         // Get coordinates avoiding circle collisions
-        putCircle: function (circles, circle, putCircleLoops) {
+        putCircle: function (circles, circle, putCircleLoops, _initialPosition) {
+
             this.putCircleLoops = putCircleLoops || 0;
 
             var xMaxDistance = this.canvasWidth - (circle.getRadius() * 2),
-                yMaxDistance = this.canvasHeight - (circle.getRadius() * 2);
-
-            var coordinates = utils.getRandomCoordinates(50, xMaxDistance, yMaxDistance),
+                yMaxDistance = this.canvasHeight - (circle.getRadius() * 2),
+                coordinates = utils.getRandomCoordinates(50, xMaxDistance, yMaxDistance),
+                initialPosition = _initialPosition || circle.getCoordinates(),
                 i, collidingCircles;
 
             circle.move(coordinates);
@@ -108,11 +127,12 @@ define([
                 collidingCircles = this.detectCollision(circles, circle);
 
                 if (collidingCircles.length > 0) {
-                    return this.putCircle(circles, circle, ++this.putCircleLoops);
+                    return this.putCircle(circles, circle, ++this.putCircleLoops, initialPosition);
                 }
             }
             console.log('putCircle loops: ' + this.putCircleLoops);
-            return circle;
+            circle.move(initialPosition);
+            return coordinates;
         }
     };
 

@@ -27,7 +27,6 @@ define([
         this.shape = new createjs.Shape();
         this.shape.graphics.beginStroke(color[1]);
         this.shape.graphics.rf(color, [0.1, 0.8], 0, 0, radius / 2, 0, 0, radius).drawCircle(0, 0, radius);
-        //this.shape.graphics.beginFill(color[0]).drawCircle(0, 0, radius);
         this.shape.set({radius: radius});
 
         this.id = this.shape.id;
@@ -64,6 +63,10 @@ define([
             };
         },
 
+        getColor: function () {
+            return this.color;
+        },
+
         /**
          * Get radius
          *
@@ -88,8 +91,15 @@ define([
          * @param coordinates
          */
         move: function (coordinates) {
+            console.log('move', coordinates);
             this.shape.x = coordinates.x;
             this.shape.y = coordinates.y;
+        },
+
+        moveSmooth: function (coordinates, speed) {
+            console.log(this.shape.x, this.shape.y);
+            console.log('moveSmooth', coordinates);
+            createjs.Tween.get(this.shape).to({x: coordinates.x, y: coordinates.y}, speed || 100, createjs.Ease.cubicIn());
         },
 
         /**

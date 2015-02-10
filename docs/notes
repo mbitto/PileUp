@@ -4,6 +4,9 @@ TODO:
 - Creare nuovi circle durante il push ed il pop [OK]
 - Aggiungere dati sull'andamento del gioco (punteggio fittizio)
 
+- Gestire i controlli di sovrapposizione senza muovere esplicitamente le pedine
+- Gestire movimenti fluidi in ingresso (nuove pedine)
+- Gestire movimenti fluidi al pop
 
 
 

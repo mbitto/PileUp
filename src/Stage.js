@@ -8,41 +8,55 @@ define([
 
     "use strict";
 
-    var Stage = function Stage(game, createJSStage, width, height) {
+    var Stage = function Stage(game, createJSStage, width, height, enableTicker) {
+        this.enableTicker = enableTicker;
         this.createJSStage = createJSStage;
         this.circleFactory = new CircleFactory();
         this.positioningManager = new PositioningManager(width, height);
         this.game = game;
         this.userInteractionManager = new UserInteractionManager(this, this.game, this.positioningManager);
         this.circles = [];
+
+
+        createjs.Touch.enable(createJSStage);
+        if(this.enableTicker){
+            createjs.Ticker.setFPS(30);
+            createjs.Ticker.addEventListener("tick", createJSStage);
+        }
+
     };
 
     Stage.prototype = {
 
         update: function(){
-            this.createJSStage.update();
+            if(!this.enableTicker){
+                console.log("Stage update");
+                this.createJSStage.update();
+            }
         },
 
         start: function(){
             var startingCirclesQuantity = this.game.getStartingCirclesQuantity();
 
             // Create initial circles
-            var i;
+            var self = this,
+                i;
 
             for(i=0; i<startingCirclesQuantity; i++){
-                this.addCircle();
-                this.game.addedCircle();
+                setTimeout(function(){
+                    self.addCircle();
+                    self.game.addedCircle();
+                    self.update();
+                }, 600 * i);
             }
-
-            this.update();
         },
 
         addCircle: function(){
-            var circle = this.circleFactory.createCircle(),
+            var circle = this.circleFactory.createCircle(this.positioningManager.getRandomStartingPoint()),
                 self = this;
 
             this.circles[circle.getId()] = circle;
-            this.positioningManager.putCircle(this.circles, circle);
+            var coordinates = this.positioningManager.putCircle(this.circles, circle);
             this.createJSStage.addChild(circle.getShape());
 
             // Sort circles in order to allow correct overlapping
@@ -51,6 +65,8 @@ define([
                 if (s1.radius > s2.radius) { return -1; }
                 return 0;
             });
+
+            circle.moveSmooth(coordinates, 500);
 
             var circlesIterator = new CirclesIterator(circle);
 

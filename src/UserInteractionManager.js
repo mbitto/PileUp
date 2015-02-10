@@ -1,4 +1,4 @@
-define(['createjs'], function(createjs) {
+define(function() {
 
     "use strict";
 
@@ -19,6 +19,8 @@ define(['createjs'], function(createjs) {
 
         tap: function(e, circle, circlesIterator){
 
+            var self = this;
+
             if(circlesIterator.getHeight() == 1){ return; }
 
             // Find top circle id
@@ -27,13 +29,15 @@ define(['createjs'], function(createjs) {
                 poppedOutCircle = circle.pop();
 
             // Place circle near tower base circle
-            this.positioningManager.moveNear(this.stage.getCircles(), poppedOutCircle , oldBaseCircle);
+            poppedOutCircle.moveSmooth(this.positioningManager.moveNear(this.stage.getCircles(), poppedOutCircle , oldBaseCircle));
 
             this.game.splittedTower();
 
             // Add new Circle on stage when some circles have been splitted
-            this.stage.addCircle();
-            this.game.addedCircle();
+            setTimeout(function(){
+                self.stage.addCircle();
+                self.game.addedCircle();
+            }, 300);
         },
 
         release: function(e, circle, circlesIterator){
@@ -49,8 +53,10 @@ define(['createjs'], function(createjs) {
                     this.game.mergedTower();
 
                     // Add new Circle on stage when some circles have been merged
-                    this.stage.addCircle();
-                    this.game.addedCircle();
+                    setTimeout(function() {
+                        self.stage.addCircle();
+                        self.game.addedCircle();
+                    }, 300);
 
                     // TODO: refactor this part
                     if(this.game.isCirclesLimitReached(this.stage.getCircles().length)){
@@ -64,11 +70,11 @@ define(['createjs'], function(createjs) {
                         circlesIterator.forEachCircleInTower(function(circle){
                             self.stage.removeCircle(circle);
                         });
-                        this.game.doneTower();
+                        this.game.doneTower(collidingCirclesBase.getCoordinates());
                     }
                 }
                 else {
-                    this.positioningManager.moveNear(this.stage.getCircles(), collidingCircles[1], collidingCircles[0]);
+                    collidingCircles[1].moveSmooth(this.positioningManager.moveNear(this.stage.getCircles(), collidingCircles[1], collidingCircles[0]));
                 }
             }
         }

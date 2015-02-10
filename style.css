@@ -21,3 +21,7 @@ html, body{
 .info-bar span{
     margin-right: 20px;
 }
+
+.praise-message{
+    position: absolute;
+}

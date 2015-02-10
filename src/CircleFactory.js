@@ -11,9 +11,10 @@ define([
 
     CircleFactory.prototype = {
 
-        createCircle: function(){
+        createCircle: function(startingPoint){
             var shape = this.circleShapeGenerator.getCircleRandomFeatures();
-            return new Circle(shape.color, shape.radius);
+            console.log(startingPoint);
+            return new Circle(shape.color, shape.radius, startingPoint);
         }
     };
     return CircleFactory;

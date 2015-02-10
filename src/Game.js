@@ -1,8 +1,11 @@
-define(function() {
+define([
+    'src/utils'
+], function(utils) {
 
     "use strict";
 
     var Game = function Game(information, sound) {
+        this.praiseMessages = ['Well done!', 'Great!', 'Good one!', 'Good!', 'Nice one!', 'Wow!'];
         this.information = information;
         this.sound = sound;
         this.startingCirclesQuantity = 3;
@@ -25,11 +28,15 @@ define(function() {
 
         addedCircle: function(){
             this.information.incrementCirclesCounter();
+            var randomPraiseMessage = this.praiseMessages[utils.getRandomInt(0, this.praiseMessages.length - 1)];
         },
 
-        doneTower: function () {
+        doneTower: function (towerposition) {
             this.information.incrementTowersCounter();
             this.information.decrementCirclesCounter(this.maxCirclesPerTower);
+
+            var randomPraiseMessage = this.praiseMessages[utils.getRandomInt(0, this.praiseMessages.length - 1)];
+            this.information.displayPraiseMessage(randomPraiseMessage, '#fff', towerposition.x, towerposition.y);
             this.sound.playWin();
         },
 
