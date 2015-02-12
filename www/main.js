@@ -32,6 +32,7 @@ requirejs.config({
 // Start the main app logic
 requirejs([
     'createjs',
+    'tweenjs',
     'src/Stage',
     'src/Game',
     'src/Canvas',
@@ -40,7 +41,7 @@ requirejs([
     'src/Sound'
 ],
 
-function(createjs, Stage, Game, Canvas, GameInfo, Information, Sound){
+function(createjs, tweenjs, Stage, Game, Canvas, GameInfo, Information, Sound){
 
     "use strict";
 
