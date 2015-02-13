@@ -16,3 +16,5 @@ TODO:
 - Far tornare il circle al punto di partenza se il merge non è fattibile
 
 - strutturare il gioco su più livelli aggiungendo il fattore tempo (n towers entro n secondi con altezza della tower variabile)
+
+- Fare build della versione da deployare escludendo i pacchetti dev
