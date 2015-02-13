@@ -1,0 +1,20 @@
+MOBILE APP (samsung s3)
+
+- Il circle blurred non si vede bene nel mobile
+- Il circle sovrapposto tende a vedersi sia sopra che sotto al circle di riferimento (legato al blurred?)
+- Il singolo tap viene percepito dal dispositivo come multiplo
+- Dopo un tap, sebbene sia stato fatto il pop di un solo circle, ne vengono lanciati in gioco ~3, invece che uno
+  solo
+- Dopo aver spostato un circle, toccando da un altro punto sullo schermo il circle viene spostato immediatamente
+  in quel punto
+- I circle vengono posizionati dal gioco anche parzialmente fuori dall'area di gioco
+- Durante la prima mossa non si riesce a selezionare il circle voluto, l'effetto è quello
+  di un tentativo di scrollare l'area di gioco ("effetto ombra di fine pagina" di Android)
+- A volte il gioco inizia con un elemento in più nell'angolo in alto a sinistra (non conteggiato dal gioco)
+- L'effetto di distribuzione dei circle iniziale non si vede o si vede solo alla fine
+- L'area del gioco è leggermente più grande rispetto al device
+
+BROWSER PC
+
+- A volte i circle vengono posizionati dal gioco già parzialmente sovrapposti
+- I cerchietti vengono lanciati sempre dallo stesso angolo

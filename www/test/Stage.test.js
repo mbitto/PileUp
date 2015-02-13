@@ -29,12 +29,6 @@ define([
                 });
             });
 
-            it('should update the stage', function(){
-                stage.update();
-                //TODO: change assert with should or expect (everywhere in tests)
-                assert.ok(createJsStageMock.update.calledOnce);
-            });
-
 
             it('should add a circle on stage', function(){
             });

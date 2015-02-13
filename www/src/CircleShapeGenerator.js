@@ -17,13 +17,13 @@ define([
      */
     var CircleShapeGenerator = function CircleShapeGenerator(repeatLimit) {
 
-        var RED = ["#FF0000", "#D40000"],
-            ORANGE = ["#FF7F00", "#CF6700"],
-            YELLOW = ["#FFFF00", "#DEDE00"],
-            GREEN = ["#00FF00", "#00D900"],
-            BLUE = ["#0000FF", "#0000C9"],
-            INDIGO = ["#5A00FF", "#4700C9"],
-            VIOLET = ["#7F00FF", "#6700CF"];
+        var RED = "#FF0000",
+            ORANGE = "#FF7F00",
+            YELLOW = "#FFFF00",
+            GREEN = "#00FF00",
+            BLUE = "#0000FF",
+            INDIGO = "#5A00FF",
+            VIOLET = "#7F00FF";
 
         /**
          * @access private

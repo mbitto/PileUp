@@ -24,8 +24,8 @@ define([
         this.color = color;
         this.radius = radius;
         this.shape = new createjs.Shape();
-        this.shape.graphics.beginStroke(color[1]);
-        this.shape.graphics.rf(color, [0.1, 0.8], 0, 0, radius / 2, 0, 0, radius).drawCircle(0, 0, radius);
+        this.shape.graphics.beginStroke(color);
+        this.shape.graphics.beginFill(color).drawCircle(0, 0, radius);
         this.shape.set({radius: radius});
 
         this.id = this.shape.id;
@@ -138,18 +138,6 @@ define([
          */
         onTap: function (callback) {
             this.dragAndDropManager.onTap(callback);
-        },
-
-        setBlur: function () {
-            var blurFilter = new createjs.BlurFilter(6, 6, 6);
-            this.shape.filters = [blurFilter];
-            var bounds = blurFilter.getBounds();
-            this.shape.cache(-50 + bounds.x, -50 + bounds.y, 100 + bounds.width, 100 + bounds.height);
-        },
-
-        removeBlur: function () {
-            this.shape.filters = [];
-            this.shape.updateCache();
         },
 
         /**

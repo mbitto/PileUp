@@ -8,11 +8,7 @@ define(function() {
     };
 
     UserInteractionManager.prototype = {
-        press: function (circle, e) {
-            circle.forEachCircleInTower(function(circleToBlur){
-                circleToBlur.setBlur();
-            });
-        },
+        press: function (circle, e) {},
 
         move: function(circle, e){
             circle.forEachCircleInTower(function (circleToMove) {
@@ -22,11 +18,6 @@ define(function() {
 
         tap: function(circle, e){
 
-            // Remove blur from all circles
-            circle.forEachCircleInTower(function(circleToUnblur) {
-                circleToUnblur.removeBlur();
-            });
-
             if(circle.getHeight() > 1){
                 this.game.splitTower(circle);
                 this.game.generateCircle();
@@ -34,10 +25,6 @@ define(function() {
         },
 
         release: function(circle, e){
-            circle.forEachCircleInTower(function(circleToUnblur) {
-                circleToUnblur.removeBlur();
-            });
-
             var collidingCircles = this.stage.detectCollision(circle);
 
             if (collidingCircles.length > 0) {

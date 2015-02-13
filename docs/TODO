@@ -1,0 +1,18 @@
+TODO:
+- creare repulsione ravvicinata [OK]
+- Accettare input dell'utente  [OK]
+- Creare nuovi circle durante il push ed il pop [OK]
+- Aggiungere dati sull'andamento del gioco (punteggio fittizio) [ok]
+- Gestire i controlli di sovrapposizione senza muovere esplicitamente le pedine [ok]
+- Gestire movimenti fluidi in ingresso (nuove pedine) [ok]
+- Gestire movimenti fluidi al pop [ok]
+
+
+
+13/02/2015
+- Creare linee tratteggiate da un cerchio all'altro e poi unire i circle solo se il merge è fattibile.
+- Creare un cerchio concentrico più ampio attorno al circle di partenza e a quello di arrivo.
+- Colorare la combinazione di cerchi e linee di verde se il merge è fattibile o di rosso se non lo è.
+- Far tornare il circle al punto di partenza se il merge non è fattibile
+
+- strutturare il gioco su più livelli aggiungendo il fattore tempo (n towers entro n secondi con altezza della tower variabile)
