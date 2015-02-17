@@ -20,7 +20,7 @@ define(function() {
 
             if(circle.getHeight() > 1){
                 this.game.splitTower(circle);
-                this.game.generateCircle();
+                this.game.generateCircle("down");
             }
         },
 
@@ -34,7 +34,7 @@ define(function() {
 
                 if (collidingCirclesBase.canBeMergedWith(movingCirclesBase)) {
                     this.game.mergeCircles(collidingCirclesBase, movingCirclesBase);
-                    this.game.generateCircle();
+                    this.game.generateCircle("up");
                 }
                 else {
                     this.stage.moveCircleCloseTo(movingCirclesBase, collidingCirclesBase);

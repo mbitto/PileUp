@@ -16,23 +16,20 @@ define([
         this.putCircleLoops = 0;
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
-        this.randomStartingPoints = [
-            {x: -100, y: -100},                             // Top left
-            {x: canvasWidth / 2, y: -100},                  // Top center
-            {x: canvasWidth + 100, y:-100},                 // Top right
-            {x: -100, y: canvasHeight / 2},                 // Middle right
-            {x: canvasWidth + 100, y: canvasHeight / 2},    // Bottom right
-            {x: -100, y: canvasHeight + 100},               // Bottom center
-            {x: canvasWidth / 2 , y: canvasHeight + 100},   // Bottom left
-            {x: canvasWidth + 100, y: canvasHeight + 100 }  // Middle left
-        ];
+        this.topLeftStartingPoint = {x: -100, y: -100};
+        this.bottomStartingPoint = {x: -100, y: canvasHeight + 100};
+        this.bottomRightStartingPoint = {x: canvasWidth + 100, y: canvasHeight / 2};
+        this.topStartingPoint = {x: canvasWidth / 2, y: -100};
     };
 
     PositioningManager .prototype = {
 
-        getRandomStartingPoint: function () {
-            var randomInt = utils.getRandomInt(0, this.randomStartingPoints.length - 1);
-            return this.randomStartingPoints[randomInt];
+        getTopStartingPosition: function () {
+            return this.topLeftStartingPoint;
+        },
+
+        getBottomStartingPosition: function () {
+            return this.bottomStartingPoint;
         },
 
         /**
@@ -67,9 +64,7 @@ define([
          * @param {Circle} circleToMove
          * @param {Circle} baseCircleReference
          */
-        moveNear: function (allCircles, circleToMove, baseCircleReference) {
-
-            // To create (1;0), (0;-1), (-1;0), (0;1) couples
+        getFreePositionNear: function (allCircles, circleToMove, baseCircleReference) {
             var availableMovements = [1, 0.5, 0, -0.5, -1, -0.5, 0, 0.5],
                 stop = false,
                 baseCircleReferenceShape = baseCircleReference.getShape(),
@@ -97,7 +92,7 @@ define([
                     }
                     // If new position is out of canvas put it randomly
                     if(newXPosition > this.canvasWidth || newYPosition > this.canvasHeight){
-                        this.putCircle(allCircles, circleToMove);
+                        this.getFreeRandomPosition(allCircles, circleToMove);
                     }
                 }
                 if(stop){
@@ -111,7 +106,7 @@ define([
 
         // FIXME: Buggy (too much loops) when there are many circles
         // Get coordinates avoiding circle collisions
-        putCircle: function (circles, circle, putCircleLoops, _initialPosition) {
+        getFreeRandomPosition: function (circles, circle, putCircleLoops, _initialPosition) {
 
             this.putCircleLoops = putCircleLoops || 0;
 
@@ -127,10 +122,10 @@ define([
                 collidingCircles = this.detectCollision(circles, circle);
 
                 if (collidingCircles.length > 0) {
-                    return this.putCircle(circles, circle, ++this.putCircleLoops, initialPosition);
+                    return this.getFreeRandomPosition(circles, circle, ++this.putCircleLoops, initialPosition);
                 }
             }
-            console.log('putCircle loops: ' + this.putCircleLoops);
+            console.log('getFreeRandomPosition loops: ' + this.putCircleLoops);
             circle.move(initialPosition);
             return coordinates;
         }

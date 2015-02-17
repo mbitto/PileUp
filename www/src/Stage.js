@@ -13,9 +13,17 @@ define([
 
     Stage.prototype = {
 
-        addCircle: function(circle, callback){
+        addCircle: function(initialPosition, circle, callback){
+            var startingPosition;
+            if(initialPosition === "up"){
+                startingPosition = this.positioningManager.getTopStartingPosition();
+            }
+            else{
+                startingPosition = this.positioningManager.getBottomStartingPosition();
+            }
+            circle.move(startingPosition);
             this.circles[circle.getId()] = circle;
-            var coordinates = this.positioningManager.putCircle(this.circles, circle);
+            var coordinates = this.positioningManager.getFreeRandomPosition(this.circles, circle);
             this.createJSStage.addChild(circle.getShape());
 
             // Sort circles in order to allow correct overlapping
@@ -34,7 +42,7 @@ define([
         },
 
         moveCircleCloseTo: function (circleToMove, circleReference) {
-            var coordinates = this.positioningManager.moveNear(this.circles, circleToMove, circleReference);
+            var coordinates = this.positioningManager.getFreePositionNear(this.circles, circleToMove, circleReference);
             circleToMove.moveSmooth(coordinates, config.POP_CIRCLE_ANIMATION_SPEED);
         },
 

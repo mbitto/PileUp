@@ -19,17 +19,18 @@ define([
                 index = 1,
                 self = this;
 
-            this.generateCircle(function r(){
+            this.generateCircle("up", function r(){
                 if(index < startingCirclesQuantity) {
-                    self.generateCircle(r);
+                    self.generateCircle("up", r);
                 }
                 index++;
             });
 
         },
 
-        generateCircle: function (callback) {
-            this.stage.addCircle(this.circleFactory.createCircle(this.userInteractionManager), callback);
+        generateCircle: function (initialPosition, callback) {
+            var circle = this.circleFactory.createCircle(this.userInteractionManager);
+            this.stage.addCircle(initialPosition, circle, callback);
             this.gameInfo.addedCircle();
         },
 

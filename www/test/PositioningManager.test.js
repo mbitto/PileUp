@@ -36,13 +36,13 @@ define([
             });
         });
 
-        describe('#moveNear', function(){
+        describe('#getFreePositionNear', function(){
             it('should move the circle near the base circle', function(){
                 var movingCircleRadius = 40,
                     movingCircle = new Circle('#ff0000', movingCircleRadius, {x:110, y:110}),
                     referenceCircle = new Circle('#ff0000', movingCircleRadius, {x:500, y:500});
 
-                positioningManager.moveNear(allCircles, movingCircle, referenceCircle);
+                positioningManager.getFreePositionNear(allCircles, movingCircle, referenceCircle);
                 assert.isTrue(movingCircle.getCoordinates().x - referenceCircle.getCoordinates().x <= movingCircleRadius * 2);
                 assert.isTrue(movingCircle.getCoordinates().y - referenceCircle.getCoordinates().y <= movingCircleRadius * 2);
             });

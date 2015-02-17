@@ -17,15 +17,15 @@ define([
      * @constructor
      * @param {string} color
      * @param {number} radius
-     * @param {{x:*, y:*}} coordinates
      */
-    var Circle = function Circle(color, radius, coordinates) {
+    var Circle = function Circle(color, radius) {
 
         this.color = color;
         this.radius = radius;
         this.shape = new createjs.Shape();
         this.shape.graphics.beginStroke(color);
         this.shape.graphics.beginFill(color).drawCircle(0, 0, radius);
+
         this.shape.set({radius: radius});
 
         this.id = this.shape.id;
@@ -33,12 +33,6 @@ define([
         this.upperCircle = this;
 
         this.dragAndDropManager = new CircleDragAndDropManager(this.shape);
-
-        if(coordinates){
-            this.shape.x = coordinates.x;
-            this.shape.y = coordinates.y;
-        }
-
         this.circlesIterator = new CirclesIterator(this);
     };
 

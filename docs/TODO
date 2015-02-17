@@ -10,10 +10,11 @@ TODO:
 
 
 13/02/2015
-- Creare linee tratteggiate da un cerchio all'altro e poi unire i circle solo se il merge è fattibile.
 - Creare un cerchio concentrico più ampio attorno al circle di partenza e a quello di arrivo.
+- Creare una linea possibilmente tratteggiata da un cerchio all'altro
 - Colorare la combinazione di cerchi e linee di verde se il merge è fattibile o di rosso se non lo è.
 - Far tornare il circle al punto di partenza se il merge non è fattibile
+- lanciare un nuovo circle dall'alto in caso di merge e dal basso in caso di pop [OK]
 
 - strutturare il gioco su più livelli aggiungendo il fattore tempo (n towers entro n secondi con altezza della tower variabile)
 
