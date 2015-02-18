@@ -1,7 +1,8 @@
 define([
+    'createjs',
     'src/PositioningManager',
     'src/config'
-],function(PositioningManager, config){
+],function(createjs, PositioningManager, config){
 
     "use strict";
 
@@ -48,6 +49,10 @@ define([
 
         detectCollision: function(movingCircle){
             return this.positioningManager.detectCollision(this.circles, movingCircle);
+        },
+
+        addChild: function(child){
+            this.createJSStage.addChild(child);
         },
 
         update: function(){

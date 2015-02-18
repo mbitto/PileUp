@@ -8,8 +8,9 @@
 define([
     'createjs',
     'src/CircleDragAndDropManager',
-    'src/CirclesIterator'
-], function (createjs, CircleDragAndDropManager, CirclesIterator) {
+    'src/CirclesIterator',
+    'src/config'
+], function (createjs, CircleDragAndDropManager, CirclesIterator, config) {
 
     "use strict";
 
@@ -22,17 +23,24 @@ define([
 
         this.color = color;
         this.radius = radius;
-        this.shape = new createjs.Shape();
-        this.shape.graphics.beginStroke(color);
-        this.shape.graphics.beginFill(color).drawCircle(0, 0, radius);
 
-        this.shape.set({radius: radius});
+        this.container = new createjs.Container();
 
-        this.id = this.shape.id;
+        this.circleShape = new createjs.Shape();
+        this.circleShape.graphics.beginStroke(color);
+        this.circleShape.graphics.beginFill(color).drawCircle(0, 0, radius);
+
+        this.outerCircleShape = new createjs.Shape();
+
+        this.container.addChild(this.circleShape, this.outerCircleShape);
+
+        this.container.set({radius: radius});
+
+        this.id = this.container.id;
         this.baseCircle = this;
         this.upperCircle = this;
 
-        this.dragAndDropManager = new CircleDragAndDropManager(this.shape);
+        this.dragAndDropManager = new CircleDragAndDropManager(this.circleShape);
         this.circlesIterator = new CirclesIterator(this);
     };
 
@@ -53,8 +61,8 @@ define([
          */
         getCoordinates: function () {
             return {
-                x: this.shape.x,
-                y: this.shape.y
+                x: this.container.x,
+                y: this.container.y
             };
         },
 
@@ -77,7 +85,19 @@ define([
          * @returns {createjs.Shape}
          */
         getShape: function(){
-            return this.shape;
+            return this.container;
+        },
+
+        showOutlineCircle: function () {
+            this.outerCircleShape.graphics.
+                setStrokeStyle(config.OUTLINE_CIRCLE_STROKE).
+                beginStroke(config.OUTLINE_CIRCLE_COLOR);
+
+            this.outerCircleShape.graphics.drawCircle(0, 0, config.OUTLINE_CIRCLE_RADIUS);
+        },
+
+        hideOutlineCircle: function () {
+            this.outerCircleShape.graphics.clear();
         },
 
         /**
@@ -86,8 +106,8 @@ define([
          * @param coordinates
          */
         move: function (coordinates) {
-            this.shape.x = coordinates.x;
-            this.shape.y = coordinates.y;
+            this.container.x = coordinates.x;
+            this.container.y = coordinates.y;
         },
 
         moveSmooth: function (coordinates, speed, callback) {
@@ -95,7 +115,7 @@ define([
                 callback = callback || function(){},
                 ease = createjs.Ease.cubicIn();
 
-            createjs.Tween.get(this.shape).to(coords, speed, ease).call(callback);
+            createjs.Tween.get(this.container).to(coords, speed, ease).call(callback);
         },
 
         /**

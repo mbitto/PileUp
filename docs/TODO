@@ -10,8 +10,8 @@ TODO:
 
 
 13/02/2015
-- Creare un cerchio concentrico più ampio attorno al circle di partenza e a quello di arrivo.
-- Creare una linea possibilmente tratteggiata da un cerchio all'altro
+- Creare un cerchio concentrico più ampio attorno al circle di partenza [OK]
+- Creare una linea possibilmente tratteggiata che indica la traiettoria del cerchio [OK]
 - Colorare la combinazione di cerchi e linee di verde se il merge è fattibile o di rosso se non lo è.
 - Far tornare il circle al punto di partenza se il merge non è fattibile
 - lanciare un nuovo circle dall'alto in caso di merge e dal basso in caso di pop [OK]
@@ -19,3 +19,13 @@ TODO:
 - strutturare il gioco su più livelli aggiungendo il fattore tempo (n towers entro n secondi con altezza della tower variabile)
 
 - Fare build della versione da deployare escludendo i pacchetti dev
+
+
+
+
+stage   lineMgr(stage, line)    line
+
+
+        lineMgr->setLine
+        lineMgr->extendLine
+        lineMgr->removeLine
