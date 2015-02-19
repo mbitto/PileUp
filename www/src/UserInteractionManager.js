@@ -15,9 +15,13 @@ define([
 
     UserInteractionManager.prototype = {
         press: function (circle, e) {
+            var self = this;
             circle.showOutlineCircle();
 
-            this.stage.moveZIndexUp(circle, this.stage.getChildrenNumber() - 1);
+            circle.forEachCircleInTower(function(circleToMoveUp){
+                self.stage.moveZIndexUp(circleToMoveUp, self.stage.getChildrenNumber() - 1);
+            });
+
             this.stage.moveZIndexUp(this.line, this.stage.getChildrenNumber() - 2);
 
             var circleCoordinates = circle.getCoordinates();
@@ -32,18 +36,22 @@ define([
         },
 
         tap: function(circle, e){
+            var self = this;
             this.lineManager.removeLine();
             circle.hideOutlineCircle();
             if(circle.getHeight() > 1){
-                this.game.splitTower(circle);
-                this.game.generateCircle("down");
+                this.game.splitTower(circle, function(){
+                    self.game.generateCircle("down");
+                });
             }
         },
 
         release: function(circle, e){
+            var self = this,
+                collidingCircles = this.stage.detectCollision(circle);
+
             this.lineManager.removeLine();
             circle.hideOutlineCircle();
-            var collidingCircles = this.stage.detectCollision(circle);
 
             if (collidingCircles.length > 0) {
 
@@ -55,7 +63,10 @@ define([
                     this.game.generateCircle("up");
                 }
                 else {
-                    circle.moveSmooth(this.lineManager.getLineStartingPoint(), config.POP_CIRCLE_ANIMATION_SPEED);
+                    circle.forEachCircleInTower(function (circleToMove) {
+                        var startingPoint = self.lineManager.getLineStartingPoint();
+                        circleToMove.moveSmooth(startingPoint, config.POP_CIRCLE_ANIMATION_SPEED);
+                    });
                 }
             }
         }

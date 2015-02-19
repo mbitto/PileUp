@@ -14,8 +14,8 @@ define([
      */
     var PositioningManager = function PositioningManager(canvasWidth, canvasHeight){
         this.putCircleLoops = 0;
-        this.canvasWidth = canvasWidth;
-        this.canvasHeight = canvasHeight;
+        this.gameCanvasWidth = canvasWidth - 50;
+        this.gameCanvasHeight = canvasHeight - 50;
         this.topLeftStartingPoint = {x: -100, y: -100};
         this.bottomStartingPoint = {x: -100, y: canvasHeight + 100};
         this.bottomRightStartingPoint = {x: canvasWidth + 100, y: canvasHeight / 2};
@@ -86,12 +86,14 @@ define([
                         y: newYPosition
                     });
 
-                    if(this.detectCollision(allCircles, circleToMove).length == 0){
+                    if(this.detectCollision(allCircles, circleToMove).length == 0 &&
+                        !(newXPosition > this.gameCanvasWidth || newYPosition > this.gameCanvasHeight)
+                    ){
                         stop = true;
                         break;
                     }
                     // If new position is out of canvas put it randomly
-                    if(newXPosition > this.canvasWidth || newYPosition > this.canvasHeight){
+                    if(newXPosition > this.gameCanvasWidth || newYPosition > this.gameCanvasHeight){
                         this.getFreeRandomPosition(allCircles, circleToMove);
                     }
                 }
@@ -110,8 +112,8 @@ define([
 
             this.putCircleLoops = putCircleLoops || 0;
 
-            var xMaxDistance = this.canvasWidth - (circle.getRadius() * 2),
-                yMaxDistance = this.canvasHeight - (circle.getRadius() * 2),
+            var xMaxDistance = this.gameCanvasWidth - (circle.getRadius() * 2),
+                yMaxDistance = this.gameCanvasHeight - (circle.getRadius() * 2),
                 coordinates = utils.getRandomCoordinates(50, xMaxDistance, yMaxDistance),
                 initialPosition = _initialPosition || circle.getCoordinates(),
                 i, collidingCircles;

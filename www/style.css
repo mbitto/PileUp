@@ -3,12 +3,13 @@ html{
 }
 html, body{
     margin: 0;
+    -webkit-transform: translate3d(0, 0, 0);
     background-color: #111;
+    height: 100%;
 }
 #canvas{
     background-color:#111;
     height: 100%;
-    -webkit-transform: translate3d(0, 0, 0);
 }
 .info-bar{
     position: absolute;

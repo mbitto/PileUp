@@ -34,7 +34,7 @@ define([
             this.gameInfo.addedCircle();
         },
 
-        splitTower: function (circle) {
+        splitTower: function (circle, callback) {
 
             // Find top circle id
             var baseCircle = circle.getBaseCircle(),
@@ -42,7 +42,7 @@ define([
                 poppedCircle = circle.pop();
 
             // Place circle near tower base circle
-            this.stage.moveCircleCloseTo(poppedCircle, baseCircle);
+            this.stage.moveCircleCloseTo(poppedCircle, baseCircle, callback);
 
             this.gameInfo.splittedTower();
         },

@@ -1,12 +1,14 @@
 BROWSER PC
 
-- A volte i circle vengono posizionati dal gioco già parzialmente sovrapposti
-- I cerchietti vengono lanciati sempre dallo stesso angolo
+- A volte i circle vengono posizionati dal gioco già parzialmente sovrapposti [OK]
+- I cerchietti vengono lanciati sempre dallo stesso angolo [OK]
+- Spostamento del solo scerchio supoeriore nel go-back [OK]
+- intersecamento di cerchi quando muovo una torre su un pezzo che potrebbe essere intermedio in essa [OK]
 
 MOBILE APP (samsung s3)
 
 - Il circle blurred non si vede bene nel mobile [Tolto blurred]
-- I circle vengono posizionati dal gioco anche parzialmente fuori dall'area di gioco
+- I circle vengono posizionati dal gioco anche parzialmente fuori dall'area di gioco [OK]
 - L'effetto di distribuzione dei circle iniziale non si vede o si vede solo alla fine
 
 

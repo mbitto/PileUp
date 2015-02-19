@@ -49,9 +49,9 @@ define([
             this.createJSStage.setChildIndex(shape.getShape(), index);
         },
 
-        moveCircleCloseTo: function (circleToMove, circleReference) {
+        moveCircleCloseTo: function (circleToMove, circleReference, callback) {
             var coordinates = this.positioningManager.getFreePositionNear(this.circles, circleToMove, circleReference);
-            circleToMove.moveSmooth(coordinates, config.POP_CIRCLE_ANIMATION_SPEED);
+            circleToMove.moveSmooth(coordinates, config.POP_CIRCLE_ANIMATION_SPEED, callback);
         },
 
         detectCollision: function(movingCircle){
