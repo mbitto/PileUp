@@ -26,20 +26,27 @@ define([
             this.circles[circle.getId()] = circle;
             var coordinates = this.positioningManager.getFreeRandomPosition(this.circles, circle);
             this.createJSStage.addChild(circle.getShape());
-
-            // Sort circles in order to allow correct overlapping
-            this.createJSStage.sortChildren(function (s1, s2) {
-                if (s1.radius < s2.radius) { return 1; }
-                if (s1.radius > s2.radius) { return -1; }
-                return 0;
-            });
-
+            this.sortCircles();
             circle.moveSmooth(coordinates, config.NEW_CIRCLE_ANIMATION_SPEED, callback);
         },
 
         removeCircle: function(circle){
             this.createJSStage.removeChild(circle.getShape());
             delete this.circles[circle.getId()];
+        },
+
+        sortCircles: function () {
+            console.log("sort children");
+            // Sort circles in order to allow correct overlapping
+            this.createJSStage.sortChildren(function (s1, s2) {
+                if (s1.radius < s2.radius) { return 1; }
+                if (s1.radius > s2.radius) { return -1; }
+                return 0;
+            });
+        },
+
+        moveZIndexUp: function (shape, index) {
+            this.createJSStage.setChildIndex(shape.getShape(), index);
         },
 
         moveCircleCloseTo: function (circleToMove, circleReference) {
@@ -57,6 +64,10 @@ define([
 
         update: function(){
             this.createJSStage.update();
+        },
+
+        getChildrenNumber: function () {
+            return this.createJSStage.numChildren;
         }
     };
 

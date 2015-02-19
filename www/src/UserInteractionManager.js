@@ -16,8 +16,12 @@ define([
     UserInteractionManager.prototype = {
         press: function (circle, e) {
             circle.showOutlineCircle();
+
+            this.stage.moveZIndexUp(circle, this.stage.getChildrenNumber() - 1);
+            this.stage.moveZIndexUp(this.line, this.stage.getChildrenNumber() - 2);
+
             var circleCoordinates = circle.getCoordinates();
-            this.lineManager.setLineStartingPoint(circleCoordinates.x, circleCoordinates.y)
+            this.lineManager.setLineStartingPoint(circleCoordinates.x, circleCoordinates.y);
         },
 
         move: function(circle, e){
