@@ -17,6 +17,10 @@ define([
             this.startingPointY = y;
         },
 
+        getStartingPoint: function () {
+            return { x: this.startingPointX, y: this.startingPointY };
+        },
+
         extendTo: function (x, y) {
             this.lineShape.graphics.clear();
             this.lineShape.graphics.setStrokeStyle(1).beginStroke("lime");

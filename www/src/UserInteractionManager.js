@@ -1,7 +1,8 @@
 define([
     'src/Line',
-    'src/LineManager'
-], function(Line, LineManager) {
+    'src/LineManager',
+    'src/config'
+], function(Line, LineManager, config) {
 
     "use strict";
 
@@ -50,7 +51,7 @@ define([
                     this.game.generateCircle("up");
                 }
                 else {
-                    this.stage.moveCircleCloseTo(movingCirclesBase, collidingCirclesBase);
+                    circle.moveSmooth(this.lineManager.getLineStartingPoint(), config.POP_CIRCLE_ANIMATION_SPEED);
                 }
             }
         }

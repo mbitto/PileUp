@@ -13,6 +13,10 @@ define(function () {
             this.line.setStartingPoint(x, y);
         },
 
+        getLineStartingPoint: function () {
+            return this.line.getStartingPoint();
+        },
+
         extendLineTo: function (x, y) {
             console.log('extendLineTo');
             this.line.extendTo(x, y);
