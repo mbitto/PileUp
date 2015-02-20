@@ -11,6 +11,8 @@ define([
         this.stage = stage;
         this.line = new Line(5);
         this.lineManager = new LineManager(stage, this.line);
+        this.minimumTimeBetweenTaps = 1000;
+        this.lastTapTimestamp = 0;
     };
 
     UserInteractionManager.prototype = {
@@ -35,11 +37,16 @@ define([
             this.lineManager.extendLineTo(e.stageX, e.stageY);
         },
 
-        tap: function(circle, e){
-            var self = this;
+        tap: function(circle, e) {
+
+            var self = this,
+                upTimestamp = Date.now();
+
             this.lineManager.removeLine();
             circle.hideOutlineCircle();
-            if(circle.getHeight() > 1){
+
+            if(circle.getHeight() > 1 && upTimestamp - this.lastTapTimestamp > this.minimumTimeBetweenTaps){
+                this.lastTapTimestamp = upTimestamp;
                 this.game.splitTower(circle, function(){
                     self.game.generateCircle("down");
                 });

@@ -19,10 +19,12 @@ define(function () {
         shape.addEventListener("mousedown", function(e){
             downTimestamp = Date.now();
             self.onPressCallbacks.forEach(function(callback){callback(e);});
+            console.log("press");
         });
         shape.addEventListener("pressmove", function(e){
             wasMoved = true;
             self.onMoveCallbacks.forEach(function(callback){callback(e);});
+            console.log("move");
         });
         shape.addEventListener("pressup", function(e){
             upTimestamp = Date.now();
@@ -30,9 +32,11 @@ define(function () {
 
             if(wasMoved && downTime > dragAndDropMinimumTime){
                 self.onReleaseCallbacks.forEach(function(callback){callback(e);});
+                console.log("release");
             }
             else{
                 self.onTapCallbacks.forEach(function(callback){callback(e);});
+                console.log("tap");
             }
         });
     };
