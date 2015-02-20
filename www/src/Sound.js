@@ -3,6 +3,8 @@ define([
     'soundjs'
 ],function(createjs) {
 
+    "use strict";
+
     var Sound = function Sound() {
         this.audioPath = "./assets/";
         this.mergeSound = {id: "merge", src: "merge.ogg"};

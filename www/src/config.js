@@ -1,5 +1,6 @@
 define(function() {
     return {
+        SPLASH_SCREEN_DURATION: 5000,
         OUTLINE_CIRCLE_COLOR: "lime",
         OUTLINE_CIRCLE_STROKE: 2,
         OUTLINE_CIRCLE_RADIUS: 50,

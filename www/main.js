@@ -38,14 +38,15 @@ requirejs([
     'src/Canvas',
     'src/GameInfo',
     'src/Information',
-    'src/Sound'
+    'src/Sound',
+    'src/config'
 ],
 
-function(createjs, tweenjs, Stage, Game, Canvas, GameInfo, Information, Sound){
+function(createjs, tweenjs, Stage, Game, Canvas, GameInfo, Information, Sound, config){
 
     "use strict";
 
-    var htmlCanvasElement = document.getElementById('canvas'),
+    var htmlCanvasElement = document.querySelector('#canvas'),
         canvas = new Canvas(htmlCanvasElement),
         createJSStage = new createjs.Stage(htmlCanvasElement),
         gameInfo = new GameInfo(new Information('circlesQuantity', 'towersCompleted'), new Sound()),
@@ -54,7 +55,12 @@ function(createjs, tweenjs, Stage, Game, Canvas, GameInfo, Information, Sound){
 
     createjs.Touch.enable(createJSStage);
     createjs.Ticker.setFPS(30);
-    createjs.Ticker.addEventListener("tick", createJSStage);
+    createjs.Ticker.addEventListener('tick', createJSStage);
 
-    game.start();
+    setTimeout(function(){
+        document.querySelector('.splash').style.display = 'none';
+        setTimeout(function () {
+            game.start();
+        }, 1000);
+    }, config.SPLASH_SCREEN_DURATION);
 });

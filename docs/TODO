@@ -17,6 +17,8 @@ TODO:
 
 - Colorare la combinazione di cerchi e linee di verde se il merge è fattibile o di rosso se non lo è.
 
+- Aggiungere spash screen e istruzioni
+
 - strutturare il gioco su più livelli aggiungendo il fattore tempo (n towers entro n secondi con altezza della tower variabile)
 
 - Fare build della versione da deployare escludendo i pacchetti dev

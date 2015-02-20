@@ -6,6 +6,7 @@ html, body{
     -webkit-transform: translate3d(0, 0, 0);
     background-color: #111;
     height: 100%;
+    overflow: hidden;
 }
 #canvas{
     background-color:#111;
@@ -26,4 +27,24 @@ html, body{
 
 .praise-message{
     position: absolute;
+}
+
+.splash{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: #111;
+    z-index: 100;
+}
+
+.splash div{
+    text-align: center;
+    color: lime;
+    font-size: 4em;
+    margin-top: 30%;
+}
+
+.splash img{
+    margin-top: 15px;
+    margin-left: 15px;
 }

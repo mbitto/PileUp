@@ -8,10 +8,10 @@ define([
         this.towersCompleted = 0;
         this.circlesCounter = 0;
 
-        this.circlesCounterElement = document.getElementsByClassName(circlesClass)[0];
+        this.circlesCounterElement = document.querySelector('.' + circlesClass);
         this.circlesCounterElement.textContent = "Circles : " + this.circlesCounter;
 
-        this.towersCounterElement = document.getElementsByClassName(towersClass)[0];
+        this.towersCounterElement = document.querySelector('.' + towersClass);
         this.towersCounterElement.textContent = "Towers : " + this.towersCompleted;
     };
 
@@ -40,7 +40,7 @@ define([
         },
 
         displayPraiseMessage: function (message, color, posX, posY) {
-            var praiseMessageDomElement = document.getElementsByClassName('praise-message')[0];
+            var praiseMessageDomElement = document.querySelector('.praise-message');
             praiseMessageDomElement.textContent = message;
             praiseMessageDomElement.style.color = color;
             praiseMessageDomElement.style.left = posX + 'px';

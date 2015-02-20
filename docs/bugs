@@ -9,6 +9,6 @@ MOBILE APP (samsung s3)
 
 - Il circle blurred non si vede bene nel mobile [Tolto blurred]
 - I circle vengono posizionati dal gioco anche parzialmente fuori dall'area di gioco [OK]
+- Il singolo tap viene percepito dal dispositivo come multiplo [OK]
 - L'effetto di distribuzione dei circle iniziale non si vede o si vede solo alla fine
-- Il singolo tap viene percepito dal dispositivo come multiplo
 
