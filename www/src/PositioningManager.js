@@ -4,8 +4,9 @@
  * @requires src/utils
  */
 define([
-    'src/utils'
-], function(utils){
+    'src/utils',
+    'src/config'
+], function(utils, config){
 
     "use strict";
 
@@ -14,8 +15,8 @@ define([
      */
     var PositioningManager = function PositioningManager(canvasWidth, canvasHeight){
         this.putCircleLoops = 0;
-        this.gameCanvasWidth = canvasWidth - 50;
-        this.gameCanvasHeight = canvasHeight - 50;
+        this.gameCanvasWidth = canvasWidth - config.OUTLINE_CIRCLE_RADIUS;
+        this.gameCanvasHeight = canvasHeight - config.OUTLINE_CIRCLE_RADIUS;
         this.topLeftStartingPoint = {x: -100, y: -100};
         this.bottomStartingPoint = {x: -100, y: canvasHeight + 100};
         this.bottomRightStartingPoint = {x: canvasWidth + 100, y: canvasHeight / 2};
@@ -23,6 +24,14 @@ define([
     };
 
     PositioningManager .prototype = {
+
+        inCanvas: function (circle) {
+            var coordinates = circle.getCoordinates();
+            return coordinates.x < this.gameCanvasWidth &&
+                   coordinates.y < this.gameCanvasHeight &&
+                   coordinates.x > config.OUTLINE_CIRCLE_RADIUS &&
+                   coordinates.y > config.OUTLINE_CIRCLE_RADIUS;
+        },
 
         getTopStartingPosition: function () {
             return this.topLeftStartingPoint;
@@ -86,14 +95,12 @@ define([
                         y: newYPosition
                     });
 
-                    if(this.detectCollision(allCircles, circleToMove).length == 0 &&
-                        !(newXPosition > this.gameCanvasWidth || newYPosition > this.gameCanvasHeight)
-                    ){
+                    if(this.detectCollision(allCircles, circleToMove).length == 0 && this.inCanvas(circleToMove)){
                         stop = true;
                         break;
                     }
                     // If new position is out of canvas put it randomly
-                    if(newXPosition > this.gameCanvasWidth || newYPosition > this.gameCanvasHeight){
+                    if(!this.inCanvas(circleToMove)){
                         this.getFreeRandomPosition(allCircles, circleToMove);
                     }
                 }
