@@ -7,7 +7,7 @@ define([
     var LevelManager = function LevelManager() {
         this.currentLevel = 0;
         this.levels = [
-            {time: 60, cpt: 3, towersGoal: 2, maxCircles: 10},
+            {time: 60, cpt: 3, towersGoal: 3, maxCircles: 10},
             {time: 45, cpt: 3, towersGoal: 3, maxCircles: 10},
             {time: 45, cpt: 4, towersGoal: 3, maxCircles: 10}
         ];

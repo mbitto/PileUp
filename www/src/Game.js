@@ -1,8 +1,9 @@
 define([
     'src/CircleFactory',
     'src/UserInteractionManager',
-    'src/GameStatus'
-],function(CircleFactory, UserInteractionManager, GameStatus){
+    'src/GameStatus',
+    'src/ScoreManager'
+],function(CircleFactory, UserInteractionManager, GameStatus, ScoreManager){
 
     "use strict";
 
@@ -12,6 +13,7 @@ define([
         this.stage = stage;
         this.gameInfo = gameInfo;
         this.levelManager = levelManager;
+        this.scoreManager = new ScoreManager();
         this.gameStatus = null;
     };
 
@@ -32,8 +34,7 @@ define([
                 }
                 index++;
             });
-
-            this.gameInfo.setCirclesCounter(0);
+            this.gameInfo.setUserScore(this.scoreManager.getScore());
             this.gameInfo.setTowersCompletedCounter(0, this.gameStatus.getTowersGoal());
 
             this.gameStatus.start(
@@ -41,15 +42,12 @@ define([
                     self.gameInfo.setTimeLeft(timeLeft);
                 },
                 function () {
-                    self.gameInfo.displayGameOverMessage(function () {
-                        self.restart();
-                    });
+                    self.gameOver();
                 }
             );
         },
 
         restart: function () {
-            console.log("Restarting game");
             this.levelManager.setLevelNumber(1);
             this.stage.removeAllCircles();
             this.start();
@@ -63,7 +61,6 @@ define([
                     callback();
                 }
                 self.gameStatus.circleAdded();
-                self.gameInfo.setCirclesCounter(self.gameStatus.getCirclesQuantity());
             });
         },
 
@@ -72,41 +69,45 @@ define([
             // Find top circle id
             var baseCircle = circle.getBaseCircle(),
             // Pop out top circle
-                poppedCircle = circle.pop();
+                poppedCircle = circle.pop(),
+                newTopCircle = baseCircle.getTop();
 
             // Place circle near tower base circle
             this.stage.moveCircleCloseTo(poppedCircle, baseCircle, callback);
-            this.gameInfo.towerSplitted();
+            var score = this.scoreManager.decreaseScore(poppedCircle.getPlaceNumber(), newTopCircle.getPlaceNumber());
+            this.gameInfo.setUserScore(this.scoreManager.getScore());
+            this.gameInfo.towerSplitted(score, baseCircle.getCoordinates());
         },
         
         mergeCircles: function (baseCircle, movingCircle) {
-            var self = this;
+            var self = this,
+                baseCircleTop = baseCircle.getTop(),
+                movingCircleBase = movingCircle.getBaseCircle();
+
+            var score = this.scoreManager.increaseScore(movingCircleBase.getPlaceNumber(), baseCircleTop.getPlaceNumber());
+
+            this.gameInfo.setUserScore(this.scoreManager.getScore());
 
             baseCircle.mergeWith(movingCircle);
-            this.gameInfo.circlesMerged();
+            this.gameInfo.circlesMerged(score, baseCircle.getCoordinates());
 
             if(this.gameStatus.isCirclesLimitReached()){
-                baseCircle.forEachCircleInTower(function(circle){
-                    self.stage.removeCircle(circle);
-                });
-                this.gameInfo.displayGameOverMessage(function () {
-                    self.restart();
-                });
+                this.gameOver();
             }
-
             else if(this.gameStatus.isTowerCompleted(baseCircle.getHeight())){
                 baseCircle.forEachCircleInTower(function(circle){
                     self.stage.removeCircle(circle);
                 });
                 this.gameStatus.towerCompleted();
 
-                var towerCoordinates = baseCircle.getCoordinates(),
-                    completedTowersQuantity = this.gameStatus.getCompletedTowersQuantity(),
-                    towersQuantityGoal = this.gameStatus.getTowersGoal();
+                var completedTowersQuantity = this.gameStatus.getCompletedTowersQuantity(),
+                    towersQuantityGoal = this.gameStatus.getTowersGoal(),
+                    towerHeight = baseCircle.getHeight();
 
                 this.gameInfo.setTowersCompletedCounter(completedTowersQuantity, towersQuantityGoal);
-                this.gameInfo.setCirclesCounter(self.gameStatus.getCirclesQuantity());
-                this.gameInfo.towerCompleted(towerCoordinates.x, towerCoordinates.y);
+                var towerCompletionScore = this.scoreManager.increaseScoreForTowerCompletion(towerHeight);
+                this.gameInfo.setUserScore(this.scoreManager.getScore());
+                this.gameInfo.towerCompleted(towerCompletionScore, baseCircle.getCoordinates());
 
 
                 if(this.gameStatus.isLevelCompleted()){
@@ -118,6 +119,21 @@ define([
                     });
                 }
             }
+        },
+
+        gameOver: function () {
+            var self = this,
+                score = this.scoreManager.getScore(),
+                newHighScore = this.scoreManager.getScore() > this.scoreManager.getStoredHighScore();
+
+            if(newHighScore){
+                this.scoreManager.storeNewHighScore(score);
+            }
+
+            this.gameInfo.displayGameOverMessage(function () {
+                // TODO: show score and the new high score if necessary
+                self.restart();
+            });
         }
 
     };

@@ -21,7 +21,7 @@ TODO:
 
 
 
-REFACTORING
+REFACTORING [OK]
 
 GameInfo e Information vanno refattorizzate:
 
@@ -42,21 +42,19 @@ GameInfo e Information vanno refattorizzate:
 
 
 
+- strutturare il gioco su più livelli aggiungendo il fattore tempo (n towers entro n secondi con altezza della tower variabile) [OK]
 
 
+- Introdurre punteggio in base a vicinanza dei cerchi
 
-- strutturare il gioco su più livelli aggiungendo il fattore tempo (n towers entro n secondi con altezza della tower variabile)
+- test
+
+- refactoring
+
+- miglioramento prestazioni e ottimizzazione
+
+- spinner loading iniziale e tasto dx
 
 - Aggiungere e istruzioni
 
 - Fare build della versione da deployare escludendo i pacchetti dev
-
-
-
-
-stage   lineMgr(stage, line)    line
-
-
-        lineMgr->setLine
-        lineMgr->extendLine
-        lineMgr->removeLine

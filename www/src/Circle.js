@@ -19,10 +19,11 @@ define([
      * @param {string} color
      * @param {number} radius
      */
-    var Circle = function Circle(color, radius) {
+    var Circle = function Circle(color, radius, place) {
 
         this.color = color;
         this.radius = radius;
+        this.place = place;
 
         this.container = new createjs.Container();
 
@@ -77,6 +78,10 @@ define([
          */
         getRadius: function(){
             return this.radius;
+        },
+
+        getPlaceNumber: function () {
+            return this.place;
         },
 
         /**
@@ -250,6 +255,10 @@ define([
 
         getHeight: function () {
             return this.circlesIterator.getHeight();
+        },
+
+        getTop: function () {
+            return this.circlesIterator.getTop();
         }
     };
     return Circle;

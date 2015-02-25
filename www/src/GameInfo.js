@@ -5,11 +5,13 @@ define([
 
     "use strict";
 
-    var GameInfo = function GameInfo(timeLeftClass, circlesClass, towersClass, sound) {
-        this.praiseMessages = ['Well done!', 'Great!', 'Good one!', 'Good!', 'Nice one!', 'Wow!'];
+    var GameInfo = function GameInfo(timeLeftClass, userScoreClass, towersClass, sound) {
+
+        this.scoreMessageDomElement = document.querySelector('.score-message');
+        this.towerCompletedScoreMessageDomElement = document.querySelector('.tower-completed-score-message');
 
         this.timeLeftElement = document.querySelector('.' + timeLeftClass);
-        this.circlesCounterElement = document.querySelector('.' + circlesClass);
+        this.userScoreElement = document.querySelector('.' + userScoreClass);
         this.towersCounterElement = document.querySelector('.' + towersClass);
 
         this.sound = sound;
@@ -20,8 +22,8 @@ define([
             this.timeLeftElement.textContent = "Time left: " + timeLeft;
         },
 
-        setCirclesCounter: function (circles) {
-            this.circlesCounterElement.textContent = "Circles : " + circles;
+        setUserScore: function (score) {
+            this.userScoreElement.textContent = "Score : " + score;
         },
 
         setTowersCompletedCounter: function (towersCompleted, towersGoal) {
@@ -36,25 +38,34 @@ define([
             alertify.alert("Yeah!</br>Go to level: " + level, callback);
         },
 
-        towerSplitted: function () {
+        showScoreMessage: function (score, posX, posY, time, towerCompleted) {
+            var element = towerCompleted ? this.towerCompletedScoreMessageDomElement : this.scoreMessageDomElement;
+
+
+            element.style.left = posX + 'px';
+            element.style.top = posY + 'px';
+            element.style.color = score > 0 ? 'lime' : 'red';
+            element.textContent = score > 0 ? '+' + score : score;
+
+            setTimeout(function(){
+                element.textContent = '';
+            }, time);
+        },
+
+        towerSplitted: function (score, coordinates) {
+            this.showScoreMessage(score, coordinates.x + 50, coordinates.y, 500);
             this.sound.playSplit();
         },
 
-        circlesMerged: function () {
+        circlesMerged: function (score, coordinates) {
+            this.showScoreMessage(score, coordinates.x + 50, coordinates.y, 500);
             this.sound.playMerge();
         },
 
-        towerCompleted: function (posX, posY) {
-            var randomPraiseMessage = this.praiseMessages[utils.getRandomInt(0, this.praiseMessages.length - 1)],
-                praiseMessageDomElement = document.querySelector('.praise-message');
-
-            praiseMessageDomElement.textContent = randomPraiseMessage;
-            praiseMessageDomElement.style.left = posX + 'px';
-            praiseMessageDomElement.style.top = posY + 'px';
-            setTimeout(function(){
-                praiseMessageDomElement.textContent = '';
-            }, 3000);
-            this.sound.playWin();
+        towerCompleted: function (score, coordinates) {
+            console.log(score, coordinates.x - 50, coordinates.y);
+            this.showScoreMessage(score, coordinates.x - 50, coordinates.y, 1000, true);
+            //this.sound.playWin();
         }
     };
 

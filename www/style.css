@@ -25,8 +25,13 @@ html, body{
     margin-right: 20px;
 }
 
-.praise-message{
+.score-message, .tower-completed-score-message{
     position: absolute;
+}
+
+.bold-text{
+    font-weight: bold;
+    font-size: 1em;
 }
 
 .splash{

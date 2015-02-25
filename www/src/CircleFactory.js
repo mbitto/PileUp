@@ -13,7 +13,7 @@ define([
 
         createCircle: function(userInteractionManager){
             var shape = this.circleShapeGenerator.getCircleRandomFeatures(),
-                circle = new Circle(shape.color, shape.radius);
+                circle = new Circle(shape.color, shape.radius, shape.place);
 
             circle.onPress(function(e){
                 userInteractionManager.press(circle, e);

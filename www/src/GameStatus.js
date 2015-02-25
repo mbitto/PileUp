@@ -44,6 +44,7 @@ define([
         },
 
         isCirclesLimitReached: function () {
+            console.log("Circles count: " + this.circlesCounter  + "/" + this.maxCirclesPerGame);
             return this.circlesCounter === this.maxCirclesPerGame;
         },
 

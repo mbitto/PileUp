@@ -44,13 +44,13 @@ define([
          * @type {Object}
          */
         this.circlesCollection = [
-            {radius: 46, color: RED},
-            {radius: 42.5, color: ORANGE},
-            {radius: 39, color: YELLOW},
-            {radius: 35.5, color: GREEN},
-            {radius: 32, color: BLUE},
-            {radius: 28.5, color: INDIGO},
-            {radius: 25, color: VIOLET}
+            {radius: 46, color: RED, place: 1},
+            {radius: 42.5, color: ORANGE, place: 2},
+            {radius: 39, color: YELLOW, place: 3},
+            {radius: 35.5, color: GREEN, place: 4},
+            {radius: 32, color: BLUE, place: 5},
+            {radius: 28.5, color: INDIGO, place: 6},
+            {radius: 25, color: VIOLET, place: 7}
         ];
 
         this._resetIndex();
@@ -108,7 +108,8 @@ define([
             this._updateRepetitionsIndex(randomIndex);
             return {
                 radius: this.circlesCollection[randomIndex].radius,
-                color: this.circlesCollection[randomIndex].color
+                color: this.circlesCollection[randomIndex].color,
+                place: this.circlesCollection[randomIndex].place
             };
         },
 
