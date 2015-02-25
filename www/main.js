@@ -36,22 +36,25 @@ requirejs([
     'src/Stage',
     'src/Game',
     'src/Canvas',
+    'src/GameStatus',
+    'src/LevelManager',
     'src/GameInfo',
-    'src/Information',
     'src/Sound',
     'src/config'
 ],
 
-function(createjs, tweenjs, Stage, Game, Canvas, GameInfo, Information, Sound, config){
+function(createjs, tweenjs, Stage, Game, Canvas, GameStatus, LevelManager, GameInfo, Sound, config){
 
     "use strict";
 
     var htmlCanvasElement = document.querySelector('#canvas'),
         canvas = new Canvas(htmlCanvasElement),
         createJSStage = new createjs.Stage(htmlCanvasElement),
-        gameInfo = new GameInfo(new Information('circlesQuantity', 'towersCompleted'), new Sound()),
+        levelManager = new LevelManager(),
+        sound = new Sound(),
+        gameInfo = new GameInfo('timeLeft', 'circlesQuantity', 'towersCompleted', sound),
         stage = new Stage(createJSStage, canvas.getWidth(), canvas.getHeight()),
-        game = new Game(stage, gameInfo);
+        game = new Game(stage, levelManager, gameInfo);
 
     createjs.Touch.enable(createJSStage);
     createjs.Ticker.setFPS(30);

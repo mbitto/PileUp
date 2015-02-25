@@ -9,7 +9,6 @@ define(function () {
 
     LineManager.prototype = {
         setLineStartingPoint: function (x, y) {
-            console.log('setLineStartingPoint');
             this.line.setStartingPoint(x, y);
         },
 
@@ -18,12 +17,10 @@ define(function () {
         },
 
         extendLineTo: function (x, y) {
-            console.log('extendLineTo');
             this.line.extendTo(x, y);
         },
 
         removeLine: function () {
-            console.log('removeLine');
             this.line.remove();
         }
     };

@@ -17,9 +17,37 @@ TODO:
 
 - Colorare la combinazione di cerchi e linee di verde se il merge è fattibile o di rosso se non lo è.
 
-- Aggiungere spash screen e istruzioni
+- Aggiungere spash screen [OK]
+
+
+
+REFACTORING
+
+GameInfo e Information vanno refattorizzate:
+
+    Game(stage, gameStatus, gameInfo)
+        manages gameStatus and gameInfo separately
+
+
+
+
+    GameInfo -> GameStatus(levelManager)
+        manages only game dynamics
+
+
+
+
+    Information -> GameInfo(timeLeftClass, circlesClass, towersClass, sound)
+        manages only UI feedbacks related to game dynamics
+
+
+
+
+
 
 - strutturare il gioco su più livelli aggiungendo il fattore tempo (n towers entro n secondi con altezza della tower variabile)
+
+- Aggiungere e istruzioni
 
 - Fare build della versione da deployare escludendo i pacchetti dev
 

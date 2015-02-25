@@ -1,55 +1,62 @@
 define([
-    'src/utils'
-], function(utils) {
+    'src/utils',
+    'alertify'
+],function(utils, alertify){
 
     "use strict";
 
-    var GameInfo = function GameInfo(information, sound) {
+    var GameInfo = function GameInfo(timeLeftClass, circlesClass, towersClass, sound) {
         this.praiseMessages = ['Well done!', 'Great!', 'Good one!', 'Good!', 'Nice one!', 'Wow!'];
-        this.information = information;
+
+        this.timeLeftElement = document.querySelector('.' + timeLeftClass);
+        this.circlesCounterElement = document.querySelector('.' + circlesClass);
+        this.towersCounterElement = document.querySelector('.' + towersClass);
+
         this.sound = sound;
-        this.startingCirclesQuantity = 3;
-        this.maxCirclesPerGame = 20;
-        this.maxCirclesPerTower = 7;
     };
 
     GameInfo.prototype = {
-        getStartingCirclesQuantity: function () {
-            return this.startingCirclesQuantity;
+        setTimeLeft: function (timeLeft) {
+            this.timeLeftElement.textContent = "Time left: " + timeLeft;
         },
 
-        isTowerCompleted: function (circlesNumber) {
-            return circlesNumber === this.maxCirclesPerTower;
+        setCirclesCounter: function (circles) {
+            this.circlesCounterElement.textContent = "Circles : " + circles;
         },
 
-        isCirclesLimitReached: function () {
-            return this.information.getCirclesCount() === this.maxCirclesPerGame;
+        setTowersCompletedCounter: function (towersCompleted, towersGoal) {
+            this.towersCounterElement.textContent = "Towers : " + towersCompleted + "/" + towersGoal;
         },
 
-        addedCircle: function(){
-            this.information.incrementCirclesCounter();
+        displayGameOverMessage: function (callback) {
+            alertify.alert("Game Over!", callback);
         },
 
-        doneTower: function (towerposition) {
-            this.information.incrementTowersCounter();
-            this.information.decrementCirclesCounter(this.maxCirclesPerTower);
-
-            var randomPraiseMessage = this.praiseMessages[utils.getRandomInt(0, this.praiseMessages.length - 1)];
-            this.information.displayPraiseMessage(randomPraiseMessage, '#fff', towerposition.x, towerposition.y);
-            this.sound.playWin();
+        displayNextLevelMessage: function (level, callback) {
+            alertify.alert("Yeah!</br>Go to level: " + level, callback);
         },
 
-        splittedTower: function () {
+        towerSplitted: function () {
             this.sound.playSplit();
         },
 
-        mergedCircles: function () {
+        circlesMerged: function () {
             this.sound.playMerge();
         },
 
-        gameOver: function () {
-            this.information.displayGameOverMessage();
+        towerCompleted: function (posX, posY) {
+            var randomPraiseMessage = this.praiseMessages[utils.getRandomInt(0, this.praiseMessages.length - 1)],
+                praiseMessageDomElement = document.querySelector('.praise-message');
+
+            praiseMessageDomElement.textContent = randomPraiseMessage;
+            praiseMessageDomElement.style.left = posX + 'px';
+            praiseMessageDomElement.style.top = posY + 'px';
+            setTimeout(function(){
+                praiseMessageDomElement.textContent = '';
+            }, 3000);
+            this.sound.playWin();
         }
     };
+
     return GameInfo;
 });

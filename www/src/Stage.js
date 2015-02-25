@@ -35,8 +35,14 @@ define([
             delete this.circles[circle.getId()];
         },
 
+        removeAllCircles: function () {
+            var self = this;
+            this.circles.forEach(function (circle) {
+                self.removeCircle(circle);
+            });
+        },
+
         sortCircles: function () {
-            console.log("sort children");
             // Sort circles in order to allow correct overlapping
             this.createJSStage.sortChildren(function (s1, s2) {
                 if (s1.radius < s2.radius) { return 1; }
