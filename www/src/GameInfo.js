@@ -30,8 +30,25 @@ define([
             this.towersCounterElement.textContent = "Towers : " + towersCompleted + "/" + towersGoal;
         },
 
-        displayGameOverMessage: function (callback) {
-            alertify.alert("Game Over!", callback);
+        displayGameOverMessage: function (score, highScore, newHighScore, callback) {
+            var message = "<strong>Game Over!</strong><br/><br/>"+
+                    "Your Score: " + score + "<br/><br/>" +
+                    "High score: " + highScore + "<br/><br/>";
+
+            if(newHighScore){
+                message += "<strong>New high score!</strong>"
+            }
+
+            alertify.alert(message, callback);
+        },
+
+        displayInstructionMessage: function (time, cpt, towers, maxCircles, callback) {
+            var message = "Time: <strong>" + time + " seconds</strong><br/><br/>" +
+                    "Complete a tower piling up: <strong>" + cpt + " circles</strong><br/><br/>" +
+                    "Pass this level completing: <strong>" + towers + " towers</strong><br/><br/>" +
+                    "Game over with more than: <strong>" + maxCircles + " circles</strong><br/><br/>";
+
+            alertify.alert(message, callback);
         },
 
         displayNextLevelMessage: function (level, callback) {

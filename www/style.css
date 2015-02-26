@@ -60,3 +60,7 @@ html, body{
 #alertify{
     color: #111;
 }
+
+.alertify-message{
+    font-size: 0.8em;
+}

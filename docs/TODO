@@ -45,7 +45,9 @@ GameInfo e Information vanno refattorizzate:
 - strutturare il gioco su più livelli aggiungendo il fattore tempo (n towers entro n secondi con altezza della tower variabile) [OK]
 
 
-- Introdurre punteggio in base a vicinanza dei cerchi
+- Introdurre punteggio in base a vicinanza dei cerchi [OK]
+
+- Migliorare messaggi per l'utente
 
 - test
 

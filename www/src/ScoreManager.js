@@ -43,6 +43,10 @@ define(function(){
 
         storeNewHighScore: function (score) {
             window.localStorage.setItem(this.localStorageKey, score);
+        },
+        
+        clearScore: function () {
+            this.userScore = 0;
         }
     };
 

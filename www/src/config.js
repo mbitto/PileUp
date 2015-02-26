@@ -1,7 +1,7 @@
 define(function() {
     return {
         STARTING_CIRCLES_QUANTITY: 3,
-        SPLASH_SCREEN_DURATION: 500,
+        SPLASH_SCREEN_DURATION: 5000,
         OUTLINE_CIRCLE_COLOR: "lime",
         OUTLINE_CIRCLE_STROKE: 1,
         OUTLINE_CIRCLE_RADIUS: 50,

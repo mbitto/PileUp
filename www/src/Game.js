@@ -20,36 +20,46 @@ define([
     Game.prototype = {
         start: function () {
 
-            this.gameStatus = new GameStatus(this.levelManager.getNextLevel());
+            var self = this,
+                level = this.levelManager.getNextLevel(),
+                time = level.getTime(),
+                cpt = level.getCPT(),
+                towersGoal = level.getTowersGoal(),
+                maxCircles = level.getMaxCircles();
 
-            console.log("Starting level: " + this.levelManager.getCurrentLevelNumber());
+            this.gameStatus = new GameStatus(level);
+            this.gameInfo.displayInstructionMessage(time, cpt, towersGoal, maxCircles, function () {
 
-            var startingCirclesQuantity = this.gameStatus.getStartingCirclesQuantity(),
-                index = 1,
-                self = this;
+                console.log("Starting level: " + self.levelManager.getCurrentLevelNumber());
 
-            this.generateCircle("up", function r(){
-                if(index < startingCirclesQuantity) {
-                    self.generateCircle("up", r);
-                }
-                index++;
+                var startingCirclesQuantity = self.gameStatus.getStartingCirclesQuantity(),
+                    index = 1;
+
+                self.generateCircle("up", function r(){
+                    if(index < startingCirclesQuantity) {
+                        self.generateCircle("up", r);
+                    }
+                    index++;
+                });
+
+                self.gameInfo.setUserScore(self.scoreManager.getScore());
+                self.gameInfo.setTowersCompletedCounter(0, self.gameStatus.getTowersGoal());
+
+                self.gameStatus.start(
+                    function (timeLeft) {
+                        self.gameInfo.setTimeLeft(timeLeft);
+                    },
+                    function () {
+                        self.gameOver();
+                    }
+                );
             });
-            this.gameInfo.setUserScore(this.scoreManager.getScore());
-            this.gameInfo.setTowersCompletedCounter(0, this.gameStatus.getTowersGoal());
-
-            this.gameStatus.start(
-                function (timeLeft) {
-                    self.gameInfo.setTimeLeft(timeLeft);
-                },
-                function () {
-                    self.gameOver();
-                }
-            );
         },
 
         restart: function () {
             this.levelManager.setLevelNumber(1);
             this.stage.removeAllCircles();
+            this.scoreManager.clearScore();
             this.start();
         },
 
@@ -124,14 +134,14 @@ define([
         gameOver: function () {
             var self = this,
                 score = this.scoreManager.getScore(),
-                newHighScore = this.scoreManager.getScore() > this.scoreManager.getStoredHighScore();
+                highScore = this.scoreManager.getStoredHighScore(),
+                newHighScore = score > highScore;
 
             if(newHighScore){
                 this.scoreManager.storeNewHighScore(score);
             }
 
-            this.gameInfo.displayGameOverMessage(function () {
-                // TODO: show score and the new high score if necessary
+            this.gameInfo.displayGameOverMessage(score, highScore, newHighScore, function () {
                 self.restart();
             });
         }
