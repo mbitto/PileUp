@@ -38,7 +38,7 @@ define(function(){
         },
 
         getStoredHighScore: function () {
-            return window.localStorage.getItem(this.localStorageKey);
+            return window.localStorage.getItem(this.localStorageKey) || 0;
         },
 
         storeNewHighScore: function (score) {
