@@ -119,7 +119,6 @@ define([
                 this.gameInfo.setUserScore(this.scoreManager.getScore());
                 this.gameInfo.towerCompleted(towerCompletionScore, baseCircle.getCoordinates());
 
-
                 if(this.gameStatus.isLevelCompleted()){
                     var nextLevelNumber = this.levelManager.getCurrentLevelNumber() + 1;
                     this.gameInfo.displayNextLevelMessage(nextLevelNumber, function () {
@@ -127,6 +126,12 @@ define([
                         self.stage.removeAllCircles();
                         self.start();
                     });
+                }
+                else if(self.stage.getChildrenNumber() <= 1){
+                    // Launch circle from right after 3 secs
+                    setTimeout(function () {
+                        self.generateCircle("right");
+                    }, 3000);
                 }
             }
         },

@@ -16,12 +16,12 @@ define([
 
         addCircle: function(initialPosition, circle, callback){
             var startingPosition;
-            if(initialPosition === "up"){
-                startingPosition = this.positioningManager.getTopStartingPosition();
+            switch(initialPosition){
+                case "up": startingPosition = this.positioningManager.getTopStartingPosition(); break;
+                case "down": startingPosition = this.positioningManager.getBottomStartingPosition(); break;
+                case "right": startingPosition = this.positioningManager.getRightStartingPosition(); break;
             }
-            else{
-                startingPosition = this.positioningManager.getBottomStartingPosition();
-            }
+
             circle.move(startingPosition);
             this.circles[circle.getId()] = circle;
             var coordinates = this.positioningManager.getFreeRandomPosition(this.circles, circle);

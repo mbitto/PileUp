@@ -8,13 +8,13 @@ define([
         this.currentLevel = 0;
         this.levels = [
             {time: 60, cpt: 3, towersGoal: 3, maxCircles: 10},
-            {time: 45, cpt: 3, towersGoal: 4, maxCircles: 10},
-            {time: 45, cpt: 4, towersGoal: 3, maxCircles: 10},
-            {time: 45, cpt: 4, towersGoal: 4, maxCircles: 15},
-            {time: 30, cpt: 4, towersGoal: 5, maxCircles: 15},
-            {time: 45, cpt: 5, towersGoal: 4, maxCircles: 20},
-            {time: 45, cpt: 5, towersGoal: 5, maxCircles: 20},
-            {time: 30, cpt: 5, towersGoal: 6, maxCircles: 20}
+            {time: 60, cpt: 4, towersGoal: 3, maxCircles: 10},
+            {time: 45, cpt: 5, towersGoal: 3, maxCircles: 10},
+            {time: 45, cpt: 5, towersGoal: 4, maxCircles: 15},
+            {time: 45, cpt: 5, towersGoal: 5, maxCircles: 15},
+            {time: 45, cpt: 6, towersGoal: 4, maxCircles: 20},
+            {time: 30, cpt: 6, towersGoal: 5, maxCircles: 20},
+            {time: 60, cpt: 7, towersGoal: 6, maxCircles: 20}
         ];
     };
 

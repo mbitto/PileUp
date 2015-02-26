@@ -19,7 +19,7 @@ define([
         this.gameCanvasHeight = canvasHeight - config.OUTLINE_CIRCLE_RADIUS;
         this.topLeftStartingPoint = {x: -100, y: -100};
         this.bottomStartingPoint = {x: -100, y: canvasHeight + 100};
-        this.bottomRightStartingPoint = {x: canvasWidth + 100, y: canvasHeight / 2};
+        this.rightStartingPoint = {x: canvasWidth + 100, y: canvasHeight / 2};
         this.topStartingPoint = {x: canvasWidth / 2, y: -100};
     };
 
@@ -35,6 +35,10 @@ define([
 
         getTopStartingPosition: function () {
             return this.topLeftStartingPoint;
+        },
+
+        getRightStartingPosition: function () {
+            return this.rightStartingPoint;
         },
 
         getBottomStartingPosition: function () {
