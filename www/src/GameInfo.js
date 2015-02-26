@@ -40,6 +40,7 @@ define([
             }
 
             alertify.alert(message, callback);
+            this.sound.playLoss();
         },
 
         displayInstructionMessage: function (time, cpt, towers, maxCircles, callback) {
@@ -82,7 +83,7 @@ define([
         towerCompleted: function (score, coordinates) {
             console.log(score, coordinates.x - 50, coordinates.y);
             this.showScoreMessage(score, coordinates.x - 50, coordinates.y, 1000, true);
-            //this.sound.playWin();
+            this.sound.playWin();
         }
     };
 
