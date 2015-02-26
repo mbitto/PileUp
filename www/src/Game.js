@@ -1,3 +1,14 @@
+/**
+ * Game module. Handle the most high level functionalities of the game
+ *
+ * @module src/Game
+ *
+ * @requires src/CircleFactory
+ * @requires src/UserInteractionManager
+ * @requires src/GameStatus
+ * @requires src/ScoreManager
+ *
+ */
 define([
     'src/CircleFactory',
     'src/UserInteractionManager',
@@ -7,6 +18,15 @@ define([
 
     "use strict";
 
+    /**
+     * @constructor
+     *
+     * @param {Stage} stage
+     * @param {LevelManager} levelManager
+     * @param {GameInfo} gameInfo
+     *
+     * @alias src/Game
+     */
     var Game = function Game(stage, levelManager, gameInfo) {
         this.circleFactory = new CircleFactory();
         this.userInteractionManager = new UserInteractionManager(this, stage);
@@ -18,17 +38,22 @@ define([
     };
 
     Game.prototype = {
+
+        /**
+         * Start the game, generate starting circles, and initialize a new game status and game information
+         *
+         */
         start: function () {
 
             var self = this,
                 level = this.levelManager.getNextLevel(),
                 time = level.getTime(),
                 cpt = level.getCPT(),
-                towersGoal = level.getTowersGoal(),
+                pilesGoal = level.getPilesGoal(),
                 maxCircles = level.getMaxCircles();
 
             this.gameStatus = new GameStatus(level);
-            this.gameInfo.displayInstructionMessage(time, cpt, towersGoal, maxCircles, function () {
+            this.gameInfo.displayInstructionMessage(time, cpt, pilesGoal, maxCircles, function () {
 
                 console.log("Starting level: " + self.levelManager.getCurrentLevelNumber());
 
@@ -43,7 +68,7 @@ define([
                 });
 
                 self.gameInfo.setUserScore(self.scoreManager.getScore());
-                self.gameInfo.setTowersCompletedCounter(0, self.gameStatus.getTowersGoal());
+                self.gameInfo.setPilesCompletedCounter(0, self.gameStatus.getPilesGoal());
 
                 self.gameStatus.start(
                     function (timeLeft) {
@@ -56,6 +81,9 @@ define([
             });
         },
 
+        /**
+         * Restart the game from level 1 cleaning up previous information
+         */
         restart: function () {
             this.levelManager.setLevelNumber(1);
             this.stage.removeAllCircles();
@@ -63,10 +91,16 @@ define([
             this.start();
         },
 
-        generateCircle: function (initialPosition, callback) {
+        /**
+         * Generate new circle
+         *
+         * @param {string} enteringSide
+         * @param {function} callback - called when circle's transition has finished
+         */
+        generateCircle: function (enteringSide, callback) {
             var circle = this.circleFactory.createCircle(this.userInteractionManager),
                 self = this;
-            this.stage.addCircle(initialPosition, circle, function () {
+            this.stage.addCircle(enteringSide, circle, function () {
                 if(callback){
                     callback();
                 }
@@ -74,7 +108,13 @@ define([
             });
         },
 
-        splitTower: function (circle, callback) {
+        /**
+         * Split a circles pile popping out the top circle near the pile
+         *
+         * @param {Circle} circle
+         * @param {function} callback - called when popped out circle's transition has finished
+         */
+        splitPile: function (circle, callback) {
 
             // Find top circle id
             var baseCircle = circle.getBaseCircle(),
@@ -82,13 +122,19 @@ define([
                 poppedCircle = circle.pop(),
                 newTopCircle = baseCircle.getTop();
 
-            // Place circle near tower base circle
+            // Place circle near pile base circle
             this.stage.moveCircleCloseTo(poppedCircle, baseCircle, callback);
             var score = this.scoreManager.decreaseScore(poppedCircle.getPlaceNumber(), newTopCircle.getPlaceNumber());
             this.gameInfo.setUserScore(this.scoreManager.getScore());
-            this.gameInfo.towerSplitted(score, baseCircle.getCoordinates());
+            this.gameInfo.pileSplitted(score, baseCircle.getCoordinates());
         },
-        
+
+        /**
+         * Merge single circles or circle piles
+         *
+         * @param {Circle} baseCircle - the steady circle (or circles pile) where the moving circle is being merged into
+         * @param {Circle} movingCircle - the moving circle to merge
+         */
         mergeCircles: function (baseCircle, movingCircle) {
             var self = this,
                 baseCircleTop = baseCircle.getTop(),
@@ -104,20 +150,20 @@ define([
             if(this.gameStatus.isCirclesLimitReached()){
                 this.gameOver();
             }
-            else if(this.gameStatus.isTowerCompleted(baseCircle.getHeight())){
-                baseCircle.forEachCircleInTower(function(circle){
+            else if(this.gameStatus.isPileCompleted(baseCircle.getHeight())){
+                baseCircle.forEachCircleInPile(function(circle){
                     self.stage.removeCircle(circle);
                 });
-                this.gameStatus.towerCompleted();
+                this.gameStatus.pileCompleted();
 
-                var completedTowersQuantity = this.gameStatus.getCompletedTowersQuantity(),
-                    towersQuantityGoal = this.gameStatus.getTowersGoal(),
-                    towerHeight = baseCircle.getHeight();
+                var completedPilesQuantity = this.gameStatus.getCompletedPilesQuantity(),
+                    pilesQuantityGoal = this.gameStatus.getPilesGoal(),
+                    pileHeight = baseCircle.getHeight();
 
-                this.gameInfo.setTowersCompletedCounter(completedTowersQuantity, towersQuantityGoal);
-                var towerCompletionScore = this.scoreManager.increaseScoreForTowerCompletion(towerHeight);
+                this.gameInfo.setPilesCompletedCounter(completedPilesQuantity, pilesQuantityGoal);
+                var pileCompletionScore = this.scoreManager.increaseScoreForPileCompletion(pileHeight);
                 this.gameInfo.setUserScore(this.scoreManager.getScore());
-                this.gameInfo.towerCompleted(towerCompletionScore, baseCircle.getCoordinates());
+                this.gameInfo.pileCompleted(pileCompletionScore, baseCircle.getCoordinates());
 
                 if(this.gameStatus.isLevelCompleted()){
                     var nextLevelNumber = this.levelManager.getCurrentLevelNumber() + 1;
@@ -136,6 +182,9 @@ define([
             }
         },
 
+        /**
+         * Set game over. Save new high score if necessary and restart the game
+         */
         gameOver: function () {
             var self = this,
                 score = this.scoreManager.getScore(),

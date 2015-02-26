@@ -1,10 +1,10 @@
+/**
+ * utils module, export generic use functions
+ * @exports src/utils
+ */
+
 define(function() {
     "use strict";
-
-    /**
-     * utils module, export generic use functions
-     * @exports src/utils
-     */
 
     return {
         /**

@@ -1,3 +1,11 @@
+/**
+ * Create circles instances with random features
+ *
+ * @module src/CircleFactory
+ * @requires src/CircleShapeGenerator
+ * @requires src/Circle
+ *
+ */
 define([
     'src/CircleShapeGenerator',
     'src/Circle'
@@ -5,12 +13,23 @@ define([
 
     "use strict";
 
+    /**
+     * @constructor
+     *
+     * @alias src/CircleFactory
+     */
     var CircleFactory = function CircleFactory() {
         this.circleShapeGenerator = new CircleShapeGenerator();
     };
 
     CircleFactory.prototype = {
 
+        /**
+         * Create a new circle and attach custom event listeners
+         *
+         * @param userInteractionManager
+         * @returns {Circle}
+         */
         createCircle: function(userInteractionManager){
             var shape = this.circleShapeGenerator.getCircleRandomFeatures(),
                 circle = new Circle(shape.color, shape.radius, shape.place);

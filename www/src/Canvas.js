@@ -1,4 +1,18 @@
+/**
+ * Represent the canvas and its attributes
+ *
+ * @module src/Canvas
+ */
 define(function(){
+
+    "use strict";
+
+    /**
+     * @constructor
+     * @param {external:Node} canvasElement
+     *
+     * @alias src/Canvas
+     */
     var Canvas = function Canvas(canvasElement){
 
         this.width = canvasElement.width = window.innerWidth - 5;
@@ -10,9 +24,20 @@ define(function(){
     };
 
     Canvas.prototype = {
+        /**
+         * get canvas' width
+         *
+         * @returns {number}
+         */
         getWidth: function(){
             return this.width;
         },
+
+        /**
+         * get canvas' height
+         *
+         * @returns {number}
+         */
         getHeight: function(){
             return this.height;
         }

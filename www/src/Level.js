@@ -1,27 +1,62 @@
+/**
+ * Represent a game level
+ *
+ * @module src/Level
+ */
 define(function () {
 
     "use strict";
 
-    var Level = function Level(time, cpt, towersGoal, maxCircles) {
+    /**
+     * @constructor
+     *
+     * @param {number} time
+     * @param {number} cpt
+     * @param {number} pilesGoal
+     * @param {number} maxCircles
+     *
+     * @alias src/Level
+     */
+    var Level = function Level(time, cpt, pilesGoal, maxCircles) {
         this.time = time;
-        this.circlesPerTower = cpt;
-        this.towersGoal = towersGoal;
+        this.circlesPerPile = cpt;
+        this.pilesGoal = pilesGoal;
         this.maxCircles = maxCircles;
     };
 
     Level.prototype = {
+        /**
+         * Maximum time to complete this level
+         *
+         * @returns {number}
+         */
         getTime: function () {
             return this.time;
         },
 
+        /**
+         * Number of circles to complete a pile
+         *
+         * @returns {number}
+         */
         getCPT: function () {
-            return this.circlesPerTower;
+            return this.circlesPerPile;
         },
 
-        getTowersGoal: function () {
-            return this.towersGoal;
+        /**
+         * Number of piles needed to complete this level
+         *
+         * @returns {number}
+         */
+        getPilesGoal: function () {
+            return this.pilesGoal;
         },
 
+        /**
+         * Maximum number of circles allowed on stage
+         *
+         * @returns {number}
+         */
         getMaxCircles: function () {
             return this.maxCircles;
         }

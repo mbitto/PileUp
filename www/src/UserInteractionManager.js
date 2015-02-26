@@ -1,3 +1,13 @@
+/**
+ * Handle user interaction with circles
+ *
+ * @module src/UserInteractionManager
+ *
+ * @requires src/Line
+ * @requires src/LineManager
+ * @requires config
+ *
+ */
 define([
     'src/Line',
     'src/LineManager',
@@ -6,21 +16,36 @@ define([
 
     "use strict";
 
+    /**
+     * @constructor
+     *
+     * @param {Game} game
+     * @param {Stage} stage
+     *
+     * @alias src/UserInteractionManager
+     */
     var UserInteractionManager = function UserInteractionManager(game, stage) {
         this.game = game;
         this.stage = stage;
         this.line = new Line(5);
         this.lineManager = new LineManager(stage, this.line);
+        // Fix bug related to multiple tap recognized by mobile app
         this.minimumTimeBetweenTaps = 1000;
         this.lastTapTimestamp = 0;
     };
 
     UserInteractionManager.prototype = {
+        /**
+         * Press action
+         *
+         * @param {Circle} circle
+         * @param {createjs.Event} e
+         */
         press: function (circle, e) {
             var self = this;
             circle.showOutlineCircle();
 
-            circle.forEachCircleInTower(function(circleToMoveUp){
+            circle.forEachCircleInPile(function(circleToMoveUp){
                 self.stage.moveZIndexUp(circleToMoveUp, self.stage.getChildrenNumber() - 1);
             });
 
@@ -30,13 +55,25 @@ define([
             this.lineManager.setLineStartingPoint(circleCoordinates.x, circleCoordinates.y);
         },
 
+        /**
+         * Move action
+         *
+         * @param {Circle} circle
+         * @param {createjs.Event} e
+         */
         move: function(circle, e){
-            circle.forEachCircleInTower(function (circleToMove) {
+            circle.forEachCircleInPile(function (circleToMove) {
                 circleToMove.move({x: e.stageX, y: e.stageY});
             });
             this.lineManager.extendLineTo(e.stageX, e.stageY);
         },
 
+        /**
+         * Tap action
+         *
+         * @param {Circle} circle
+         * @param {createjs.Event} e
+         */
         tap: function(circle, e) {
 
             var self = this,
@@ -47,12 +84,18 @@ define([
 
             if(circle.getHeight() > 1 && upTimestamp - this.lastTapTimestamp > this.minimumTimeBetweenTaps){
                 this.lastTapTimestamp = upTimestamp;
-                this.game.splitTower(circle, function(){
+                this.game.splitPile(circle, function(){
                     self.game.generateCircle("down");
                 });
             }
         },
 
+        /**
+         * Release action
+         *
+         * @param {Circle} circle
+         * @param {createjs.Event} e
+         */
         release: function(circle, e){
             var self = this,
                 collidingCircles = this.stage.detectCollision(circle);
@@ -70,7 +113,7 @@ define([
                     this.game.generateCircle("up");
                 }
                 else {
-                    circle.forEachCircleInTower(function (circleToMove) {
+                    circle.forEachCircleInPile(function (circleToMove) {
                         var startingPoint = self.lineManager.getLineStartingPoint();
                         circleToMove.moveSmooth(startingPoint, config.POP_CIRCLE_ANIMATION_SPEED);
                     });

@@ -52,7 +52,7 @@ function(createjs, tweenjs, Stage, Game, Canvas, GameStatus, LevelManager, GameI
         createJSStage = new createjs.Stage(htmlCanvasElement),
         levelManager = new LevelManager(),
         sound = new Sound(),
-        gameInfo = new GameInfo('timeLeft', 'userScore', 'towersCompleted', sound),
+        gameInfo = new GameInfo(sound),
         stage = new Stage(createJSStage, canvas.getWidth(), canvas.getHeight()),
         game = new Game(stage, levelManager, gameInfo);
 

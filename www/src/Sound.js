@@ -1,3 +1,12 @@
+/**
+ * Handle game's sounds
+ *
+ * @module src/Sound
+ * @requires createjs
+ * @requires soundjs
+ *
+ *
+ */
 define([
     'createjs',
     'soundjs'
@@ -5,6 +14,10 @@ define([
 
     "use strict";
 
+    /**
+     * @constructor
+     * @alias src/Sound
+     */
     var Sound = function Sound() {
         this.audioPath = "./assets/";
         this.mergeSound = {id: "merge", src: "merge.ogg"};
@@ -19,15 +32,30 @@ define([
     };
 
     Sound.prototype = {
+        /**
+         * Play sound for a merge
+         */
         playMerge: function () {
             createjs.Sound.play(this.audioPath + this.mergeSound.src);
         },
+
+        /**
+         * Play sound for a split
+         */
         playSplit: function () {
             createjs.Sound.play(this.audioPath + this.splitSound.src);
         },
+
+        /**
+         * Play sound for a level win
+         */
         playWin: function () {
             createjs.Sound.play(this.audioPath + this.winSound.src);
         },
+
+        /**
+         * Play sound for a game loss
+         */
         playLoss: function () {
             createjs.Sound.play(this.audioPath + this.lossSound.src);
         }

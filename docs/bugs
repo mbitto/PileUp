@@ -4,6 +4,10 @@ BROWSER PC
 - I cerchietti vengono lanciati sempre dallo stesso angolo [OK]
 - Spostamento del solo scerchio supoeriore nel go-back [OK]
 - intersecamento di cerchi quando muovo una torre su un pezzo che potrebbe essere intermedio in essa [OK]
+- Il counter dei circle totali probabilmente non viene resettato avanzando di livello
+- Il limite del numero dei circle totali non sempre è rispettato
+- Al game over non viene resettato il timer
+
 
 MOBILE APP (samsung s3)
 
@@ -11,5 +15,3 @@ MOBILE APP (samsung s3)
 - I circle vengono posizionati dal gioco anche parzialmente fuori dall'area di gioco [OK]
 - Il singolo tap viene percepito dal dispositivo come multiplo [OK]
 - L'effetto di distribuzione dei circle iniziale non si vede o si vede solo alla fine [OK]
-- Il counter dei circle totali probabilmente non viene resettato avanzando di livello
-- Il limite del numero dei circle totali non sempre è rispettato

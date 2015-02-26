@@ -1,16 +1,21 @@
 /**
  * Circle module. Represent a circle properties and its connections with other circles
+ *
  * @module src/Circle
+ *
  * @requires createjs
+ * @requires tweenjs
  * @requires src/CircleDragAndDropManager
  * @requires src/CirclesIterator
+ * @requires src/config
  */
 define([
     'createjs',
+    'tweenjs',
     'src/CircleDragAndDropManager',
     'src/CirclesIterator',
     'src/config'
-], function (createjs, CircleDragAndDropManager, CirclesIterator, config) {
+], function (createjs, tweenjs, CircleDragAndDropManager, CirclesIterator, config) {
 
     "use strict";
 
@@ -18,6 +23,9 @@ define([
      * @constructor
      * @param {string} color
      * @param {number} radius
+     * @param {number} place
+     *
+     * @alias src/Circle
      */
     var Circle = function Circle(color, radius, place) {
 
@@ -25,12 +33,14 @@ define([
         this.radius = radius;
         this.place = place;
 
+        // Container contain circleShape and outerCircleShape
         this.container = new createjs.Container();
 
         this.circleShape = new createjs.Shape();
         this.circleShape.graphics.beginStroke(color);
         this.circleShape.graphics.beginFill(color).drawCircle(0, 0, radius);
 
+        // Help user to see what he is pressing
         this.outerCircleShape = new createjs.Shape();
 
         this.container.addChild(this.circleShape, this.outerCircleShape);
@@ -38,6 +48,8 @@ define([
         this.container.set({radius: radius});
 
         this.id = this.container.id;
+
+        // BaseCircle and upperCircle initially refer to the circle itself
         this.baseCircle = this;
         this.upperCircle = this;
 
@@ -67,6 +79,11 @@ define([
             };
         },
 
+        /**
+         * Get color
+         *
+         * @returns {string}
+         */
         getColor: function () {
             return this.color;
         },
@@ -80,6 +97,11 @@ define([
             return this.radius;
         },
 
+        /**
+         * Get the predefined position that circle has considering a full pile of 7 circles
+         *
+         * @returns {number}
+         */
         getPlaceNumber: function () {
             return this.place;
         },
@@ -93,6 +115,10 @@ define([
             return this.container;
         },
 
+        /**
+         * Show the outline circle
+         *
+         */
         showOutlineCircle: function () {
             this.outerCircleShape.graphics.
                 setStrokeStyle(config.OUTLINE_CIRCLE_STROKE).
@@ -101,12 +127,16 @@ define([
             this.outerCircleShape.graphics.drawCircle(0, 0, config.OUTLINE_CIRCLE_RADIUS);
         },
 
+        /**
+         * Hide the outline circle
+         *
+         */
         hideOutlineCircle: function () {
             this.outerCircleShape.graphics.clear();
         },
 
         /**
-         * Move to coordinates
+         * Move immediately to coordinates
          *
          * @param coordinates
          */
@@ -115,6 +145,14 @@ define([
             this.container.y = coordinates.y;
         },
 
+        /**
+         * Move smoothly to coordinates. Callback is called at the end of transition
+         *
+         * @param {{x: number, y: number}} coordinates
+         * @param {number} speed
+         * @param {function|undefined} callback
+         *
+         */
         moveSmooth: function (coordinates, speed, callback) {
             var coords = {x: coordinates.x, y: coordinates.y},
                 callback = callback || function(){},
@@ -196,7 +234,7 @@ define([
         },
 
         /**
-         * Check if this circle is can be merged with with another circle
+         * Check if this circle can be merged with with another circle
          *
          * @param circle
          * @returns {boolean}
@@ -209,7 +247,7 @@ define([
         },
 
         /**
-         * Merge this circle with another circle (param is the new circle that goes up)
+         * Merge this circle with another circle (param is the circle that goes over)
          *
          * @param circle
          */
@@ -219,7 +257,7 @@ define([
                 currentCircleTop = currentCircleIterator.getTop(),
                 circleToMergeIterator = new CirclesIterator(circle);
 
-            circleToMergeIterator.forEachCircleInTower(function (circle) {
+            circleToMergeIterator.forEachCircleInPile(function (circle) {
                 circle.setBaseCircle(self.getBaseCircle());
                 circle.move(self.getCoordinates());
             });
@@ -227,9 +265,10 @@ define([
             currentCircleTop.setUpperCircle(circle);
         },
 
-        //TODO: test pop() in a collection with only one element
         /**
          * Remove the last circle considering the collection this circle belongs to
+         *
+         * @returns {src/Circle|null} null if there is no circle to pop
          */
         pop: function(){
 
@@ -249,14 +288,29 @@ define([
             return null;
         },
 
-        forEachCircleInTower: function(callback) {
-            this.circlesIterator.forEachCircleInTower(callback);
+        /**
+         * Iterate all circles of the pile
+         *
+         * @param callback
+         */
+        forEachCircleInPile: function(callback) {
+            this.circlesIterator.forEachCircleInPile(callback);
         },
 
+        /**
+         * Get pile's height
+         *
+         * @returns {number}
+         */
         getHeight: function () {
             return this.circlesIterator.getHeight();
         },
 
+        /**
+         * Get pile's top circle
+         *
+         * @returns {src/Circle}
+         */
         getTop: function () {
             return this.circlesIterator.getTop();
         }

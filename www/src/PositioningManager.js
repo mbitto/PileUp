@@ -12,19 +12,28 @@ define([
 
     /**
      * @constructor
+     * @param {number} canvasWidth
+     * @param {number} canvasHeight
+     *
+     * @alias src/PositionManager
      */
     var PositioningManager = function PositioningManager(canvasWidth, canvasHeight){
-        this.putCircleLoops = 0;
+        this.circlePlacementLoops = 0;
         this.gameCanvasWidth = canvasWidth - config.OUTLINE_CIRCLE_RADIUS;
         this.gameCanvasHeight = canvasHeight - config.OUTLINE_CIRCLE_RADIUS;
-        this.topLeftStartingPoint = {x: -100, y: -100};
-        this.bottomStartingPoint = {x: -100, y: canvasHeight + 100};
-        this.rightStartingPoint = {x: canvasWidth + 100, y: canvasHeight / 2};
-        this.topStartingPoint = {x: canvasWidth / 2, y: -100};
+        this.bottomSideEnteringPosition = {x: canvasWidth / 2, y: canvasHeight + 100};
+        this.rightSideEnteringPosition = {x: canvasWidth + 100, y: canvasHeight / 2};
+        this.topSideEnteringPosition = {x: canvasWidth / 2, y: -100};
     };
 
     PositioningManager .prototype = {
 
+        /**
+         * Check if circle's position is inside canvas
+         *
+         * @param {Circle} circle
+         * @returns {boolean}
+         */
         inCanvas: function (circle) {
             var coordinates = circle.getCoordinates();
             return coordinates.x < this.gameCanvasWidth &&
@@ -33,16 +42,31 @@ define([
                    coordinates.y > config.OUTLINE_CIRCLE_RADIUS;
         },
 
-        getTopStartingPosition: function () {
-            return this.topLeftStartingPoint;
+        /**
+         * Get position to launch a new circle from the top side
+         *
+         * @returns {{x: number, y: number}|*}
+         */
+        getTopSideEnteringPosition: function () {
+            return this.topSideEnteringPosition;
         },
 
-        getRightStartingPosition: function () {
-            return this.rightStartingPoint;
+        /**
+         * Get position to launch a new circle from the right side
+         *
+         * @returns {{x: number, y: number}|*}
+         */
+        getRightSideEnteringPosition: function () {
+            return this.rightSideEnteringPosition;
         },
 
-        getBottomStartingPosition: function () {
-            return this.bottomStartingPoint;
+        /**
+         * Get position to launch a new circle from the bottom side
+         *
+         * @returns {{x: number, y: number}|*}
+         */
+        getBottomSideEnteringPosition: function () {
+            return this.bottomSideEnteringPosition;
         },
 
         /**
@@ -70,12 +94,14 @@ define([
         },
 
         /**
-         * Move a circle near another circle. The distance is relative to the base circle radius. The final
-         * position is determinated by other circles eventually placed near the base circle. In this case
+         * Get coordinates to move a circle near another circle. The distance is relative to the base circle radius.
+         * The final position is determinated by other circles eventually placed near the base circle. In this case
          * overlapping is avoided using detectCollision method.
+         *
          * @param {Circle[]} allCircles
          * @param {Circle} circleToMove
          * @param {Circle} baseCircleReference
+         * @returns {{x: number, y: number}} coordinates
          */
         getFreePositionNear: function (allCircles, circleToMove, baseCircleReference) {
             var availableMovements = [1, 0.5, 0, -0.5, -1, -0.5, 0, 0.5],
@@ -117,11 +143,20 @@ define([
             return { x: newXPosition, y: newYPosition };
         },
 
-        // FIXME: Buggy (too much loops) when there are many circles
-        // Get coordinates avoiding circle collisions
-        getFreeRandomPosition: function (circles, circle, putCircleLoops, _initialPosition) {
 
-            this.putCircleLoops = putCircleLoops || 0;
+        /**
+         * Get a free random position for a circle
+         *
+         * @param {Circle[]} circles
+         * @param {Circle} circle
+         * @param {number} circlePlacementLoops - keep track how many looops are required to place a circle
+         *                 (used for debug purposes)
+         * @param {{x: number, y: number}} _initialPosition
+         * @returns {{x: number, y: number}} coordinates
+         */
+        getFreeRandomPosition: function (circles, circle, circlePlacementLoops, _initialPosition) {
+
+            this.circlePlacementLoops = circlePlacementLoops || 0;
 
             var xMaxDistance = this.gameCanvasWidth - (circle.getRadius() * 2),
                 yMaxDistance = this.gameCanvasHeight - (circle.getRadius() * 2),
@@ -135,10 +170,10 @@ define([
                 collidingCircles = this.detectCollision(circles, circle);
 
                 if (collidingCircles.length > 0) {
-                    return this.getFreeRandomPosition(circles, circle, ++this.putCircleLoops, initialPosition);
+                    return this.getFreeRandomPosition(circles, circle, ++this.circlePlacementLoops, initialPosition);
                 }
             }
-            console.log('getFreeRandomPosition loops: ' + this.putCircleLoops);
+            console.log('getFreeRandomPosition loops: ' + this.circlePlacementLoops);
             circle.move(initialPosition);
             return coordinates;
         }

@@ -17,6 +17,7 @@ requirejs.config({
         sinon: 'sinonjs/sinon',
         zepto: 'zepto/zepto',
         createjs: 'easeljs/lib/easeljs-0.8.0.combined',
+        tweenjs: 'TweenJS/lib/tweenjs-0.6.0.combined',
         soundjs: 'SoundJS/lib/soundjs-0.6.0.combined'
     },
 
@@ -29,6 +30,10 @@ requirejs.config({
         },
         'sinon': {
             exports: 'sinon'
+        },
+        'tweenjs': {
+            deps: ['createjs'],
+            exports: 'createjs.Tween'
         },
         'soundjs': {
             deps: ['createjs'],

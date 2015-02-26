@@ -1,9 +1,24 @@
+/**
+ * Create the line connected to the moving circle
+ *
+ * @requires createjs
+ *
+ * @module src/Line
+ */
+
 define([
     'createjs'
 ], function (createjs) {
 
     "use strict";
 
+    /**
+     * @constructor
+     *
+     * @param dashLength - length of line's dashes
+     *
+     * @alias src/Line
+     */
     var Line = function Line(dashLength) {
         this.startingPointX = 0;
         this.startingPointY = 0;
@@ -12,15 +27,32 @@ define([
     };
 
     Line.prototype = {
+        /**
+         * Set the line starting point
+         *
+         * @param {number} x
+         * @param {number} y
+         */
         setStartingPoint: function (x, y) {
             this.startingPointX = x;
             this.startingPointY = y;
         },
 
+        /**
+         * Get the line starting point
+         *
+         * @returns {{x: number, y: number}}
+         */
         getStartingPoint: function () {
             return { x: this.startingPointX, y: this.startingPointY };
         },
 
+        /**
+         * Extend line to the specific point
+         *
+         * @param {number} x
+         * @param {number} y
+         */
         extendTo: function (x, y) {
             this.lineShape.graphics.clear();
             this.lineShape.graphics.setStrokeStyle(1).beginStroke("lime");
@@ -46,10 +78,18 @@ define([
             this.lineShape.graphics.endStroke();
         },
 
+        /**
+         * Remove line
+         */
         remove: function(){
             this.lineShape.graphics.clear();
         },
 
+        /**
+         * Get line's shape
+         *
+         * @returns {createjs.Shape}
+         */
         getShape: function () {
             return this.lineShape;
         }

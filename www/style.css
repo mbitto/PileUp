@@ -25,7 +25,7 @@ html, body{
     margin-right: 20px;
 }
 
-.score-message, .tower-completed-score-message{
+.score-message, .pile-completed-score-message{
     position: absolute;
 }
 

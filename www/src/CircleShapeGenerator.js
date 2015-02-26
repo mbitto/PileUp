@@ -93,7 +93,7 @@ define([
 
         /**
          * Get random features for a circle shape
-         * @returns {{radius: number, color: string}}
+         * @returns {{radius: number, color: string, place: number}}
          */
         getCircleRandomFeatures: function(){
 
@@ -120,15 +120,6 @@ define([
          */
         getCirclesCollection: function () {
             return this.circlesCollection;
-        },
-
-        /**
-         * Get the max generable radius
-         *
-         * @returns {number}
-         */
-        getMaximumGenerableRadius: function(){
-            return this.circlesCollection[0].radius;
         }
     };
 

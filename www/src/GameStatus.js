@@ -1,3 +1,11 @@
+/**
+ * Handle Game Status like quantities and progresses
+ *
+ * @requires src/utils
+ * @requires src/config
+ *
+ * @module src/GameStatus
+ */
 define([
     'src/utils',
     'src/config'
@@ -5,20 +13,33 @@ define([
 
     "use strict";
 
-    var gameStatus = function gameStatus(level) {
+    /**
+     * @constructor
+     * @param {Level} level - current level
+     *
+     * @alias src/GameStatus
+     */
+    var GameStatus = function GameStatus(level) {
         this.startingCirclesQuantity = config.STARTING_CIRCLES_QUANTITY;
 
         this.circlesCounter = 0;
-        this.towersCompletedCounter = 0;
+        this.pilesCompletedCounter = 0;
 
         this.level = level;
 
         this.maxCirclesPerGame = this.level.getMaxCircles();
-        this.maxCirclesPerTower = this.level.getCPT();
+        this.maxCirclesPerPile = this.level.getCPT();
         this.timeTickInterval = null;
     };
 
-    gameStatus.prototype = {
+
+    GameStatus.prototype = {
+
+        /**
+         *
+         * @param {function} timeTickCallback - callback called each game second
+         * @param {function} gameOverCallback - callback called on game over
+         */
         start: function (timeTickCallback, gameOverCallback) {
 
             var timeLeft = this.level.getTime(),
@@ -35,47 +56,82 @@ define([
             }, 1000);
         },
 
+        /**
+         * Get the number of initial circles created on stage
+         *
+         * @returns {number}
+         */
         getStartingCirclesQuantity: function () {
             return this.startingCirclesQuantity;
         },
 
-        isTowerCompleted: function (circlesNumber) {
-            return circlesNumber === this.maxCirclesPerTower;
+        /**
+         * Check if pile is completed
+         *
+         * @param {number} circlesNumber
+         * @returns {boolean}
+         */
+        isPileCompleted: function (circlesNumber) {
+            return circlesNumber === this.maxCirclesPerPile;
         },
 
+        /**
+         * Check if the maximum number of circles on stage has been reached
+         *
+         * @returns {boolean}
+         */
         isCirclesLimitReached: function () {
             console.log("Circles count: " + this.circlesCounter  + "/" + this.maxCirclesPerGame);
             return this.circlesCounter === this.maxCirclesPerGame;
         },
 
-        towerCompleted: function () {
-            this.towersCompletedCounter++;
-            this.circlesCounter = this.circlesCounter - this.maxCirclesPerTower;
+        /**
+         * Update counter when a pile has been completed
+         */
+        pileCompleted: function () {
+            this.pilesCompletedCounter++;
+            this.circlesCounter = this.circlesCounter - this.maxCirclesPerPile;
         },
 
+        /**
+         * Update counter when a circle has been added
+         */
         circleAdded: function(){
             this.circlesCounter++;
         },
 
+        /**
+         * Check if current level has been completed
+         * @returns {boolean}
+         */
         isLevelCompleted: function () {
-            return this.towersCompletedCounter === this.level.getTowersGoal();
+            return this.pilesCompletedCounter === this.level.getPilesGoal();
         },
 
-        getCirclesQuantity: function () {
-            return this.circlesCounter;
+        /**
+         * Get the number of piles to complete current level
+         *
+         * @returns {number}
+         */
+        getPilesGoal: function () {
+            return this.level.getPilesGoal();
         },
 
-        getTowersGoal: function () {
-            return this.level.getTowersGoal();
+        /**
+         * Get the number of completed piles
+         *
+         * @returns {number}
+         */
+        getCompletedPilesQuantity: function () {
+            return this.pilesCompletedCounter;
         },
 
-        getCompletedTowersQuantity: function () {
-            return this.towersCompletedCounter;
-        },
-
+        /**
+         * Clear current level interval
+         */
         clearCurrentGame: function () {
             clearInterval(this.timeTickInterval);
         }
     };
-    return gameStatus;
+    return GameStatus;
 });

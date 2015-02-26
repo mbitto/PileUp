@@ -10,10 +10,10 @@ define([
             it('should update the index of this.circlesIndex passed as param', function(){
                 var circleShapeGenerator = new CircleShapeGenerator(2);
                 circleShapeGenerator._updateRepetitionsIndex(0);
-                assert.isTrue(circleShapeGenerator.circlesIndex[0] === 1);
+                expect(circleShapeGenerator.circlesIndex[0]).to.be.equal(1);
 
                 circleShapeGenerator._updateRepetitionsIndex(0);
-                assert.isTrue(circleShapeGenerator.circlesIndex[0] === 2);
+                expect(circleShapeGenerator.circlesIndex[0]).to.be.equal(2);
             });
 
             it('should reset index to 0 if all index reach the limit set by constructor', function(){
@@ -24,7 +24,7 @@ define([
                     circleShapeGenerator._updateRepetitionsIndex(i);
                 }
                 for(var j = 0; j<7; j++){
-                    assert.isTrue(circleShapeGenerator.circlesIndex[j] === 0);
+                    expect(circleShapeGenerator.circlesIndex[j]).to.be.equal(0);
                 }
             });
         });
@@ -35,16 +35,17 @@ define([
             it('should return a random shape object having radius and color params', function(){
                 var res = circleShapeGenerator.getCircleRandomFeatures();
 
-                assert.isObject(res);
-                assert.property(res, 'radius');
-                assert.property(res, 'color');
+                expect(res).to.be.an('object');
+                expect(res).to.have.property('radius');
+                expect(res).to.have.property('color');
+                expect(res).to.have.property('place');
             });
 
             it('should return an object of circleCollection property', function() {
                 var res = circleShapeGenerator.getCircleRandomFeatures(),
                     circlesCollection = circleShapeGenerator.getCirclesCollection();
 
-                assert.include(circlesCollection, res);
+                expect(circlesCollection).to.contain(res);
             });
 
 
