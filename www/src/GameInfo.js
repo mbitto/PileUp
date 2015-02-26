@@ -54,7 +54,7 @@ define([
         /**
          * Set piles completed in current level and piles needed to complete it
          *
-         * @param {nuber} pilesCompleted
+         * @param {number} pilesCompleted
          * @param {number} pilesGoal
          */
         setPilesCompletedCounter: function (pilesCompleted, pilesGoal) {

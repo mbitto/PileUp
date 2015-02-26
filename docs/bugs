@@ -7,7 +7,7 @@ BROWSER PC
 - Il counter dei circle totali probabilmente non viene resettato avanzando di livello
 - Il limite del numero dei circle totali non sempre è rispettato
 - Al game over non viene resettato il timer
-
+- La possibilità di rimanere con 2 (o più) circles uguali non è contemplata (aggiungere circle in caso di inattività?)
 
 MOBILE APP (samsung s3)
 

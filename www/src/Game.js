@@ -40,6 +40,45 @@ define([
     Game.prototype = {
 
         /**
+         * Remove circles in pile and update game information
+         *
+         * @private
+         * @param {Circle} baseCircle
+         *
+         */
+        _setPileCompleted: function (baseCircle) {
+            var self = this;
+            baseCircle.forEachCircleInPile(function(circle){
+                self.stage.removeCircle(circle);
+            });
+            this.gameStatus.pileCompleted();
+
+            var completedPilesQuantity = this.gameStatus.getCompletedPilesQuantity(),
+                pilesQuantityGoal = this.gameStatus.getPilesGoal(),
+                pileHeight = baseCircle.getHeight();
+
+            this.gameInfo.setPilesCompletedCounter(completedPilesQuantity, pilesQuantityGoal);
+            var pileCompletionScore = this.scoreManager.increaseScoreForPileCompletion(pileHeight);
+            this.gameInfo.setUserScore(this.scoreManager.getScore());
+            this.gameInfo.pileCompleted(pileCompletionScore, baseCircle.getCoordinates());
+        },
+
+        /**
+         * Go to the next level and display the related message
+         * @private
+         *
+         */
+        _goToNextLevel: function () {
+            var self = this;
+            var nextLevelNumber = this.levelManager.getCurrentLevelNumber() + 1;
+            this.gameInfo.displayNextLevelMessage(nextLevelNumber, function () {
+                self.gameStatus.clearCurrentGame();
+                self.stage.removeAllCircles();
+                self.start();
+            });
+        },
+
+        /**
          * Start the game, generate starting circles, and initialize a new game status and game information
          *
          */
@@ -50,15 +89,16 @@ define([
                 time = level.getTime(),
                 cpt = level.getCPT(),
                 pilesGoal = level.getPilesGoal(),
-                maxCircles = level.getMaxCircles();
+                maxCircles = level.getMaxCircles(),
+                index = 1;
 
             this.gameStatus = new GameStatus(level);
+
+            var startingCirclesQuantity = self.gameStatus.getStartingCirclesQuantity();
+
             this.gameInfo.displayInstructionMessage(time, cpt, pilesGoal, maxCircles, function () {
 
                 console.log("Starting level: " + self.levelManager.getCurrentLevelNumber());
-
-                var startingCirclesQuantity = self.gameStatus.getStartingCirclesQuantity(),
-                    index = 1;
 
                 self.generateCircle("up", function r(){
                     if(index < startingCirclesQuantity) {
@@ -70,10 +110,12 @@ define([
                 self.gameInfo.setUserScore(self.scoreManager.getScore());
                 self.gameInfo.setPilesCompletedCounter(0, self.gameStatus.getPilesGoal());
 
-                self.gameStatus.start(
+                self.gameStatus.init(
+                    // timeTickCallback
                     function (timeLeft) {
                         self.gameInfo.setTimeLeft(timeLeft);
                     },
+                    // gameOverCallback
                     function () {
                         self.gameOver();
                     }
@@ -95,7 +137,7 @@ define([
          * Generate new circle
          *
          * @param {string} enteringSide
-         * @param {function} callback - called when circle's transition has finished
+         * @param {function|undefined} callback - called when circle's transition has finished
          */
         generateCircle: function (enteringSide, callback) {
             var circle = this.circleFactory.createCircle(this.userInteractionManager),
@@ -145,35 +187,19 @@ define([
             this.gameInfo.setUserScore(this.scoreManager.getScore());
 
             baseCircle.mergeWith(movingCircle);
+
             this.gameInfo.circlesMerged(score, baseCircle.getCoordinates());
 
             if(this.gameStatus.isCirclesLimitReached()){
                 this.gameOver();
             }
             else if(this.gameStatus.isPileCompleted(baseCircle.getHeight())){
-                baseCircle.forEachCircleInPile(function(circle){
-                    self.stage.removeCircle(circle);
-                });
-                this.gameStatus.pileCompleted();
-
-                var completedPilesQuantity = this.gameStatus.getCompletedPilesQuantity(),
-                    pilesQuantityGoal = this.gameStatus.getPilesGoal(),
-                    pileHeight = baseCircle.getHeight();
-
-                this.gameInfo.setPilesCompletedCounter(completedPilesQuantity, pilesQuantityGoal);
-                var pileCompletionScore = this.scoreManager.increaseScoreForPileCompletion(pileHeight);
-                this.gameInfo.setUserScore(this.scoreManager.getScore());
-                this.gameInfo.pileCompleted(pileCompletionScore, baseCircle.getCoordinates());
+                this._setPileCompleted(baseCircle);
 
                 if(this.gameStatus.isLevelCompleted()){
-                    var nextLevelNumber = this.levelManager.getCurrentLevelNumber() + 1;
-                    this.gameInfo.displayNextLevelMessage(nextLevelNumber, function () {
-                        self.gameStatus.clearCurrentGame();
-                        self.stage.removeAllCircles();
-                        self.start();
-                    });
+                    this._goToNextLevel();
                 }
-                else if(self.stage.getChildrenNumber() <= 1){
+                else if(this.stage.getChildrenNumber() <= 1){
                     // Launch circle from right after 3 secs
                     setTimeout(function () {
                         self.generateCircle("right");

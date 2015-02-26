@@ -37,10 +37,12 @@ define([
 
         /**
          *
+         * Initialize game status
+         *
          * @param {function} timeTickCallback - callback called each game second
          * @param {function} gameOverCallback - callback called on game over
          */
-        start: function (timeTickCallback, gameOverCallback) {
+        init: function (timeTickCallback, gameOverCallback) {
 
             var timeLeft = this.level.getTime(),
                 self = this;
