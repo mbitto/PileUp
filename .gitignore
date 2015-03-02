@@ -1,3 +1,7 @@
 www/node_modules
 www/bower_components
 platforms
+mobile-app/www/assets
+mobile-app/www/index.html
+mobile-app/www/main.js
+mobile-app/www/main.js.map

@@ -38,3 +38,7 @@ gulp.task('clean', function (cb) {
         'mobile-app/www/index.html'
     ], cb);
 });
+
+gulp.task('deploy', function () {
+    // TODO deploy with shell command
+});
