@@ -47,16 +47,20 @@ GameInfo e Information vanno refattorizzate:
 
 - Introdurre punteggio in base a vicinanza dei cerchi [OK]
 
-- Migliorare messaggi per l'utente
+- test [OK]
 
-- test
+- Fare build della versione da deployare escludendo i pacchetti dev
+
+    1) build r.js [OK] (node r.js -o build.js)
+    2) capire come linkare la versione buildata al file html principale [OK]
+    3) usare gulp per copiare la versione buildata nella cartella mobile-app
+
+
 
 - refactoring
 
 - miglioramento prestazioni e ottimizzazione
 
-- spinner loading iniziale e tasto dx
+- tasto dx
 
 - Aggiungere e istruzioni
-
-- Fare build della versione da deployare escludendo i pacchetti dev
