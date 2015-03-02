@@ -74,14 +74,14 @@ define([
 
         describe('#isCirclesLimitReached()', function () {
             it('should return false if number of circles added is less or equal than circles per pile value', function() {
-                for(var i = 0; i<10; i++){
+                for(var i = 1; i<10; i++){
                     gameStatus.circleAdded();
                 }
                 expect(gameStatus.isCirclesLimitReached()).to.be.false;
             });
 
             it('should return true if number of circles added is more than circles per pile value', function() {
-                for(var i = 0; i<11; i++){
+                for(var i = 1; i<=10; i++){
                     gameStatus.circleAdded();
                 }
                 expect(gameStatus.isCirclesLimitReached()).to.be.true;
@@ -91,7 +91,7 @@ define([
         describe('#pileCompleted()', function () {
             it('should update the circle counter according to circles per pile value', function() {
                 var circlesAdded = 7;
-                for(var i = 0; i < circlesAdded; i++){
+                for(var i = 1; i <= circlesAdded; i++){
                     gameStatus.circleAdded();
                 }
                 gameStatus.pileCompleted();
@@ -103,9 +103,9 @@ define([
         describe('#circleAdded()', function () {
             it('should update the circle counter', function () {
                 var circlesAdded = 7;
-                for(var i = 0; i < circlesAdded; i++){
+                for(var i = 1; i <= circlesAdded; i++){
                     gameStatus.circleAdded();
-                    expect(gameStatus.circlesCounter).to.equal(i+1);
+                    expect(gameStatus.circlesCounter).to.equal(i);
                 }
             });
         });
@@ -114,7 +114,7 @@ define([
             it('should return false if piles completed level ', function () {
                 var pilesCompleted = 4;
 
-                for(var i = 0; i < pilesCompleted; i++){
+                for(var i = 1; i <= pilesCompleted; i++){
                     gameStatus.pileCompleted();
                 }
 
@@ -130,7 +130,7 @@ define([
             it('should return completed piles quantity', function () {
                 var pilesCompleted = 10;
 
-                for(var i = 0; i < pilesCompleted; i++){
+                for(var i = 1; i <= pilesCompleted; i++){
                     gameStatus.pileCompleted();
                 }
 
@@ -164,6 +164,5 @@ define([
                 this.clock.restore();
             });
         });
-
     });
 });

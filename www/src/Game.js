@@ -143,11 +143,14 @@ define([
             var circle = this.circleFactory.createCircle(this.userInteractionManager),
                 self = this;
             this.stage.addCircle(enteringSide, circle, function () {
-                if(callback){
+                if (callback) {
                     callback();
                 }
                 self.gameStatus.circleAdded();
             });
+            if (this.gameStatus.isCirclesLimitReached()) {
+                this.gameOver();
+            }
         },
 
         /**
@@ -190,10 +193,7 @@ define([
 
             this.gameInfo.circlesMerged(score, baseCircle.getCoordinates());
 
-            if(this.gameStatus.isCirclesLimitReached()){
-                this.gameOver();
-            }
-            else if(this.gameStatus.isPileCompleted(baseCircle.getHeight())){
+            if(this.gameStatus.isPileCompleted(baseCircle.getHeight())){
                 this._setPileCompleted(baseCircle);
 
                 if(this.gameStatus.isLevelCompleted()){
@@ -216,6 +216,8 @@ define([
                 score = this.scoreManager.getScore(),
                 highScore = this.scoreManager.getStoredHighScore(),
                 newHighScore = score > highScore;
+
+            self.gameStatus.clearCurrentGame();
 
             if(newHighScore){
                 this.scoreManager.storeNewHighScore(score);

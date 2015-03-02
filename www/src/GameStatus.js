@@ -83,7 +83,7 @@ define([
          * @returns {boolean}
          */
         isCirclesLimitReached: function () {
-            return this.circlesCounter > this.maxCirclesPerGame;
+            return this.circlesCounter >= this.maxCirclesPerGame;
         },
 
         /**

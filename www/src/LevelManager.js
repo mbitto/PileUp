@@ -20,9 +20,9 @@ define([
         this.currentLevel = 0;
         // Levels features
         this.levels = [
-            {time: 60, cpt: 3, pilesGoal: 3, maxCircles: 10},
-            {time: 60, cpt: 4, pilesGoal: 3, maxCircles: 10},
-            {time: 45, cpt: 5, pilesGoal: 3, maxCircles: 10},
+            {time: 60, cpt: 3, pilesGoal: 3, maxCircles: 5},
+            {time: 60, cpt: 4, pilesGoal: 3, maxCircles: 5},
+            {time: 45, cpt: 5, pilesGoal: 3, maxCircles: 5},
             {time: 45, cpt: 5, pilesGoal: 4, maxCircles: 15},
             {time: 45, cpt: 5, pilesGoal: 5, maxCircles: 15},
             {time: 45, cpt: 6, pilesGoal: 4, maxCircles: 20},
