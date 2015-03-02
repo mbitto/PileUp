@@ -35,7 +35,7 @@ define(function(){
          * @returns {number} increased score
          */
         increaseScore: function (position1, position2) {
-            var score = this.scores[position1 - position2];
+            var score = this.scores[position1 - position2] || 0;
             this.userScore += score;
             return score;
         },
@@ -84,21 +84,21 @@ define(function(){
         },
 
         /**
-         * Get user's high score
-         *
-         * @returns {number}
-         */
-        getStoredHighScore: function () {
-            return window.localStorage.getItem(this.localStorageKey) || 0;
-        },
-
-        /**
          * Store a new high score
          *
          * @param score
          */
         storeNewHighScore: function (score) {
             window.localStorage.setItem(this.localStorageKey, score);
+        },
+
+        /**
+         * Get user's high score
+         *
+         * @returns {number}
+         */
+        getStoredHighScore: function () {
+            return window.localStorage.getItem(this.localStorageKey) || 0;
         }
     };
 

@@ -1,6 +1,7 @@
 define([
-    'src/Circle'
-], function(Circle){
+    'src/Circle',
+    'sinon'
+], function(Circle, sinon){
     "use strict";
 
     describe('Circle', function(){
@@ -8,8 +9,8 @@ define([
         var circle = new Circle('#000000', 25, 7);
 
         describe('#move', function(){
-            circle.move({x:100, y:300});
             it('should move the circle to the new position', function(){
+                circle.move({x:100, y:300});
                 var coordinates = circle.getCoordinates();
                 expect(coordinates.x).to.be.equal(100);
                 expect(coordinates.y).to.be.equal(300);
@@ -17,15 +18,19 @@ define([
         });
 
         describe('#moveSmooth', function () {
+
             it('should move the circle to the new position smoothly', function(done){
 
                 var sCircle = new Circle('#000000', 25, 7);
-                sCircle.moveSmooth({x:500, y:50}, 300, function () {
+
+                sCircle.moveSmooth({x:500, y:50}, 100, function () {
                     var coordinates = sCircle.getCoordinates();
                     expect(coordinates.x).to.be.equal(500);
                     expect(coordinates.y).to.be.equal(50);
                     done();
+                    console.log("done() called");
                 });
+
             });
         });
 
