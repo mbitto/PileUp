@@ -17,13 +17,22 @@ define([
      */
     var CircleShapeGenerator = function CircleShapeGenerator(repeatLimit) {
 
-        var RED = "#FF0000",
-            ORANGE = "#FF7F00",
-            YELLOW = "#FFFF00",
-            GREEN = "#00FF00",
-            BLUE = "#0000FF",
-            INDIGO = "#5A00FF",
-            VIOLET = "#7F00FF";
+        var RED = "#E02130",
+            ORANGE = "#F85931",
+            YELLOW = "#FAB243",
+            GREEN = "#429867",
+            BLUE = "#2B5166",
+            INDIGO = "#009989",
+            VIOLET = "#482344",
+
+            STROKE_RED = "#c74550",
+            STROKE_ORANGE = "#df7358",
+            STROKE_YELLOW = "#e0b069",
+            STROKE_GREEN = "#517f65",
+            STROKE_BLUE = "#4f6f80",
+            STROKE_INDIGO = "#1a8076",
+            STROKE_VIOLET = "#62435f";
+
 
         /**
          * @access private
@@ -44,13 +53,13 @@ define([
          * @type {Object}
          */
         this.circlesCollection = [
-            {radius: 46, color: RED, place: 1},
-            {radius: 42.5, color: ORANGE, place: 2},
-            {radius: 39, color: YELLOW, place: 3},
-            {radius: 35.5, color: GREEN, place: 4},
-            {radius: 32, color: BLUE, place: 5},
-            {radius: 28.5, color: INDIGO, place: 6},
-            {radius: 25, color: VIOLET, place: 7}
+            {radius: 46, color: RED, strokeColor: STROKE_RED, place: 1},
+            {radius: 42.5, color: ORANGE, strokeColor: STROKE_ORANGE, place: 2},
+            {radius: 39, color: YELLOW, strokeColor: STROKE_YELLOW, place: 3},
+            {radius: 35.5, color: GREEN, strokeColor: STROKE_GREEN, place: 4},
+            {radius: 32, color: BLUE, strokeColor: STROKE_BLUE, place: 5},
+            {radius: 28.5, color: INDIGO, strokeColor: STROKE_INDIGO, place: 6},
+            {radius: 25, color: VIOLET, strokeColor: STROKE_VIOLET, place: 7}
         ];
 
         this._resetIndex();
@@ -93,7 +102,7 @@ define([
 
         /**
          * Get random features for a circle shape
-         * @returns {{radius: number, color: string, place: number}}
+         * @returns {{radius: number, color: string, strokeColor: string, place: number}}
          */
         getCircleRandomFeatures: function(){
 
@@ -109,6 +118,7 @@ define([
             return {
                 radius: this.circlesCollection[randomIndex].radius,
                 color: this.circlesCollection[randomIndex].color,
+                strokeColor: this.circlesCollection[randomIndex].strokeColor,
                 place: this.circlesCollection[randomIndex].place
             };
         },

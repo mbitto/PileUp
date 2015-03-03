@@ -38,6 +38,7 @@ define([
                 expect(res).to.be.an('object');
                 expect(res).to.have.property('radius');
                 expect(res).to.have.property('color');
+                expect(res).to.have.property('strokeColor');
                 expect(res).to.have.property('place');
             });
 

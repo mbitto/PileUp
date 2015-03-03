@@ -66,7 +66,7 @@ define([
          *
          * @param {number} score
          * @param {number} highScore
-         * @param {number} newHighScore
+         * @param {boolean} newHighScore
          * @param {function} callback - Called when user presses ok
          */
         displayGameOverMessage: function (score, highScore, newHighScore, callback) {
@@ -98,6 +98,18 @@ define([
                     "Game over with more than: <strong>" + maxCircles + " circles</strong><br/><br/>";
 
             alertify.alert(message, callback);
+        },
+
+        displayResetMessage: function (okCallback, cancelCallback) {
+            var message = "<strong>Paused!</strong><br/><br/> Do you want to restart? <br/><br/>";
+            alertify.confirm(message, function (e) {
+                if (e) {
+                    okCallback();
+
+                } else {
+                    cancelCallback();
+                }
+            });
         },
 
         /**

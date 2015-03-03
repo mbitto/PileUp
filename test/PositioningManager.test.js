@@ -12,15 +12,15 @@ define([
             positioningManager = new PositioningManager(canvasWidth, canvasHeight),
             allCircles = [];
 
-        allCircles.push(new Circle('#ff0000', 25, 7));
-        allCircles.push(new Circle('#ff0000', 46, 1));
+        allCircles.push(new Circle('#ff0000', '#000000', 25, 7));
+        allCircles.push(new Circle('#ff0000', '#000000', 46, 1));
 
         allCircles[0].move({x:100, y:100});
         allCircles[1].move({x:250, y:250});
 
         describe('#detectCollision', function(){
             it('should return an empty array if no collision is detected', function(){
-                var movingCircle = new Circle('#ff0000', 25, 7);
+                var movingCircle = new Circle('#ff0000', '#000000', 25, 7);
                 movingCircle.move({x:150, y:150});
                 var collidingCircles = positioningManager.detectCollision(allCircles, movingCircle);
 
@@ -30,7 +30,7 @@ define([
 
 
             it('should detect collisions between circles in stage and the moving circle', function(){
-                var movingCircle = new Circle('#ff0000', 46, 1);
+                var movingCircle = new Circle('#ff0000', '#000000', 46, 1);
                 movingCircle.move({x:110, y:110});
                 var collidingCircles = positioningManager.detectCollision(allCircles, movingCircle);
 
@@ -44,8 +44,8 @@ define([
         describe('#getFreePositionNear', function(){
             it('should move the circle near the base circle', function(){
                 var movingCircleRadius = 42.5,
-                    movingCircle = new Circle('#ff0000', movingCircleRadius, 2),
-                    referenceCircle = new Circle('#ff0000', movingCircleRadius, 2);
+                    movingCircle = new Circle('#ff0000', '#000000', movingCircleRadius, 2),
+                    referenceCircle = new Circle('#ff0000', '#000000', movingCircleRadius, 2);
 
                 movingCircle.move({x:110, y:110});
                 referenceCircle.move({x:500, y:500});

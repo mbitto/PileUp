@@ -2,9 +2,11 @@
 <widget id="com.mbitto.pileup" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>PileUp</name>
     <description>
-        A simple game
+        Hello World sample application that responds to the deviceready event.
     </description>
-    <author email="manuel.bitto@gmail.com" href="http://mbitto.com">Manuel Bitto</author>
+    <author email="support@phonegap.com" href="http://phonegap.com">
+        PhoneGap Team
+    </author>
     <content src="index.html" />
     <preference name="permissions" value="none" />
     <preference name="orientation" value="default" />

@@ -21,7 +21,6 @@ module.exports = function(config) {
             {pattern: 'test/**/*.js', included: false}
         ],
 
-
         // list of files to exclude
         exclude: [
             'main.js'
@@ -50,10 +49,16 @@ module.exports = function(config) {
         // enable / disable watching file and executing tests whenever any file changes
         autoWatch: false,
 
+        customLaunchers: {
+            Chrome_small: {
+                base: 'Chrome',
+                flags: ['--window-size=100,100', '--window-position=0,0']
+            }
+        },
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Chrome'],
+        browsers: ['Chrome_small'],
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits

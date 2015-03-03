@@ -29,7 +29,12 @@ define([
 
         this.maxCirclesPerGame = this.level.getMaxCircles();
         this.maxCirclesPerPile = this.level.getCPT();
+
         this.timeTickInterval = null;
+        this.timeLeft = 0;
+
+        this.timeTickCallback;
+        this.gameOverCallback;
     };
 
 
@@ -44,16 +49,29 @@ define([
          */
         init: function (timeTickCallback, gameOverCallback) {
 
-            var timeLeft = this.level.getTime(),
-                self = this;
+            this.timeTickCallback = timeTickCallback;
+            this.gameOverCallback = gameOverCallback;
+
+            this.startTimer(this.level.getTime());
+        },
+
+        /**
+         * Start timer at given time
+         *
+         * @param timeLeft
+         */
+        startTimer: function (timeLeft) {
+            var self = this;
+
+            this.timeLeft = timeLeft;
 
             this.timeTickInterval = setInterval(function () {
-                if(timeLeft === 0){
-                    gameOverCallback();
+                if(self.timeLeft === 0){
+                    self.gameOverCallback();
                     clearInterval(self.timeTickInterval);
                 }
                 else{
-                    timeTickCallback(--timeLeft);
+                    self.timeTickCallback(--self.timeLeft);
                 }
             }, 1000);
         },
@@ -132,6 +150,14 @@ define([
          */
         clearCurrentGame: function () {
             clearInterval(this.timeTickInterval);
+        },
+
+        /**
+         * Get time left
+         * @returns {number}
+         */
+        getTimeLeft: function () {
+            return this.timeLeft;
         }
     };
     return GameStatus;

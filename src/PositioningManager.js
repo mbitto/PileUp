@@ -173,7 +173,7 @@ define([
                     return this.getFreeRandomPosition(circles, circle, ++this.circlePlacementLoops, initialPosition);
                 }
             }
-            console.log('getFreeRandomPosition loops: ' + this.circlePlacementLoops);
+            //console.log('getFreeRandomPosition loops: ' + this.circlePlacementLoops);
             circle.move(initialPosition);
             return coordinates;
         }

@@ -1,11 +1,14 @@
 html{
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
     font-family: Verdana, Arial, sans-serif;
 }
 html, body{
-    color: lime;
+    color: #EDB92E;
     margin: 0;
     -webkit-transform: translate3d(0, 0, 0);
-    background-color: #111;
+    background-color: #181818;
     height: 100%;
     overflow: hidden;
 }
@@ -58,9 +61,23 @@ html, body{
 }
 
 #alertify{
-    color: #111;
+    color: #181818;
 }
 
 .alertify-message{
     font-size: 0.8em;
+}
+
+.alertify-dialog{
+    background-color: #edb92e;
+}
+
+#alertify .alertify-button-ok, #alertify .alertify-button-ok:hover, #alertify .alertify-button-ok:focus{
+    background-color: #ed5a2e;
+    border: #ed5a2e;
+}
+
+#alertify .alertify-button-cancel, #alertify .alertify-button-cancel:hover, #alertify .alertify-button-cancel:focus{
+    background-color: #4f6f80;
+    border: #4f6f80;
 }

@@ -43,7 +43,7 @@ define([
          */
         press: function (circle, e) {
             var self = this;
-            circle.showOutlineCircle();
+            circle.showOutlineCircle(circle.getBaseCircle().getColor());
 
             circle.forEachCircleInPile(function(circleToMoveUp){
                 self.stage.moveZIndexUp(circleToMoveUp, self.stage.getChildrenNumber() - 1);
@@ -65,7 +65,7 @@ define([
             circle.forEachCircleInPile(function (circleToMove) {
                 circleToMove.move({x: e.stageX, y: e.stageY});
             });
-            this.lineManager.extendLineTo(e.stageX, e.stageY);
+            this.lineManager.extendLineTo(e.stageX, e.stageY, circle.getBaseCircle().getColor());
         },
 
         /**

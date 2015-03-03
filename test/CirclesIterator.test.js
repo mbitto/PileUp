@@ -6,9 +6,9 @@ define([
 
     describe('CirclesIterator', function(){
 
-        var circle = new Circle('#000000', 25, 7),
-            middleCircle = new Circle('#000000', 32, 5),
-            topCircle = new Circle('#000000', 39, 3),
+        var circle = new Circle('#000000', '#000000', 25, 7),
+            middleCircle = new Circle('#000000', '#000000', 32, 5),
+            topCircle = new Circle('#000000', '#000000', 39, 3),
             circlesIterator = new CirclesIterator(circle);
 
         circle.mergeWith(middleCircle);
@@ -20,7 +20,7 @@ define([
             });
 
             it('should return itself', function(){
-                var singleCircle = new Circle('#000000', 39, 3),
+                var singleCircle = new Circle('#000000', '#000000', 39, 3),
                     singleCirclesIterator = new CirclesIterator(singleCircle);
                 expect(singleCirclesIterator.getTop()).to.be.equal(singleCircle);
             });

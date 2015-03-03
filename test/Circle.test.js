@@ -6,7 +6,7 @@ define([
 
     describe('Circle', function(){
 
-        var circle = new Circle('#000000', 25, 7);
+        var circle = new Circle('#000000', '#000000', 25, 7);
 
         describe('#move', function(){
             it('should move the circle to the new position', function(){
@@ -21,7 +21,7 @@ define([
 
             it('should move the circle to the new position smoothly', function(done){
 
-                var sCircle = new Circle('#000000', 25, 7);
+                var sCircle = new Circle('#000000', '#000000', 25, 7);
 
                 sCircle.moveSmooth({x:500, y:50}, 100, function () {
                     var coordinates = sCircle.getCoordinates();
@@ -48,8 +48,8 @@ define([
 
         describe('#canBeMergedWith', function(){
             it('should return true if this circle can be merged', function(){
-                var baseCircle = new Circle('#000000', 40, {x:100, y:100}),
-                    movingCircle = new Circle('#000000', 30, {x:200, y:200});
+                var baseCircle = new Circle('#000000', '#000000', 40, {x:100, y:100}),
+                    movingCircle = new Circle('#000000', '#000000', 30, {x:200, y:200});
 
                 expect(baseCircle.canBeMergedWith(movingCircle)).to.be.ok;
                 expect(movingCircle.canBeMergedWith(baseCircle)).to.not.be.ok;
@@ -58,8 +58,8 @@ define([
 
         describe('#mergeWith', function(){
             it('should merge with the other circle', function(){
-                var baseCircle = new Circle('#000000', 40, {x:100, y:100}),
-                    movingCircle = new Circle('#000000', 30, {x:200, y:200});
+                var baseCircle = new Circle('#000000', '#000000', 40, {x:100, y:100}),
+                    movingCircle = new Circle('#000000', '#000000', 30, {x:200, y:200});
 
                 baseCircle.mergeWith(movingCircle);
 
@@ -70,8 +70,8 @@ define([
 
         describe('#pop', function(){
             it('should pop out the last circle', function(){
-                var baseCircle = new Circle('#000000', 40, {x:100, y:100}),
-                    movingCircle = new Circle('#000000', 30, {x:200, y:200});
+                var baseCircle = new Circle('#000000', '#000000', 40, {x:100, y:100}),
+                    movingCircle = new Circle('#000000', '#000000', 30, {x:200, y:200});
 
                 baseCircle.mergeWith(movingCircle);
 

@@ -4,6 +4,6 @@
     name:'../main',
     out:'build/main.js',
     optimize: 'uglify2',
-    generateSourceMaps: true,
+    generateSourceMaps: false,
     preserveLicenseComments: false
 })

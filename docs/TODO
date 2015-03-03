@@ -8,6 +8,8 @@ TODO:
 - Gestire movimenti fluidi al pop [ok]
 
 
+- build mobile app:
+
 
 13/02/2015
 - Creare un cerchio concentrico più ampio attorno al circle di partenza [OK]
@@ -53,14 +55,18 @@ GameInfo e Information vanno refattorizzate:
 
     1) build r.js [OK] (node r.js -o build.js)
     2) capire come linkare la versione buildata al file html principale [OK]
-    3) usare gulp per copiare la versione buildata nella cartella mobile-app
+    3) usare gulp per copiare la versione buildata nella cartella mobile-app [OK]
 
 
 
-- refactoring
+- refactoring [OK]
+
+- tasto dx
 
 - miglioramento prestazioni e ottimizzazione
 
-- tasto dx
+- controllo alogoritmo casualità nuovi circles
+
+- aggiungere nuovo circle se user inattivo per n secs
 
 - Aggiungere e istruzioni

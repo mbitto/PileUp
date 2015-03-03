@@ -71,6 +71,7 @@ define([
         _goToNextLevel: function () {
             var self = this;
             var nextLevelNumber = this.levelManager.getCurrentLevelNumber() + 1;
+            this.pause();
             this.gameInfo.displayNextLevelMessage(nextLevelNumber, function () {
                 self.gameStatus.clearCurrentGame();
                 self.stage.removeAllCircles();
@@ -97,8 +98,6 @@ define([
             var startingCirclesQuantity = self.gameStatus.getStartingCirclesQuantity();
 
             this.gameInfo.displayInstructionMessage(time, cpt, pilesGoal, maxCircles, function () {
-
-                console.log("Starting level: " + self.levelManager.getCurrentLevelNumber());
 
                 self.generateCircle("up", function r(){
                     if(index < startingCirclesQuantity) {
@@ -226,6 +225,20 @@ define([
             this.gameInfo.displayGameOverMessage(score, highScore, newHighScore, function () {
                 self.restart();
             });
+        },
+
+        /**
+         * Pause the game
+         */
+        pause: function () {
+            this.gameStatus.clearCurrentGame();
+        },
+
+        /**
+         * Resume the game
+         */
+        resume: function () {
+            this.gameStatus.startTimer(this.gameStatus.getTimeLeft());
         }
 
     };

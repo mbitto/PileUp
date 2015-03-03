@@ -164,5 +164,33 @@ define([
                 this.clock.restore();
             });
         });
+
+        describe('#startTimer()', function () {
+            before(function () {
+                this.clock = sinon.useFakeTimers();
+            });
+
+            it('should pause internal timer and restart it on request', function () {
+                var timeTickCounter = 0,
+                    timeTickCallback = function () {
+                        timeTickCounter++;
+                    };
+
+                gameStatus.init(timeTickCallback, function () {});
+                expect(timeTickCounter).to.be.equal(0);
+                this.clock.tick(1000);
+                expect(timeTickCounter).to.be.equal(1);
+                gameStatus.clearCurrentGame();
+                this.clock.tick(1000);
+                expect(timeTickCounter).to.be.equal(1);
+                gameStatus.startTimer(1);
+                this.clock.tick(1000);
+                expect(timeTickCounter).to.be.equal(2);
+            });
+
+            after(function () {
+                this.clock.restore();
+            });
+        });
     });
 });

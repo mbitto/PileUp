@@ -37,19 +37,21 @@ requirejs([
     'src/Game',
     'src/Canvas',
     'src/GameStatus',
+    'src/DeviceEventManager',
     'src/LevelManager',
     'src/GameInfo',
     'src/Sound',
     'src/config'
 ],
 
-function(createjs, tweenjs, Stage, Game, Canvas, GameStatus, LevelManager, GameInfo, Sound, config){
+function(createjs, tweenjs, Stage, Game, Canvas, GameStatus, DeviceEventManager, LevelManager, GameInfo, Sound, config){
 
     "use strict";
 
     var htmlCanvasElement = document.querySelector('#canvas'),
         canvas = new Canvas(htmlCanvasElement),
         createJSStage = new createjs.Stage(htmlCanvasElement),
+        deviceEventManager = new DeviceEventManager(),
         levelManager = new LevelManager(),
         sound = new Sound(),
         gameInfo = new GameInfo(sound),
@@ -60,10 +62,24 @@ function(createjs, tweenjs, Stage, Game, Canvas, GameStatus, LevelManager, GameI
     createjs.Ticker.setFPS(30);
     createjs.Ticker.addEventListener('tick', createJSStage);
 
+    deviceEventManager.onMenu(function () {
+        game.pause();
+        gameInfo.displayResetMessage(
+            function () {
+                game.restart();
+            },
+            function () {
+                game.resume();
+            }
+        );
+    });
+
     setTimeout(function(){
         document.querySelector('.splash').style.display = 'none';
         setTimeout(function () {
             game.start();
         }, 1000);
     }, config.SPLASH_SCREEN_DURATION);
+
+
 });

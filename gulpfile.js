@@ -3,6 +3,7 @@ var gulp = require('gulp'),
     sequence = require('run-sequence'),
     del = require('del'),
     clean = require('gulp-clean'),
+    inject = require('gulp-inject-string'),
     karma = require('karma').server;
 
 gulp.task('requirejs-build', function(){
@@ -39,10 +40,20 @@ gulp.task('delete-build', function () {
 });
 
 gulp.task('test', function (done) {
-    karma.start({
+    return karma.start({
         configFile: __dirname + '/karma.conf.js',
         singleRun: true
     }, done);
+});
+
+gulp.task('inject-mobile-scripts', function(){
+    return gulp.src('./dist/pileup/www/index.html')
+        .pipe(inject.after('<!-- inject-mobile-scirpts -->',
+            '\n<script type="text/javascript" src="cordova.js"></script>' +
+            '\n<script type="text/javascript" src="js/index.js"></script>' +
+            '\n<script type="text/javascript">app.initialize();</script>'
+        ))
+        .pipe(gulp.dest('./dist/pileup/www/'));
 });
 
 gulp.task('phonegap-build', function () {
@@ -61,10 +72,11 @@ gulp.task('clean', function (cb) {
         'dist/pileup/www/assets',
         'dist/pileup/www/bower_components',
         'dist/pileup/www/style.css',
-        'dist/pileup/www/index.html'
+        'dist/pileup/www/index.html',
     ], cb);
 });
 
 gulp.task('default', function () {
-    sequence('test', ['requirejs-build', 'copy'], 'copy-build', 'delete-build', 'phonegap-build');
+    sequence('test', ['requirejs-build', 'copy'], 'copy-build', 'delete-build',
+        'inject-mobile-scripts', 'phonegap-build', 'clean');
 });

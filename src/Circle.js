@@ -27,7 +27,7 @@ define([
      *
      * @alias src/Circle
      */
-    var Circle = function Circle(color, radius, place) {
+    var Circle = function Circle(color, strokeColor, radius, place) {
 
         this.color = color;
         this.radius = radius;
@@ -37,7 +37,7 @@ define([
         this.container = new createjs.Container();
 
         this.circleShape = new createjs.Shape();
-        this.circleShape.graphics.beginStroke(color);
+        this.circleShape.graphics.setStrokeStyle(3).beginStroke(strokeColor);
         this.circleShape.graphics.beginFill(color).drawCircle(0, 0, radius);
 
         // Help user to see what he is pressing
@@ -117,12 +117,12 @@ define([
 
         /**
          * Show the outline circle
-         *
+         * @param {string} color
          */
-        showOutlineCircle: function () {
+        showOutlineCircle: function (color) {
             this.outerCircleShape.graphics.
                 setStrokeStyle(config.OUTLINE_CIRCLE_STROKE).
-                beginStroke(config.OUTLINE_CIRCLE_COLOR);
+                beginStroke(color);
 
             this.outerCircleShape.graphics.drawCircle(0, 0, config.OUTLINE_CIRCLE_RADIUS);
         },

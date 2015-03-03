@@ -2,13 +2,16 @@
  * Create the line connected to the moving circle
  *
  * @requires createjs
+ * @requires config
  *
  * @module src/Line
+ *
  */
 
 define([
-    'createjs'
-], function (createjs) {
+    'createjs',
+    'src/config'
+], function (createjs, config) {
 
     "use strict";
 
@@ -52,10 +55,11 @@ define([
          *
          * @param {number} x
          * @param {number} y
+         * @param {string} color
          */
-        extendTo: function (x, y) {
+        extendTo: function (x, y, color) {
             this.lineShape.graphics.clear();
-            this.lineShape.graphics.setStrokeStyle(1).beginStroke("lime");
+            this.lineShape.graphics.setStrokeStyle(1).beginStroke(color);
             this.lineShape.graphics.moveTo(this.startingPointX, this.startingPointY);
 
             var q = 0;

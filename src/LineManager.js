@@ -48,9 +48,10 @@ define(function () {
          *
          * @param {number} x
          * @param {number} y
+         * @param {string} color
          */
-        extendLineTo: function (x, y) {
-            this.line.extendTo(x, y);
+        extendLineTo: function (x, y, color) {
+            this.line.extendTo(x, y, color);
         },
 
         /**
