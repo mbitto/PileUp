@@ -1,18 +1,10 @@
-Node version: v0.10.33
-
-Cordova version: 4.2.0
-
-Config.xml file: 
-
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.phonegap.helloworld" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>Hello World</name>
+<widget id="com.mbitto.pileup" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>PileUp</name>
     <description>
-        Hello World sample application that responds to the deviceready event.
+        A simple game
     </description>
-    <author email="support@phonegap.com" href="http://phonegap.com">
-        PhoneGap Team
-    </author>
+    <author email="manuel.bitto@gmail.com" href="http://mbitto.com">Manuel Bitto</author>
     <content src="index.html" />
     <preference name="permissions" value="none" />
     <preference name="orientation" value="default" />
@@ -74,100 +66,3 @@ Config.xml file:
     <gap:splash gap:platform="winphone" src="www/res/screen/windows-phone/screen-portrait.jpg" />
     <access origin="*" />
 </widget>
-
-
-No Plugins Currently Installed
-
-Android platform:
-
-Available Android targets:
-----------
-id: 1 or "android-13"
-     Name: Android 3.2
-     Type: Platform
-     API level: 13
-     Revision: 1
-     Skins: WXGA (default)
- Tag/ABIs : default/armeabi
-----------
-id: 2 or "android-14"
-     Name: Android 4.0
-     Type: Platform
-     API level: 14
-     Revision: 4
-     Skins: HVGA, QVGA, WQVGA400, WQVGA432, WSVGA, WVGA800 (default), WVGA854, WXGA720, WXGA800
- Tag/ABIs : no ABIs.
-----------
-id: 3 or "android-15"
-     Name: Android 4.0.3
-     Type: Platform
-     API level: 15
-     Revision: 5
-     Skins: HVGA, QVGA, WQVGA400, WQVGA432, WSVGA, WVGA800 (default), WVGA854, WXGA720, WXGA800
- Tag/ABIs : no ABIs.
-----------
-id: 4 or "android-16"
-     Name: Android 4.1.2
-     Type: Platform
-     API level: 16
-     Revision: 5
-     Skins: HVGA, QVGA, WQVGA400, WQVGA432, WSVGA, WVGA800 (default), WVGA854, WXGA720, WXGA800, WXGA800-7in
- Tag/ABIs : no ABIs.
-----------
-id: 5 or "android-17"
-     Name: Android 4.2.2
-     Type: Platform
-     API level: 17
-     Revision: 3
-     Skins: HVGA, QVGA, WQVGA400, WQVGA432, WSVGA, WVGA800 (default), WVGA854, WXGA720, WXGA800, WXGA800-7in
- Tag/ABIs : no ABIs.
-----------
-id: 6 or "android-18"
-     Name: Android 4.3.1
-     Type: Platform
-     API level: 18
-     Revision: 3
-     Skins: HVGA, QVGA, WQVGA400, WQVGA432, WSVGA, WVGA800 (default), WVGA854, WXGA720, WXGA800, WXGA800-7in
- Tag/ABIs : no ABIs.
-----------
-id: 7 or "android-19"
-     Name: Android 4.4.2
-     Type: Platform
-     API level: 19
-     Revision: 4
-     Skins: HVGA, QVGA, WQVGA400, WQVGA432, WSVGA, WVGA800 (default), WVGA854, WXGA720, WXGA800, WXGA800-7in
- Tag/ABIs : no ABIs.
-----------
-id: 8 or "android-20"
-     Name: Android 4.4W.2
-     Type: Platform
-     API level: 20
-     Revision: 2
-     Skins: HVGA, QVGA, WQVGA400, WQVGA432, WSVGA, WVGA800 (default), WVGA854, WXGA720, WXGA800, WXGA800-7in
- Tag/ABIs : no ABIs.
-----------
-id: 9 or "android-21"
-     Name: Android 5.0.1
-     Type: Platform
-     API level: 21
-     Revision: 2
-     Skins: HVGA, QVGA, WQVGA400, WQVGA432, WSVGA, WVGA800 (default), WVGA854, WXGA720, WXGA800, WXGA800-7in
- Tag/ABIs : default/x86_64
-----------
-id: 10 or "Google Inc.:Google APIs:21"
-     Name: Google APIs
-     Type: Add-On
-     Vendor: Google Inc.
-     Revision: 1
-     Description: Android + Google APIs
-     Based on Android 5.0.1 (API level 21)
-     Libraries:
-      * com.android.future.usb.accessory (usb.jar)
-          API for USB Accessories
-      * com.google.android.media.effects (effects.jar)
-          Collection of video effects
-      * com.google.android.maps (maps.jar)
-          API for Google Maps
-     Skins: HVGA, QVGA, WQVGA400, WQVGA432, WSVGA, WVGA800 (default), WVGA854, WXGA720, WXGA800, WXGA800-7in
- Tag/ABIs : google_apis/x86
-
