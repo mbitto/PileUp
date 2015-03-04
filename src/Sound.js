@@ -50,14 +50,14 @@ define([
          * Play sound for a level win
          */
         playWin: function () {
-            createjs.Sound.play(this.audioPath + this.winSound.src);
+            //createjs.Sound.play(this.audioPath + this.winSound.src);
         },
 
         /**
          * Play sound for a game loss
          */
         playLoss: function () {
-            createjs.Sound.play(this.audioPath + this.lossSound.src);
+            //createjs.Sound.play(this.audioPath + this.lossSound.src);
         }
 
     };

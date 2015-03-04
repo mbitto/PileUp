@@ -13,8 +13,9 @@ define([
     'src/CircleFactory',
     'src/UserInteractionManager',
     'src/GameStatus',
-    'src/ScoreManager'
-],function(CircleFactory, UserInteractionManager, GameStatus, ScoreManager){
+    'src/ScoreManager',
+    'src/UserActivityMonitor'
+],function(CircleFactory, UserInteractionManager, GameStatus, ScoreManager, UserActivityMonitor){
 
     "use strict";
 
@@ -35,6 +36,7 @@ define([
         this.levelManager = levelManager;
         this.scoreManager = new ScoreManager();
         this.gameStatus = null;
+        this.userActivityMonitor = new UserActivityMonitor();
     };
 
     Game.prototype = {
@@ -72,6 +74,7 @@ define([
             var self = this;
             var nextLevelNumber = this.levelManager.getCurrentLevelNumber() + 1;
             this.pause();
+            this.userActivityMonitor.stop();
             this.gameInfo.displayNextLevelMessage(nextLevelNumber, function () {
                 self.gameStatus.clearCurrentGame();
                 self.stage.removeAllCircles();
@@ -119,6 +122,10 @@ define([
                         self.gameOver();
                     }
                 );
+
+                self.userActivityMonitor.init(function () {
+                    self.generateCircle('right');
+                });
             });
         },
 
@@ -166,6 +173,8 @@ define([
                 poppedCircle = circle.pop(),
                 newTopCircle = baseCircle.getTop();
 
+            this.userActivityMonitor.activityNoticed();
+
             // Place circle near pile base circle
             this.stage.moveCircleCloseTo(poppedCircle, baseCircle, callback);
             var score = this.scoreManager.decreaseScore(poppedCircle.getPlaceNumber(), newTopCircle.getPlaceNumber());
@@ -180,9 +189,10 @@ define([
          * @param {Circle} movingCircle - the moving circle to merge
          */
         mergeCircles: function (baseCircle, movingCircle) {
-            var self = this,
-                baseCircleTop = baseCircle.getTop(),
+            var baseCircleTop = baseCircle.getTop(),
                 movingCircleBase = movingCircle.getBaseCircle();
+
+            this.userActivityMonitor.activityNoticed();
 
             var score = this.scoreManager.increaseScore(movingCircleBase.getPlaceNumber(), baseCircleTop.getPlaceNumber());
 
@@ -194,15 +204,8 @@ define([
 
             if(this.gameStatus.isPileCompleted(baseCircle.getHeight())){
                 this._setPileCompleted(baseCircle);
-
                 if(this.gameStatus.isLevelCompleted()){
                     this._goToNextLevel();
-                }
-                else if(this.stage.getChildrenNumber() <= 1){
-                    // Launch circle from right after 3 secs
-                    setTimeout(function () {
-                        self.generateCircle("right");
-                    }, 3000);
                 }
             }
         },
@@ -216,7 +219,8 @@ define([
                 highScore = this.scoreManager.getStoredHighScore(),
                 newHighScore = score > highScore;
 
-            self.gameStatus.clearCurrentGame();
+            this.gameStatus.clearCurrentGame();
+            this.userActivityMonitor.stop();
 
             if(newHighScore){
                 this.scoreManager.storeNewHighScore(score);
