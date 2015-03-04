@@ -17,22 +17,13 @@ define([
      */
     var CircleShapeGenerator = function CircleShapeGenerator(repeatLimit) {
 
-        var RED = "#E02130",
-            ORANGE = "#F85931",
-            YELLOW = "#FAB243",
-            GREEN = "#429867",
-            BLUE = "#2B5166",
-            INDIGO = "#009989",
-            VIOLET = "#482344",
-
-            STROKE_RED = "#c74550",
-            STROKE_ORANGE = "#df7358",
-            STROKE_YELLOW = "#e0b069",
-            STROKE_GREEN = "#517f65",
-            STROKE_BLUE = "#4f6f80",
-            STROKE_INDIGO = "#1a8076",
-            STROKE_VIOLET = "#62435f";
-
+        var RED = "#E02130", STROKE_RED = "#c74550",
+            ORANGE = "#F85931", STROKE_ORANGE = "#df7358",
+            YELLOW = "#FAB243", STROKE_YELLOW = "#e0b069",
+            GREEN = "#429867", STROKE_GREEN = "#517f65",
+            BLUE = "#2B5166", STROKE_BLUE = "#4f6f80",
+            INDIGO = "#009989", STROKE_INDIGO = "#1a8076",
+            VIOLET = "#482344", STROKE_VIOLET = "#62435f";
 
         /**
          * @access private

@@ -37,6 +37,7 @@ define([
         this.scoreManager = new ScoreManager();
         this.gameStatus = null;
         this.userActivityMonitor = new UserActivityMonitor();
+        this.paused = true;
     };
 
     Game.prototype = {
@@ -97,10 +98,13 @@ define([
                 index = 1;
 
             this.gameStatus = new GameStatus(level);
+            this.paused = true;
 
             var startingCirclesQuantity = self.gameStatus.getStartingCirclesQuantity();
 
             this.gameInfo.displayInstructionMessage(time, cpt, pilesGoal, maxCircles, function () {
+
+                self.paused = false;
 
                 self.generateCircle("up", function r(){
                     if(index < startingCirclesQuantity) {
@@ -219,7 +223,7 @@ define([
                 highScore = this.scoreManager.getStoredHighScore(),
                 newHighScore = score > highScore;
 
-            this.gameStatus.clearCurrentGame();
+            this.pause();
             this.userActivityMonitor.stop();
 
             if(newHighScore){
@@ -235,6 +239,7 @@ define([
          * Pause the game
          */
         pause: function () {
+            this.paused = true;
             this.gameStatus.clearCurrentGame();
         },
 
@@ -242,7 +247,12 @@ define([
          * Resume the game
          */
         resume: function () {
+            this.paused = false;
             this.gameStatus.startTimer(this.gameStatus.getTimeLeft());
+        },
+
+        isPaused: function () {
+            return this.paused;
         }
 
     };

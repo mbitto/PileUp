@@ -7,7 +7,7 @@ BROWSER PC
 - Al game over non viene resettato il timer [OK]
 - Il counter dei circle totali probabilmente non viene resettato avanzando di livello [OK]
 - Il limite del numero dei circle totali non sempre è rispettato [OK]
-- La possibilità di rimanere con 2 (o più) circles uguali non è contemplata (aggiungere circle in caso di inattività)
+- La possibilità di rimanere con 2 (o più) circles uguali non è contemplata (aggiungere circle in caso di inattività) [OK]
 
 MOBILE APP (samsung s3)
 
@@ -15,4 +15,5 @@ MOBILE APP (samsung s3)
 - I circle vengono posizionati dal gioco anche parzialmente fuori dall'area di gioco [OK]
 - L'effetto di distribuzione dei circle iniziale non si vede o si vede solo alla fine [OK]
 - Dopo che è stato passato il livello il timer non viene immediatamente fermato [OK]
-- A volte il singolo tap viene percepito dal dispositivo come multiplo
+- A volte il singolo tap viene percepito dal dispositivo come multiplo [NO]
+- A volte dopo il tap viene lanciao anche un nuovo circle da sopra (come se ci fosse stato un merge)

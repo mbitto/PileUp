@@ -30,6 +30,8 @@ define([
         this.pilesCounterElement = document.querySelector('.pilesCompleted');
 
         this.sound = sound;
+        this.scoreMessageTimeout = null;
+        this.pileCompletedScoreMessageTimeout = null;
     };
 
     GameInfo.prototype = {
@@ -129,18 +131,46 @@ define([
          * @param {number} posX
          * @param {number} posY
          * @param {number} time - time of permanence
-         * @param {boolean} pileCompleted - switch to a different style if a pile has been completed
          */
-        showScoreMessage: function (score, posX, posY, time, pileCompleted) {
-            var element = pileCompleted ? this.pileCompletedScoreMessageDomElement : this.scoreMessageDomElement;
+        showScoreMessage: function (score, posX, posY, time) {
 
+            clearTimeout(this.scoreMessageTimeout);
+
+            var element = this.scoreMessageDomElement;
+
+            element.textContent = '';
 
             element.style.left = posX + 'px';
             element.style.top = posY + 'px';
             element.style.color = score > 0 ? 'lime' : 'red';
             element.textContent = score > 0 ? '+' + score : score;
 
-            setTimeout(function(){
+            this.scoreMessageTimeout = setTimeout(function(){
+                element.textContent = '';
+            }, time);
+        },
+
+        /**
+         * Display generated score by pile completed on stage
+         *
+         * @param {number} score
+         * @param {number} posX
+         * @param {number} posY
+         * @param {number} time - time of permanence
+         */
+        showPileCompletedScoreMessage: function (score, posX, posY, time) {
+
+            clearTimeout(this.pileCompletedScoreMessageTimeout);
+            var element = this.pileCompletedScoreMessageDomElement;
+
+            element.textContent = '';
+
+            element.style.left = posX + 'px';
+            element.style.top = posY + 'px';
+            element.style.color = score > 0 ? 'lime' : 'red';
+            element.textContent = score > 0 ? '+' + score : score;
+
+            this.pileCompletedScoreMessageTimeout = setTimeout(function(){
                 element.textContent = '';
             }, time);
         },
@@ -174,7 +204,7 @@ define([
          * @param {{x: number, y: number}} coordinates
          */
         pileCompleted: function (score, coordinates) {
-            this.showScoreMessage(score, coordinates.x - 50, coordinates.y, 1700, true);
+            this.showPileCompletedScoreMessage(score, coordinates.x - 50, coordinates.y, 1700);
             this.sound.playWin();
         }
     };

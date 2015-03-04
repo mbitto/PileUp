@@ -16,9 +16,7 @@ TODO:
 - Creare una linea possibilmente tratteggiata che indica la traiettoria del cerchio [OK]
 - Far tornare il circle al punto di partenza se il merge non è fattibile [OK]
 - lanciare un nuovo circle dall'alto in caso di merge e dal basso in caso di pop [OK]
-
-- Colorare la combinazione di cerchi e linee di verde se il merge è fattibile o di rosso se non lo è.
-
+- Colorare la combinazione di cerchi e linee di verde se il merge è fattibile o di rosso se non lo è. [NO]
 - Aggiungere spash screen [OK]
 
 
@@ -60,13 +58,10 @@ GameInfo e Information vanno refattorizzate:
 
 
 - refactoring [OK]
-
-- tasto dx
+- tasto dx [OK]
+- aggiungere nuovo circle se user inattivo per n secs [OK]
+- controllo alogoritmo casualità nuovi circles[OK]
 
 - miglioramento prestazioni e ottimizzazione
-
-- controllo alogoritmo casualità nuovi circles
-
-- aggiungere nuovo circle se user inattivo per n secs
-
+- Alzare target android
 - Aggiungere e istruzioni

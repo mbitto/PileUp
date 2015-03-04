@@ -70,6 +70,11 @@ define([
             it('should return true if argument is equal to piles goal', function() {
                 expect(gameStatus.isPileCompleted(pilesGoal)).to.be.true;
             });
+
+            it('should return true if argument is more then piles goal', function() {
+                expect(gameStatus.isPileCompleted(pilesGoal + 1)).to.be.true;
+            });
+
         });
 
         describe('#isCirclesLimitReached()', function () {

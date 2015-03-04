@@ -27,7 +27,7 @@ define([
         this.manifest = [this.mergeSound, this.splitSound, this.winSound, this.lossSound];
 
         createjs.Sound.alternateExtensions = ["mp3"];
-        createjs.Sound.registerManifest(this.manifest, this.audioPath);
+        createjs.Sound.registerSounds(this.manifest, this.audioPath);
 
     };
 

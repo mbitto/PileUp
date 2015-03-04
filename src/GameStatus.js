@@ -92,7 +92,7 @@ define([
          * @returns {boolean}
          */
         isPileCompleted: function (circlesNumber) {
-            return circlesNumber === this.maxCirclesPerPile;
+            return circlesNumber >= this.maxCirclesPerPile;
         },
 
         /**
