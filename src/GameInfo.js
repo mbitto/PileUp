@@ -152,7 +152,7 @@ define([
          * @param {{x: number, y: number}} coordinates
          */
         pileSplitted: function (score, coordinates) {
-            this.showScoreMessage(score, coordinates.x + 50, coordinates.y, 500);
+            this.showScoreMessage(score, coordinates.x + 50, coordinates.y, 1000);
             this.sound.playSplit();
         },
 
@@ -163,7 +163,7 @@ define([
          * @param {{x: number, y: number}} coordinates
          */
         circlesMerged: function (score, coordinates) {
-            this.showScoreMessage(score, coordinates.x + 50, coordinates.y, 500);
+            this.showScoreMessage(score, coordinates.x + 50, coordinates.y, 1000);
             this.sound.playMerge();
         },
 
@@ -174,8 +174,7 @@ define([
          * @param {{x: number, y: number}} coordinates
          */
         pileCompleted: function (score, coordinates) {
-            console.log(score, coordinates.x - 50, coordinates.y);
-            this.showScoreMessage(score, coordinates.x - 50, coordinates.y, 1000, true);
+            this.showScoreMessage(score, coordinates.x - 50, coordinates.y, 1700, true);
             this.sound.playWin();
         }
     };

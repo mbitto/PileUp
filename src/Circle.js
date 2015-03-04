@@ -37,7 +37,7 @@ define([
         this.container = new createjs.Container();
 
         this.circleShape = new createjs.Shape();
-        this.circleShape.graphics.setStrokeStyle(3).beginStroke(strokeColor);
+        this.circleShape.graphics.setStrokeStyle(2).beginStroke(strokeColor);
         this.circleShape.graphics.beginFill(color).drawCircle(0, 0, radius);
 
         // Help user to see what he is pressing
