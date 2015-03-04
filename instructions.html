@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="user-scalable=no, width=device-width, height=device-height" />
+
+    <title>Pile Up!</title>
+
+    <link rel="stylesheet" href="foundation-css/normalize.css"/>
+    <link rel="stylesheet" href="foundation-css/foundation.css"/>
+    <style type="text/css">
+        body{
+            background-color: #181818;
+        }
+        body h3, label {
+            color: #EDB92E;
+        }
+        .row{
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+        img{
+            margin-bottom: 5px;
+        }
+        .button{
+            background-color: #ed5a2e;
+            border: #d2522a;
+        }
+        .switch input:checked + label {
+            background: #EDB92E;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="row">
+        <div class="small-12 medium-6 column"><img src="img/inst1.png" /></div>
+        <h3 class="small-12 medium-6 column end">Drag a circle over a larger circle to pile it up.
+            The more similar is the size the more points you get</h3>
+    </div>
+
+    <div class="row">
+        <div class="small-12 medium-6 column"><img src="img/inst2.png" /></div>
+        <h3 class="small-12 medium-6 column end">Tap over a pile to pop out the first circle.
+            Here you will loose the double of the points you got</h3>
+    </div>
+
+    <div class="row">
+        <div class="small-12 medium-6 column"><img src="img/inst3.png" /></div>
+        <h3 class="small-12 medium-6 column end">For every move you make a new circle will appear on stage.
+            The same if you don't do nothing for some time</h3>
+    </div>
+
+    <div class="row">
+        <div class="small-12 medium-6 column"><img src="img/inst4.png" /></div>
+        <h3 class="small-12 medium-6 column end">Every level sets a number of circle to complete a pile and
+            a number of pile to complete.</h3>
+    </div>
+    <div class="row">
+        <h3 class="small-8 column">Show instructions next time</h3>
+        <div class="small-4 column end">
+            <div class="switch">
+                <input id="show-next-time" type="checkbox">
+                <label for="show-next-time"></label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-12 medium-5 column end">
+            <a href="game.html" class="button expand">Play</a>
+        </div>
+    </div>
+</body>
+</html>

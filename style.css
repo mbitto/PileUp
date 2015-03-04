@@ -4,17 +4,23 @@ html{
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
     font-family: Verdana, Arial, sans-serif;
 }
+
 html, body{
-    color: #EDB92E;
-    margin: 0;
     -webkit-transform: translate3d(0, 0, 0);
     background-color: #181818;
+    color: #EDB92E;
     height: 100%;
+    margin: 0;
+}
+
+body{
     overflow: hidden;
 }
+
 #canvas{
     height: 100%;
 }
+
 .info-bar{
     font-size: 0.8em;
     position: absolute;
@@ -58,6 +64,11 @@ html, body{
 .splash img{
     display: block;
     margin: 15px auto;
+}
+
+.instructions{
+    overflow: auto;
+    height:2000px;
 }
 
 #alertify{

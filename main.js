@@ -45,7 +45,8 @@ requirejs([
     'src/utils'
 ],
 
-function(createjs, tweenjs, Stage, Game, Canvas, GameStatus, DeviceEventManager, LevelManager, GameInfo, Sound, config, utils){
+function(createjs, tweenjs, Stage, Game, Canvas, GameStatus, DeviceEventManager, LevelManager, GameInfo, Sound,
+         config, utils){
 
     "use strict";
 
@@ -80,11 +81,8 @@ function(createjs, tweenjs, Stage, Game, Canvas, GameStatus, DeviceEventManager,
         }
     });
 
-    setTimeout(function(){
-        document.querySelector('.splash').style.display = 'none';
-        setTimeout(function () {
-            game.start();
-        }, 1000);
-    }, config.SPLASH_SCREEN_DURATION);
+    setTimeout(function () {
+        game.start();
+    }, 500);
 
 });
