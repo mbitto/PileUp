@@ -128,6 +128,7 @@ define([
                 );
 
                 self.userActivityMonitor.init(function () {
+                    self.gameInfo.userInactive();
                     self.generateCircle('right');
                 });
             });

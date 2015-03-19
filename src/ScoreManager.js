@@ -23,7 +23,7 @@ define(function(){
             6: 5
         };
         // Key used by localStorage to store high score
-        this.localStorageKey = 'circles_game_high_score';
+        this.localStorageKey = 'pileup_game_high_score';
     };
 
     ScoreManager.prototype = {

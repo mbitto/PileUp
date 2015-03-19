@@ -15,9 +15,10 @@
         body h3, label {
             color: #EDB92E;
         }
-        .row{
+
+        .instruction-row{
             padding-top: 30px;
-            padding-bottom: 30px;
+            padding-bottom: 125px;
         }
         img{
             margin-bottom: 5px;
@@ -34,42 +35,49 @@
 
 <body>
 
-    <div class="row">
+    <div class="row instruction-row">
         <div class="small-12 medium-6 column"><img src="img/inst1.png" /></div>
         <h3 class="small-12 medium-6 column end">Drag a circle over a larger circle to pile it up.
             The more similar is the size the more points you get</h3>
     </div>
 
-    <div class="row">
+    <div class="row instruction-row">
         <div class="small-12 medium-6 column"><img src="img/inst2.png" /></div>
         <h3 class="small-12 medium-6 column end">Tap over a pile to pop out the first circle.
-            Here you will loose the double of the points you got</h3>
+            Doing this you'll loose the double of the points you got when you piled it up</h3>
     </div>
 
-    <div class="row">
+    <div class="row instruction-row">
         <div class="small-12 medium-6 column"><img src="img/inst3.png" /></div>
-        <h3 class="small-12 medium-6 column end">For every move you make a new circle will appear on stage.
-            The same if you don't do nothing for some time</h3>
+        <h3 class="small-12 medium-6 column end">On every move you make a new circle will appear on stage.
+            The same will happen if you don't do nothing for some time</h3>
     </div>
 
-    <div class="row">
+    <div class="row instruction-row">
         <div class="small-12 medium-6 column"><img src="img/inst4.png" /></div>
-        <h3 class="small-12 medium-6 column end">Every level sets a number of circle to complete a pile and
-            a number of pile to complete.</h3>
+        <h3 class="small-12 medium-6 column end">Every level defines the number of circles to complete a pile
+            as well as the number of piles to complete the game</h3>
     </div>
     <div class="row">
         <h3 class="small-8 column">Show instructions next time</h3>
         <div class="small-4 column end">
             <div class="switch">
-                <input id="show-next-time" type="checkbox">
+                <input id="show-next-time" type="checkbox" checked>
                 <label for="show-next-time"></label>
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row instruction-row">
         <div class="small-12 medium-5 column end">
             <a href="game.html" class="button expand">Play</a>
         </div>
     </div>
+
+    <script type="text/javascript">
+        document.querySelector('#show-next-time').addEventListener('click', function (e) {
+            localStorage.setItem('pileup_game_show_instructions', e.target.checked);
+        });
+    </script>
+
 </body>
 </html>

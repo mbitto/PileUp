@@ -99,6 +99,7 @@ define([
                     "Pass this level completing: <strong>" + piles + " piles</strong><br/><br/>" +
                     "Game over with more than: <strong>" + maxCircles + " circles</strong><br/><br/>";
 
+            this.sound.playGameStart();
             alertify.alert(message, callback);
         },
 
@@ -176,6 +177,13 @@ define([
         },
 
         /**
+         * User is inactive
+         */
+        userInactive: function () {
+            this.sound.playInactivity();
+        },
+
+        /**
          * Message to show when pile has been splitted
          *
          * @param {number} score
@@ -194,7 +202,7 @@ define([
          */
         circlesMerged: function (score, coordinates) {
             this.showScoreMessage(score, coordinates.x + 50, coordinates.y, 1000);
-            this.sound.playMerge();
+            this.sound.playMerge(score < 50 ? 1 : score < 100 ? 2 : 3);
         },
 
         /**

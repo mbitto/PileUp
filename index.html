@@ -16,11 +16,11 @@
 
     <script type="text/javascript">
         setTimeout(function(){
-            if(localStorage.getItem('skip-instructions')){
-                document.location.href = 'game.html';
+            if(localStorage.getItem('pileup_game_show_instructions') == "true"){
+                document.location.href = 'instructions.html';
             }
             else{
-                document.location.href = 'instructions.html';
+                document.location.href = 'game.html';
             }
         }, 500);
     </script>
