@@ -19,8 +19,8 @@ define([
      * @alias src/Sound
      */
     var Sound = function Sound() {
-        this.audioPath = "./assets/";
 
+        this.audioPath = "sounds/";
         this.gameStartSound = {id: "game-start", src: "game-start.ogg"};
         this.mergeSound = {
             1: {id: "merge1", src: "merge1.ogg"},

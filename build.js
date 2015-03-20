@@ -1,6 +1,6 @@
 ({
     baseUrl: 'bower_components',
-    mainConfigFile: '../circles/main.js',
+    mainConfigFile: '../pileUp/main.js',
     name:'../main',
     out:'build/main.js',
     optimize: 'uglify2',

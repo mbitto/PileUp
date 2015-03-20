@@ -17,10 +17,13 @@ gulp.task('requirejs-build', function(){
 
 gulp.task('copy', function(){
     return gulp.src([
-        'assets/*',
+        'sounds/*',
         'img/*',
         'index.html',
+        'instructions.html',
+        'game.html',
         'style.css',
+        'foundation-css/*',
         'bower_components/alertify.js/themes/alertify.default.css',
         'bower_components/alertify.js/themes/alertify.core.css',
         'bower_components/requirejs/require.js'
@@ -69,10 +72,13 @@ gulp.task('clean', function (cb) {
     del([
         'dist/pileup/www/main.js',
         'dist/pileup/www/main.js.map',
-        'dist/pileup/www/assets',
+        'dist/pileup/www/sounds',
         'dist/pileup/www/bower_components',
         'dist/pileup/www/style.css',
         'dist/pileup/www/index.html',
+        'dist/pileup/www/instructions.html',
+        'dist/pileup/www/game.html',
+        'dist/pileup/www/foundations-css'
     ], cb);
 });
 
