@@ -16,9 +16,9 @@
 
     <script type="text/javascript">
         setTimeout(function(){
-            var showInstructions = localStorage.getItem('pileup_game_show_instructions') &&
+            var showInstructions = !localStorage.getItem('pileup_game_show_instructions') ||
                     localStorage.getItem('pileup_game_show_instructions') == "true";
-            
+
             document.location.href = showInstructions ? 'instructions.html' : 'game.html';
         }, 500);
     </script>
