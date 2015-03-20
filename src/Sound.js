@@ -31,7 +31,7 @@ define([
         this.winSound = {id: "win", src: "win.ogg"};
         this.lossSound = {id: "loss", src: "loss.ogg"};
         this.inactivitySound = {id: "inactivity", src: "inactivity.ogg"};
-        
+
         this.manifest = [
             this.mergeSound[1], this.mergeSound[2], this.mergeSound[3], this.splitSound,
             this.winSound, this.lossSound, this.gameStartSound, this.inactivitySound
