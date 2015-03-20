@@ -16,12 +16,10 @@
 
     <script type="text/javascript">
         setTimeout(function(){
-            if(localStorage.getItem('pileup_game_show_instructions') == "true"){
-                document.location.href = 'instructions.html';
-            }
-            else{
-                document.location.href = 'game.html';
-            }
+            var showInstructions = localStorage.getItem('pileup_game_show_instructions') &&
+                    localStorage.getItem('pileup_game_show_instructions') == "true";
+            
+            document.location.href = showInstructions ? 'instructions.html' : 'game.html';
         }, 500);
     </script>
 </body>
