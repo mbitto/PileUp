@@ -20,14 +20,16 @@ define([
         this.currentLevel = 0;
         // Levels features
         this.levels = [
-            {time: 60, cpt: 3, pilesGoal: 3, maxCircles: 10},
-            {time: 60, cpt: 4, pilesGoal: 3, maxCircles: 10},
-            {time: 45, cpt: 5, pilesGoal: 3, maxCircles: 10},
-            {time: 45, cpt: 5, pilesGoal: 4, maxCircles: 15},
-            {time: 45, cpt: 5, pilesGoal: 5, maxCircles: 15},
-            {time: 45, cpt: 6, pilesGoal: 4, maxCircles: 20},
-            {time: 30, cpt: 6, pilesGoal: 5, maxCircles: 20},
-            {time: 60, cpt: 7, pilesGoal: 6, maxCircles: 20}
+            {time: 60, cpt: 3, pilesGoal: 3, maxCircles: 10}//,
+            //{time: 60, cpt: 3, pilesGoal: 4, maxCircles: 10},
+            //{time: 55, cpt: 4, pilesGoal: 3, maxCircles: 10},
+            //{time: 55, cpt: 4, pilesGoal: 4, maxCircles: 15},
+            //{time: 50, cpt: 5, pilesGoal: 3, maxCircles: 15},
+            //{time: 50, cpt: 5, pilesGoal: 4, maxCircles: 20},
+            //{time: 50, cpt: 6, pilesGoal: 3, maxCircles: 20},
+            //{time: 45, cpt: 6, pilesGoal: 4, maxCircles: 20},
+            //{time: 45, cpt: 7, pilesGoal: 3, maxCircles: 20},
+            //{time: 45, cpt: 7, pilesGoal: 4, maxCircles: 20}
         ];
     };
 
@@ -60,6 +62,10 @@ define([
          */
         setLevelNumber: function (number) {
             this.currentLevel = number - 1;
+        },
+
+        isFinalLevel: function () {
+            return this.currentLevel == this.levels.length;
         }
     };
 

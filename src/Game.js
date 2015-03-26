@@ -194,7 +194,8 @@ define([
          * @param {Circle} movingCircle - the moving circle to merge
          */
         mergeCircles: function (baseCircle, movingCircle) {
-            var baseCircleTop = baseCircle.getTop(),
+            var self = this,
+                baseCircleTop = baseCircle.getTop(),
                 movingCircleBase = movingCircle.getBaseCircle();
 
             this.userActivityMonitor.activityNoticed();
@@ -210,7 +211,18 @@ define([
             if(this.gameStatus.isPileCompleted(baseCircle.getHeight())){
                 this._setPileCompleted(baseCircle);
                 if(this.gameStatus.isLevelCompleted()){
-                    this._goToNextLevel();
+                    if(this.levelManager.isFinalLevel()){
+
+                        this.pause();
+                        this.userActivityMonitor.stop();
+
+                        this.gameInfo.displayGameCompletedMessage(function () {
+                            self.gameOver();
+                        });
+                    }
+                    else{
+                        this._goToNextLevel();
+                    }
                 }
             }
         },

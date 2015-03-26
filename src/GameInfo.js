@@ -115,6 +115,10 @@ define([
             });
         },
 
+        displayGameCompletedMessage: function (callback) {
+            alertify.alert("Congratulations!</br>You finished the game.</br></br>This game has been ideated by Giulia Marin and Manuel Bitto.</br>Thanks for playing with it :)", callback);
+        },
+
         /**
          * Display message before to go on the next level
          *
